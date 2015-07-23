@@ -49,7 +49,16 @@
             this.btnSaveBH = new System.Windows.Forms.Button();
             this.btnViewBH = new System.Windows.Forms.Button();
             this.lblBoardMessage = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.A = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.B = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.C = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.D = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.E = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cobSeat = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -105,7 +114,7 @@
             // 
             this.comboBox1.Enabled = false;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(686, 259);
+            this.comboBox1.Location = new System.Drawing.Point(686, 242);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(137, 24);
             this.comboBox1.TabIndex = 8;
@@ -113,7 +122,7 @@
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(712, 325);
+            this.lblQuantity.Location = new System.Drawing.Point(712, 280);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(90, 17);
             this.lblQuantity.TabIndex = 9;
@@ -122,7 +131,7 @@
             // cobTime
             // 
             this.cobTime.AutoSize = true;
-            this.cobTime.Location = new System.Drawing.Point(712, 229);
+            this.cobTime.Location = new System.Drawing.Point(712, 212);
             this.cobTime.Name = "cobTime";
             this.cobTime.Size = new System.Drawing.Size(91, 17);
             this.cobTime.TabIndex = 10;
@@ -132,7 +141,7 @@
             // 
             this.cobQty.Enabled = false;
             this.cobQty.FormattingEnabled = true;
-            this.cobQty.Location = new System.Drawing.Point(724, 345);
+            this.cobQty.Location = new System.Drawing.Point(724, 300);
             this.cobQty.Name = "cobQty";
             this.cobQty.Size = new System.Drawing.Size(68, 24);
             this.cobQty.TabIndex = 11;
@@ -142,7 +151,7 @@
             this.rTxtMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rTxtMessages.Location = new System.Drawing.Point(246, 12);
             this.rTxtMessages.Name = "rTxtMessages";
-            this.rTxtMessages.Size = new System.Drawing.Size(577, 143);
+            this.rTxtMessages.Size = new System.Drawing.Size(896, 143);
             this.rTxtMessages.TabIndex = 13;
             this.rTxtMessages.Text = "i am text box";
             // 
@@ -253,7 +262,7 @@
             // btnSaveBH
             // 
             this.btnSaveBH.Enabled = false;
-            this.btnSaveBH.Location = new System.Drawing.Point(845, 91);
+            this.btnSaveBH.Location = new System.Drawing.Point(1161, 91);
             this.btnSaveBH.Name = "btnSaveBH";
             this.btnSaveBH.Size = new System.Drawing.Size(123, 52);
             this.btnSaveBH.TabIndex = 26;
@@ -262,7 +271,7 @@
             // 
             // btnViewBH
             // 
-            this.btnViewBH.Location = new System.Drawing.Point(845, 23);
+            this.btnViewBH.Location = new System.Drawing.Point(1161, 23);
             this.btnViewBH.Name = "btnViewBH";
             this.btnViewBH.Size = new System.Drawing.Size(123, 52);
             this.btnViewBH.TabIndex = 27;
@@ -279,11 +288,78 @@
             this.lblBoardMessage.Text = "lblBoardMessage";
             this.lblBoardMessage.Visible = false;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.A,
+            this.B,
+            this.C,
+            this.D,
+            this.E});
+            this.dataGridView1.Location = new System.Drawing.Point(1006, 212);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(159, 123);
+            this.dataGridView1.TabIndex = 29;
+            // 
+            // A
+            // 
+            this.A.HeaderText = "A";
+            this.A.Name = "A";
+            this.A.Width = 23;
+            // 
+            // B
+            // 
+            this.B.HeaderText = "B";
+            this.B.Name = "B";
+            this.B.Width = 23;
+            // 
+            // C
+            // 
+            this.C.HeaderText = "C";
+            this.C.Name = "C";
+            this.C.Width = 23;
+            // 
+            // D
+            // 
+            this.D.HeaderText = "D";
+            this.D.Name = "D";
+            this.D.Width = 24;
+            // 
+            // E
+            // 
+            this.E.HeaderText = "E";
+            this.E.Name = "E";
+            this.E.Width = 23;
+            // 
+            // cobSeat
+            // 
+            this.cobSeat.FormattingEnabled = true;
+            this.cobSeat.Location = new System.Drawing.Point(724, 371);
+            this.cobSeat.Name = "cobSeat";
+            this.cobSeat.Size = new System.Drawing.Size(71, 24);
+            this.cobSeat.TabIndex = 30;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(715, 348);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 17);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "Seat Number";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 567);
+            this.ClientSize = new System.Drawing.Size(1296, 567);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cobSeat);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblBoardMessage);
             this.Controls.Add(this.btnViewBH);
             this.Controls.Add(this.btnSaveBH);
@@ -310,6 +386,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,6 +417,14 @@
         private System.Windows.Forms.Button btnSaveBH;
         private System.Windows.Forms.Button btnViewBH;
         private System.Windows.Forms.Label lblBoardMessage;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn A;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn B;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn C;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn D;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn E;
+        private System.Windows.Forms.ComboBox cobSeat;
+        private System.Windows.Forms.Label label2;
     }
 }
 

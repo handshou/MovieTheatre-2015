@@ -22,6 +22,9 @@ namespace MvSysClient {
 
             */
 
+            this.dataGridView1.Rows.Add(3);
+            this.dataGridView1.AllowUserToAddRows = false;
+
         }
 
         public void regextest()
