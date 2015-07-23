@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace MvSysClient {
     public partial class Form1 : Form {
@@ -14,9 +16,11 @@ namespace MvSysClient {
         {
 
             InitializeComponent();
-            Thread t  = new Thread(runClient)
+            /*Thread t  = new Thread(runClient)
             t.IsBackground = true;
             t.Start();
+
+            */
 
         }
 
@@ -30,10 +34,10 @@ namespace MvSysClient {
 
             if (regex1.IsMatch(word) && regex2.IsMatch(meaning))
             {
-                if (!dic.ContainsKey(word)) //check if not inside
+                /*if (!dic.ContainsKey(word)) //check if not inside
                 {
                     dic.Add(word, meaning); //adds
-                }
+                }*/
 
                 //else means dictionary contains word
                 //no new word added
@@ -44,7 +48,7 @@ namespace MvSysClient {
 
         public void processkiller()
         {
-            Thread t = new Thread(runserver);
+            Thread t = new Thread(runServer);
             //make thread background
 
 
@@ -61,6 +65,16 @@ namespace MvSysClient {
 
         }
 
+        //public void when listMovies value changed due to file transfer
+        /* enable listMovies control
+         */
+
+        //public void when value in listmovie is selected
+        /* enable relevant controls related to selecting a movie
+         * populate cobTime with movie times retrieved from server
+         * populate quantity with 1 to 10
+         * change label values to fit Movie Name, Director and 
+         */
 
 
         // '^' = start of expression
