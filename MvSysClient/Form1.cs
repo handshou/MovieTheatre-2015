@@ -22,10 +22,40 @@ namespace MvSysClient {
 
             */
 
-            this.dataGridView1.Rows.Add(3);
-            this.dataGridView1.AllowUserToAddRows = false;
+            List<Block> blocks = new List<Block>
+            {
+                new Block { Name = "A", Rows = 3, Seats = 5 },
+
+            };
+
+            Block block = blocks[0];
+
+            this.Text = "Block: " + block.Name; // Window Title = "Block: D"
+
+            for (int y = 0; y < block.Rows; y++)
+            {
+                for (int x = 0; x < block.Seats; x++)
+                {
+                    Label label = new Label();
+                    label.Left = x * 50;
+                    label.Top = y * 20;
+                    label.Width = 50;
+                    label.Height = 20;
+                    label.Text = "[" + (y + 1) + ", " + (x + 1) + "]";
+                    this.pnSeats.Controls.Add(label);
+                }
+            }
 
         }
+
+        public struct Block
+        {
+            public string Name { get; set; }
+            public int Rows { get; set; }
+            public int Seats { get; set; }
+        }
+
+
 
         public void regextest()
         {

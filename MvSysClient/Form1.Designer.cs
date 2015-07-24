@@ -49,16 +49,10 @@
             this.btnSaveBH = new System.Windows.Forms.Button();
             this.btnViewBH = new System.Windows.Forms.Button();
             this.lblBoardMessage = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.A = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.B = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.C = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.D = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.E = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cobSeat = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pnSeats = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -288,53 +282,6 @@
             this.lblBoardMessage.Text = "lblBoardMessage";
             this.lblBoardMessage.Visible = false;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.A,
-            this.B,
-            this.C,
-            this.D,
-            this.E});
-            this.dataGridView1.Location = new System.Drawing.Point(1006, 212);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(159, 123);
-            this.dataGridView1.TabIndex = 29;
-            // 
-            // A
-            // 
-            this.A.HeaderText = "A";
-            this.A.Name = "A";
-            this.A.Width = 23;
-            // 
-            // B
-            // 
-            this.B.HeaderText = "B";
-            this.B.Name = "B";
-            this.B.Width = 23;
-            // 
-            // C
-            // 
-            this.C.HeaderText = "C";
-            this.C.Name = "C";
-            this.C.Width = 23;
-            // 
-            // D
-            // 
-            this.D.HeaderText = "D";
-            this.D.Name = "D";
-            this.D.Width = 24;
-            // 
-            // E
-            // 
-            this.E.HeaderText = "E";
-            this.E.Name = "E";
-            this.E.Width = 23;
-            // 
             // cobSeat
             // 
             this.cobSeat.FormattingEnabled = true;
@@ -352,14 +299,21 @@
             this.label2.TabIndex = 31;
             this.label2.Text = "Seat Number";
             // 
+            // pnSeats
+            // 
+            this.pnSeats.Location = new System.Drawing.Point(977, 212);
+            this.pnSeats.Name = "pnSeats";
+            this.pnSeats.Size = new System.Drawing.Size(307, 260);
+            this.pnSeats.TabIndex = 32;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
+            this.Controls.Add(this.pnSeats);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cobSeat);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblBoardMessage);
             this.Controls.Add(this.btnViewBH);
             this.Controls.Add(this.btnSaveBH);
@@ -386,7 +340,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,14 +370,9 @@
         private System.Windows.Forms.Button btnSaveBH;
         private System.Windows.Forms.Button btnViewBH;
         private System.Windows.Forms.Label lblBoardMessage;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn A;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn B;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn C;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn D;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn E;
         private System.Windows.Forms.ComboBox cobSeat;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnSeats;
     }
 }
 
