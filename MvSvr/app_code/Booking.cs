@@ -30,5 +30,9 @@ namespace MvSvr {
         public double CalculateBaseCost() {
             return show.Price * seats.Count + fee;
         }
+
+        public Hall GetHall() {
+            return show.Hall;
+        }
     }
 }
