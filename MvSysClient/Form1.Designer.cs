@@ -24,17 +24,15 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
             this.picPoster = new System.Windows.Forms.PictureBox();
             this.listTime = new System.Windows.Forms.ListView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.lblQuantity = new System.Windows.Forms.Label();
-            this.cobTime = new System.Windows.Forms.Label();
-            this.cobQty = new System.Windows.Forms.ComboBox();
+            this.cobTime = new System.Windows.Forms.ComboBox();
+            this.labelTime = new System.Windows.Forms.Label();
             this.rTxtMessages = new System.Windows.Forms.RichTextBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -50,7 +48,7 @@
             this.btnViewBH = new System.Windows.Forms.Button();
             this.lblBoardMessage = new System.Windows.Forms.Label();
             this.cobSeat = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblSeatNo = new System.Windows.Forms.Label();
             this.pnSeats = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
@@ -96,49 +94,31 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem5,
+            listViewItem6});
             this.listTime.Location = new System.Drawing.Point(855, 212);
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(100, 346);
             this.listTime.TabIndex = 7;
             this.listTime.UseCompatibleStateImageBehavior = false;
             // 
-            // comboBox1
-            // 
-            this.comboBox1.Enabled = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(686, 242);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(137, 24);
-            this.comboBox1.TabIndex = 8;
-            // 
-            // lblQuantity
-            // 
-            this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(712, 280);
-            this.lblQuantity.Name = "lblQuantity";
-            this.lblQuantity.Size = new System.Drawing.Size(90, 17);
-            this.lblQuantity.TabIndex = 9;
-            this.lblQuantity.Text = "No. of tickets";
-            // 
             // cobTime
             // 
-            this.cobTime.AutoSize = true;
-            this.cobTime.Location = new System.Drawing.Point(712, 212);
+            this.cobTime.Enabled = false;
+            this.cobTime.FormattingEnabled = true;
+            this.cobTime.Location = new System.Drawing.Point(686, 263);
             this.cobTime.Name = "cobTime";
-            this.cobTime.Size = new System.Drawing.Size(91, 17);
-            this.cobTime.TabIndex = 10;
-            this.cobTime.Text = "Time Chosen";
+            this.cobTime.Size = new System.Drawing.Size(137, 24);
+            this.cobTime.TabIndex = 8;
             // 
-            // cobQty
+            // labelTime
             // 
-            this.cobQty.Enabled = false;
-            this.cobQty.FormattingEnabled = true;
-            this.cobQty.Location = new System.Drawing.Point(724, 300);
-            this.cobQty.Name = "cobQty";
-            this.cobQty.Size = new System.Drawing.Size(68, 24);
-            this.cobQty.TabIndex = 11;
+            this.labelTime.AutoSize = true;
+            this.labelTime.Location = new System.Drawing.Point(712, 233);
+            this.labelTime.Name = "labelTime";
+            this.labelTime.Size = new System.Drawing.Size(91, 17);
+            this.labelTime.TabIndex = 10;
+            this.labelTime.Text = "Time Chosen";
             // 
             // rTxtMessages
             // 
@@ -285,25 +265,25 @@
             // cobSeat
             // 
             this.cobSeat.FormattingEnabled = true;
-            this.cobSeat.Location = new System.Drawing.Point(724, 371);
+            this.cobSeat.Location = new System.Drawing.Point(721, 351);
             this.cobSeat.Name = "cobSeat";
             this.cobSeat.Size = new System.Drawing.Size(71, 24);
             this.cobSeat.TabIndex = 30;
             // 
-            // label2
+            // lblSeatNo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(715, 348);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 17);
-            this.label2.TabIndex = 31;
-            this.label2.Text = "Seat Number";
+            this.lblSeatNo.AutoSize = true;
+            this.lblSeatNo.Location = new System.Drawing.Point(712, 328);
+            this.lblSeatNo.Name = "lblSeatNo";
+            this.lblSeatNo.Size = new System.Drawing.Size(91, 17);
+            this.lblSeatNo.TabIndex = 31;
+            this.lblSeatNo.Text = "Seat Number";
             // 
             // pnSeats
             // 
-            this.pnSeats.Location = new System.Drawing.Point(977, 212);
+            this.pnSeats.Location = new System.Drawing.Point(974, 242);
             this.pnSeats.Name = "pnSeats";
-            this.pnSeats.Size = new System.Drawing.Size(307, 260);
+            this.pnSeats.Size = new System.Drawing.Size(310, 270);
             this.pnSeats.TabIndex = 32;
             // 
             // Form1
@@ -312,7 +292,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
             this.Controls.Add(this.pnSeats);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblSeatNo);
             this.Controls.Add(this.cobSeat);
             this.Controls.Add(this.lblBoardMessage);
             this.Controls.Add(this.btnViewBH);
@@ -328,10 +308,8 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.rTxtMessages);
-            this.Controls.Add(this.cobQty);
+            this.Controls.Add(this.labelTime);
             this.Controls.Add(this.cobTime);
-            this.Controls.Add(this.lblQuantity);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.listTime);
             this.Controls.Add(this.btnBook);
             this.Controls.Add(this.picPoster);
@@ -352,10 +330,8 @@
         private System.Windows.Forms.Button btnBook;
         private System.Windows.Forms.PictureBox picPoster;
         private System.Windows.Forms.ListView listTime;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label lblQuantity;
-        private System.Windows.Forms.Label cobTime;
-        private System.Windows.Forms.ComboBox cobQty;
+        private System.Windows.Forms.ComboBox cobTime;
+        private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.RichTextBox rTxtMessages;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ComboBox comboBox2;
@@ -371,7 +347,7 @@
         private System.Windows.Forms.Button btnViewBH;
         private System.Windows.Forms.Label lblBoardMessage;
         private System.Windows.Forms.ComboBox cobSeat;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblSeatNo;
         private System.Windows.Forms.Panel pnSeats;
     }
 }
