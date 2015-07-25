@@ -29,7 +29,7 @@ namespace MvSvr {
         }
 
         // Get Set
-        public Movie movie { get; set; }
+        public Movie Movie { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
         public Calendar Date { get; set; }

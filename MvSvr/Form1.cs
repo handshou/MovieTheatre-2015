@@ -14,30 +14,44 @@ using System.Windows.Forms;
 
 namespace MvSvr {
     public partial class Form1 : Form {
+        public List<Socket> clients;
         public Form1() {
             InitializeComponent();
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
         }
+        private static int port = 9070;
+        private Socket server = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Stream, ProtocolType.Tcp);
+        private IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, port);
 
-        public void ConnectClient() {
-            int port = 9070;
-            Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, 
-                                                            ProtocolType.Tcp);
-            IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, port);
+        public delegate void DisplayMsgCallBack(String msg);
+        public void DisplayMsg(String msg) {
+            if (this.InvokeRequired) {
+                DisplayMsgCallBack d = new DisplayMsgCallBack(DisplayMsg);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++) {
+                tbDisplay.AppendText(lines[i] + "\r\n");
+            }
+        }
+
+        private void ConnectClient() {
             server.Bind(endpoint);
             server.Listen(10);
-            Console.WriteLine("Waiting for clients on port " + port);
-            while(true) 
-            {
-                try 
-                {
+            while(true){
+                try{
                     Socket client = server.Accept();
-                    ConnectionHandler handler = new ConnectionHandler(client);
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
+                    clients.Add(client);
+                    ConnectionHandler handler = new ConnectionHandler(client, this);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(
+                                                        handler.HandleConnection));
                 } catch(Exception) {
-                    Console.WriteLine("Connection falied on port " + port);
+                    // Error output
+                    tbDisplay.AppendText("Connection failed on port " + port + "\r\n");
                 }
             }
         }
@@ -49,44 +63,10 @@ namespace MvSvr {
         private void btnList_Click(object sender, EventArgs e) {
 
         }
-    }
 
-    class ConnectionHandler {
-        private Socket client;
-        private NetworkStream ns;
-        private StreamReader reader;
-        private StreamWriter writer;
-        private static int connections = 0;
-        public ConnectionHandler(Socket client) {
-            this.client = client;
-        }
-        public void HandleConnection(Object state) {
-            try {
-                ns = new NetworkStream(client);
-                reader = new StreamReader(ns);
-                writer = new StreamWriter(ns);
-                connections++;
-                Console.WriteLine("New client accepted : " + connections + " active connections");
-                writer.WriteLine("Welcome to my server");
-                writer.Flush();
-                                
-                string input;
-                while (true) {
-                    input = reader.ReadLine();
-                    if (input.Length == 0 || input.ToLower() == "exit")
-                        break;
-                    writer.WriteLine(input);
-                    writer.Flush();
-                }
-                ns.Close();
-                client.Close();
-                connections--;
-                Console.WriteLine("Client disconnected : " + connections + " activer connections");
-            }
-            catch (Exception) {
-                connections--;
-                Console.WriteLine("Client disconnected : " + connections + " activer connections");
-            }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
