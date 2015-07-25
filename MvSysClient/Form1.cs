@@ -23,6 +23,38 @@ namespace MvSysClient {
 
             loadMovieDetails();
 
+        }
+
+        public void loadMovieDetails()
+            //this method adds the details of a selected movie to the form for users to refer to
+            //called by 
+        {
+            //hardcoded times:
+
+            lblShowName.Visible = true;
+            lblShowDirector.Visible = true;
+            lblShowGenre.Visible = true;
+
+            lblMvName.Visible = true;
+            lblMvGenre.Visible = true;
+            lblMvDirector.Visible = true;
+
+            cobTime.Enabled = true;
+            cobSeat.Enabled = true;
+
+            lblMvName.Text = "Best Movie 5";
+            lblMvGenre.Text = "Action";
+            lblMvDirector.Text = "Bobby Han";
+
+            //cobTime.Items.Add("10:00");
+            //cobTime.Items.Add(5);
+
+            ArrayList s = new ArrayList();
+            s.Add("10:00");  s.Add("12:00");  s.Add("14:00");
+            cobTime.DataSource = s;
+
+            cobTime.SelectedIndex = 0;
+
             List<Block> blocks = new List<Block>
             {
                 new Block { Name = "A", Rows = 3, Seats = 5 },
@@ -64,7 +96,7 @@ namespace MvSysClient {
                 label.Top = y * 20;
                 label.Width = 50;
                 label.Height = 20;
-                label.Text = (y+1).ToString();
+                label.Text = (y + 1).ToString();
                 this.pnSeats.Controls.Add(label);
 
                 for (int x = 0; x <= block.Seats; x++)
@@ -86,45 +118,6 @@ namespace MvSysClient {
 
         }
 
-        public struct Block
-        {
-            public string Name { get; set; }
-            public int Rows { get; set; }
-            public int Seats { get; set; }
-        }
-
-        public void loadMovieDetails()
-            //this method adds the details of a selected movie to the form for users to refer to
-            //called by 
-        {
-            //hardcoded times:
-
-            lblShowName.Visible = true;
-            lblShowDirector.Visible = true;
-            lblShowGenre.Visible = true;
-
-            lblMvName.Visible = true;
-            lblMvGenre.Visible = true;
-            lblMvDirector.Visible = true;
-
-            cobTime.Enabled = true;
-            cobSeat.Enabled = true;
-
-            lblMvName.Text = "Best Movie 5";
-            lblMvGenre.Text = "Action";
-            lblMvDirector.Text = "Bobby Han";
-
-            //cobTime.Items.Add("10:00");
-            //cobTime.Items.Add(5);
-
-            ArrayList s = new ArrayList();
-            s.Add("10:00");  s.Add("12:00");  s.Add("14:00");
-            cobTime.DataSource = s;
-
-            cobTime.SelectedIndex = 0;
-
-        }
-
         /*public void processkiller()
         {
             Thread t = new Thread(runClient);
@@ -141,8 +134,15 @@ namespace MvSysClient {
         public void runClient(object state)
         {
             //thread created
-            rTxtMessages.Text = "Thread " + state.ToString() + "established".;
+            rTxtMessages.Text = "Thread " + state.ToString() + "established";
             
+        }
+
+        public struct Block
+        {
+            public string Name { get; set; }
+            public int Rows { get; set; }
+            public int Seats { get; set; }
         }
 
     }
