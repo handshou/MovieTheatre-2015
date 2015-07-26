@@ -19,6 +19,7 @@ namespace MvSvr {
         private BinaryFormatter formatter;
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
         private static int connections = 0;
+        private byte[] data = new byte[1024];
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -45,20 +46,25 @@ namespace MvSvr {
 
                 string cmd;
                 while (true) {
-                    /* R */ cmd = reader.ReadLine();
-                    do {
+                    data = new Byte[1024];
+                    /* R */
+                    ns.Read(data, 0, data.Length);
+                    cmd = Encoding.ASCII.GetString(data);
+                    form.DisplayMsg(cmd);
+                    
                         switch (cmd) {
                             case BROWSE: Browse();
+                                form.DisplayMsg("Browsing");
                                 break;
                             case SEARCH: Search();
                                 break;
                             case BOOKNG: Book();
                                 break;
-                            default: 
-                                //Unknown command message
+                            default:
+                                form.DisplayMsg("Unknown Command Message");
                                 break;
                         }
-                    } while (cmd != FINISH);
+                    
                     
                     if (cmd == FINISH)
                         break;
@@ -75,7 +81,7 @@ namespace MvSvr {
 
         public void Browse() {
             formatter = new BinaryFormatter();
-            byte[] data = new byte[1024];
+            data = new byte[1024];
 
             form.DisplayMsg("Browsing...");
 

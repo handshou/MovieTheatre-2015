@@ -13,6 +13,7 @@ using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MvSysClient {
     public partial class Form1 : Form 
@@ -22,6 +23,8 @@ namespace MvSysClient {
                           SocketType.Stream, ProtocolType.Tcp);
 
         public NetworkStream stream;
+        public StreamReader reader;
+        public StreamWriter writer;
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -46,7 +49,9 @@ namespace MvSysClient {
                     "127.0.0.1 and port 9070";
 
                 stream = new NetworkStream(socket);
-
+                writer = new StreamWriter(stream);
+                reader = new StreamReader(stream);
+                
                 Thread t = new Thread(runClient);
                 //t.IsBackground = true;
                 t.Start();
@@ -72,12 +77,6 @@ namespace MvSysClient {
             //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
 
             cobSearch.SelectedIndex = 0;
-
-            byte[] data = new byte[1024];
-
-            //data = Encoding.ASCII.GetBytes(BROWSE);
-
-            //stream.Write(data, 0, data.Length);
 
             //loadMovieDetails();
         }
@@ -182,6 +181,15 @@ namespace MvSysClient {
             public int Seats { get; set; }
         }
 
+        [Serializable]
+        class Movie
+        {
+            public String Title { get; set; }
+
+            public Movie() { }
+
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
@@ -191,8 +199,27 @@ namespace MvSysClient {
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //request for movies from server
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            byte[] data = new byte[1024];
+
+            //data = Encoding.ASCII.GetBytes(BROWSE);
+
+            //writer.Write(data, 0, data.Length);
+            writer.Write(BROWSE);
+            writer.Flush();
+            //reader.Read(data, 0, data.Length);
+            //data = reader.ReadLine();
+            stream.Read(data, 0, data.Length);
+            int num =Convert.ToInt32(Encoding.ASCII.GetString(data));
+
+            Movie m = (Movie)formatter.Deserialize(stream);
+
+            listMovies.Items.Add(m);
 
         }
+
+
 
     }
 

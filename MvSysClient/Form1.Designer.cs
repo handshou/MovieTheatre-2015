@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -100,8 +100,8 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6});
             this.listTime.Location = new System.Drawing.Point(855, 212);
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(100, 346);
@@ -133,7 +133,7 @@
             this.rTxtMessages.Name = "rTxtMessages";
             this.rTxtMessages.Size = new System.Drawing.Size(896, 143);
             this.rTxtMessages.TabIndex = 13;
-            this.rTxtMessages.Text = "i am text box";
+            this.rTxtMessages.Text = "I am text box";
             // 
             // txtSearch
             // 
@@ -159,11 +159,6 @@
             // 
             this.listMovies.FormattingEnabled = true;
             this.listMovies.ItemHeight = 16;
-            this.listMovies.Items.AddRange(new object[] {
-            "--click me--",
-            "(this list should be empty",
-            "and then populated by values after ",
-            "clicking Search/Browse)"});
             this.listMovies.Location = new System.Drawing.Point(12, 260);
             this.listMovies.Name = "listMovies";
             this.listMovies.Size = new System.Drawing.Size(357, 292);

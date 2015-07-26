@@ -46,6 +46,7 @@ namespace MvSvr {
 
         public void LoadMovies() {
             Movie m = new Movie();
+            m.Title = "Bat man";
             movies.Add(m.Title, m);
         }
 
