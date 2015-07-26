@@ -48,7 +48,7 @@ namespace MvSvr {
                 connections++;
 
                 String msg = "New client accepted: " + connections + " active connection";
-                if (connections > 1)
+                if (connections != 1)
                     msg += "s";
                 form.DisplayMsg(msg);
 
@@ -58,7 +58,7 @@ namespace MvSvr {
                     /* R */
                     ns.Read(data, 0, data.Length);
                     // int size = client.Receive(data);
-                    cmd = Encoding.ASCII.GetString(data, 0, data.Length);
+                    cmd = Encoding.ASCII.GetString(data, 0, data.Length).Trim('\0');
                     form.DisplayMsg(cmd); // (!) Remove when complete
                     
                     switch (cmd) {
@@ -92,12 +92,14 @@ namespace MvSvr {
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
             String msg = "Sending " + movies.Count.ToString() + " movie";
             form.DisplayMsg(msg);
-            if (movies.Count > 1)
+            if (movies.Count != 1)
                 msg += "s";
-            /* S */ client.Send(data);
+            /* S */ ns.Write(data, 0, data.Length);
+                    ns.Flush();
             /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
                         formatter.Serialize(ns, m);
                     }
+            form.DisplayMsg("Serialize completed");
 
             // End of file
             //data = Encoding.ASCII.GetBytes(ENDOFF);
