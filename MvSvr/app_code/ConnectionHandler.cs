@@ -68,11 +68,12 @@ namespace MvSvr {
             } catch (Exception) {
                 connections--;
                 form.DisplayMsg("Client disconnected: " + connections + " active connections");
+                movies = form.movies;
             }
         }
 
         public void Browse() {
-            movies = form.GetMovies();
+            movies = form.movies;
             formatter = new BinaryFormatter();
             byte[] data = new byte[1024];
 
@@ -94,13 +95,11 @@ namespace MvSvr {
         }
 
         public void Search() {
-            movies = form.GetMovies();
-
+            movies = form.movies;
         }
 
         public void Book() {
-            movies = form.GetMovies();
-
+            movies = form.movies;
         }
     }
 }
