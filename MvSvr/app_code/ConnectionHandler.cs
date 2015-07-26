@@ -12,10 +12,13 @@ using System.Threading.Tasks;
 namespace MvSvr {
     class ConnectionHandler {
         // Attributes
+        private int i = 0;
+        private String path;
         private Socket client;
         private TcpClient tcpclient;
         private Form1 form;
         private NetworkStream ns;
+        private FileStream fs;
         private StreamReader reader;
         private StreamWriter writer;
         private IFormatter formatter;
@@ -41,7 +44,9 @@ namespace MvSvr {
         public void HandleConnection(Object state) {
             try {
                 // ns = new NetworkStream(client);
+                path = i + ".dat";
                 ns = new NetworkStream(tcpclient.Client);
+                fs = new FileStream(path, FileMode.Create);
                 reader = new StreamReader(ns);
                 writer = new StreamWriter(ns);
                 memory = new MemoryStream(data);
@@ -97,8 +102,18 @@ namespace MvSvr {
             /* S */ ns.Write(data, 0, data.Length);
                     ns.Flush();
             /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
-                        formatter.Serialize(ns, m);
+                        formatter.Serialize(fs, m);
                     }
+
+            FileInfo f = new FileInfo(path);
+            long numbytes = f.Length;
+            byte[] bytedata = Encoding.ASCII.GetBytes(path);
+            data = Encoding.ASCII.GetBytes(numbytes.ToString());
+            /* S */ ns.Write(data, 0, bytedata.Length);
+
+            data = File.ReadAllBytes(path);
+            /* S */ ns.Write(data, 0, bytedata.Length);
+
             form.DisplayMsg("Serialize completed");
 
             // End of file
