@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace MvSysClient {
     public partial class Form1 : Form 
@@ -208,7 +209,7 @@ namespace MvSysClient {
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //request for movies from server
-            BinaryFormatter formatter = new BinaryFormatter();
+            IFormatter formatter = new BinaryFormatter();
 
             byte[] data = new byte[1024];
 
@@ -229,9 +230,9 @@ namespace MvSysClient {
 
                 size = socket.Receive(data);
 
-                MemoryStream ms = new MemoryStream();
+                NetworkStream ns = new NetworkStream(socket);
 
-                m = (Movie)formatter.Deserialize(ms);
+                m = (Movie)formatter.Deserialize(ns);
 
                 listMovies.Items.Add(m.Title);
             }
