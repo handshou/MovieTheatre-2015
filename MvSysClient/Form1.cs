@@ -203,6 +203,10 @@ namespace MvSysClient {
 
             byte[] data = new byte[1024];
 
+            data = Encoding.ASCII.GetBytes(BROWSE);
+
+            socket.Send(data);
+
             //data = Encoding.ASCII.GetBytes(BROWSE);
 
             //writer.Write(data, 0, data.Length);
