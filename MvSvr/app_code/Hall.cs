@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace MvSvr {
     class Hall {
-        // Attributes
-        private String name;
+        // Attributes + Get Set
         private int capacity_max = 25;
-        private List<Seat> seats;
+        public String Name { get; set; }
+        public List<Seat> Seats { get; set; }
+        public int Capacity_Max {
+            get { return capacity_max; }
+            set { capacity_max = value; }
+        }
+
         String[] seatNames =   {"A1", "A2", "A3", "A4", "A5",
                                 "B1", "B2", "B3", "B4", "B5",
                                 "C1", "C2", "C3", "C4", "C5",
@@ -19,23 +24,19 @@ namespace MvSvr {
         // Constructors
         public Hall() {
             for (int i = 0; i < seatNames.Length; i++) {
-                seats.Add(new Seat(this, seatNames[i]));
+                Seats.Add(new Seat(this, seatNames[i]));
             }
         }
         public Hall(String name) {
             for (int i = 0; i < seatNames.Length; i++) {
-                seats.Add(new Seat(this, seatNames[i]));
+                Seats.Add(new Seat(this, seatNames[i]));
             }
-            this.name = name;
+            Name = name;
         }
-
-        // Get Set
-        public int Capacity_Max { get; set; }
-        public List<Seat> Seats { get; set; }
 
         // Methods
         public bool IsFull() {
-            foreach(Seat seat in seats){
+            foreach(Seat seat in Seats){
                 if (seat.Vacanct)
                     return false;
             }

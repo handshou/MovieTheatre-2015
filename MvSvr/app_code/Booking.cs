@@ -6,33 +6,28 @@ using System.Threading.Tasks;
 
 namespace MvSvr {
     class Booking {
-        // Attributes
-        private double subtotal;
+        // Attributes + Get Set
         private static double fee = 1.50;
-        private int id;
-        private Show show;
-        private List<Seat> seats;
+        public double Subtotal { get; set; }
+        public int Id { get; set; }
+        public Show Show { get; set; }
+        public List<Seat> Seats { get; set; }
 
         // Constructors
         public Booking() { }
         public Booking(int id, Show show, List<Seat> seats) {
-            this.id = id;
-            this.show = show;
-            this.seats = seats;
+            Id = id;
+            Show = show;
+            Seats = seats;
         }
-
-        // Get Set
-        public double Subtotal { get; set; }        
-        public int Id { get; set; }
-        public List<Seat> Seats { get; set; }
 
         // Methods
         public double CalculateBaseCost() {
-            return show.Price * seats.Count + fee;
+            return Show.Price * Seats.Count + fee;
         }
 
         public Hall GetHall() {
-            return show.Hall;
+            return Show.Hall;
         }
     }
 }

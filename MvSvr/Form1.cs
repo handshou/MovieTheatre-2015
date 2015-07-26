@@ -14,17 +14,18 @@ using System.Windows.Forms;
 
 namespace MvSvr {
     public partial class Form1 : Form {
-        public List<Socket> clients;
         public Form1() {
             InitializeComponent();
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
         }
+        private List<Socket> clients;
         private static int port = 9070;
         private Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
         private IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, port);
+        private Dictionary<String, Movie> movies;
 
         public delegate void DisplayMsgCallBack(String msg);
         public void DisplayMsg(String msg) {
@@ -39,11 +40,15 @@ namespace MvSvr {
             }
         }
 
+        public Dictionary<String, Movie> GetMovies(){
+            return movies;
+        }
+
         private void ConnectClient() {
             server.Bind(endpoint);
             server.Listen(10);
-            while(true){
-                try{
+            while(true) {
+                try {
                     Socket client = server.Accept();
                     clients.Add(client);
                     ConnectionHandler handler = new ConnectionHandler(client, this);

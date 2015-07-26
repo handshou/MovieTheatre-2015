@@ -7,28 +7,7 @@ using System.Threading.Tasks;
 
 namespace MvSvr {
     class Show {
-        // Attributes
-        private Movie movie;
-        private DateTime timeStart;
-        private DateTime timeEnd;
-        private Calendar date;
-        private Hall hall;
-        private double price;
-        private List<Booking> bookings;
-
-        // Constructors
-        public Show() { }
-        public Show(Movie movie, Calendar date, Hall hall, DateTime timeStart, 
-                    DateTime timeEnd, double price, List<Booking> bookings) {
-            this.date = date;
-            this.hall = hall;
-            this.timeStart = timeStart;
-            this.timeEnd = timeEnd;
-            this.price = price;
-            this.bookings = bookings;
-        }
-
-        // Get Set
+        // Attributes + Get Set
         public Movie Movie { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeEnd { get; set; }
@@ -36,5 +15,18 @@ namespace MvSvr {
         public Hall Hall { get; set; }
         public double Price { get; set; }
         public List<Booking> Bookings { get; set; }
+
+        // Constructors
+        public Show() { }
+        public Show(Movie movie, Calendar date, Hall hall, DateTime timeStart,
+                    DateTime timeEnd, double price, List<Booking> bookings) {
+            Movie = movie;
+            Date = date;
+            Hall = hall;
+            TimeStart = timeStart;
+            TimeEnd = timeEnd;
+            Price = price;
+            Bookings = bookings;
+        }
     }
 }
