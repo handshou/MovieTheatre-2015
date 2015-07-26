@@ -17,7 +17,7 @@ namespace MvSvr {
         private StreamReader reader;
         private StreamWriter writer;
         private BinaryFormatter formatter;
-        private ConcurrentDictionary<String, Movie> movies = new ConcurrentDictionary<String, Movie>();
+        private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
         private static int connections = 0;
 
         public const String BROWSE = "[BRWS]";
@@ -27,7 +27,7 @@ namespace MvSvr {
         public const String FINISH = "[QUIT]";
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, ref ConcurrentDictionary<String, Movie> movies) {
+        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movies) {
             this.client = client;
             this.form = form;
             this.movies = movies;
@@ -77,6 +77,8 @@ namespace MvSvr {
             formatter = new BinaryFormatter();
             byte[] data = new byte[1024];
 
+            form.DisplayMsg("Browsing...");
+
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
             /* S */ ns.Write(data, 0, data.Length);
@@ -85,12 +87,13 @@ namespace MvSvr {
             /* S */
             foreach (KeyValuePair<String, Movie> m in movies) {
                 formatter.Serialize(ns, m);
+                form.DisplayMsg("Sending movie...");
             }
 
             // End of file
-            data = Encoding.ASCII.GetBytes(ENDOFF);
-            /* S */ ns.Write(data, 0, data.Length);
-                    ns.Flush();
+            //data = Encoding.ASCII.GetBytes(ENDOFF);
+            ///* S */ ns.Write(data, 0, data.Length);
+            //        ns.Flush();
 
         }
 

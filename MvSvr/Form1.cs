@@ -23,7 +23,7 @@ namespace MvSvr {
             t.Start();
         }
 
-        private ConcurrentDictionary<String, Movie> movies = new ConcurrentDictionary<String, Movie>();
+        private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
 
         public List<Socket> clients = new List<Socket>();
         private static int port = 9070;
@@ -45,7 +45,8 @@ namespace MvSvr {
         }
 
         public void LoadMovies() {
-            
+            Movie m = new Movie();
+            movies.Add(m.Title, m);
         }
 
         public void ConnectClient() {
