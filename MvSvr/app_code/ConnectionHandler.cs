@@ -97,11 +97,13 @@ namespace MvSvr {
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
             form.DisplayMsg(movies.Count.ToString());
-            /* S */ client.Send(data);
-            /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
+            /* S */ //client.Send(data);
+            /* S */ //foreach (KeyValuePair<String, Movie> m in movies) {
+                        Movie m = new Movie();
+                        m.Title = "test";
                         formatter.Serialize(ns, m);
                         form.DisplayMsg("Sending movie...");
-                    }
+                    //}
 
             // End of file
             //data = Encoding.ASCII.GetBytes(ENDOFF);

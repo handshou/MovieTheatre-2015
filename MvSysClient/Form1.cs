@@ -186,20 +186,6 @@ namespace MvSysClient {
             public int Seats { get; set; }
         }
 
-        [Serializable]
-        class Movie
-        {
-            public String Title { get; set; }
-
-            public Movie() { }
-
-            public Movie(String title)
-            {
-                Title = title;
-            }
-
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
@@ -209,43 +195,25 @@ namespace MvSysClient {
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //request for movies from server
-            IFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new BinaryFormatter();
 
             byte[] data = new byte[1024];
 
             data = Encoding.ASCII.GetBytes(BROWSE);
 
             socket.Send(data); //this ends the browse request
-
-            int size = socket.Receive(data); //this receives the amount of movies for loop
-
-            int amt = Convert.ToInt32(Encoding.ASCII.GetString(data, 0, size)); //sets the amount of movies
-
-            rTxtMessages.Text = amt + " movies received.";
-
+            
             Movie m = null;
 
-            for (int i = 0; i <= amt; i++)
-            {
+            data = new byte[1024];
+            int size = socket.Receive(data);
 
-                size = socket.Receive(data);
-
-                NetworkStream ns = new NetworkStream(socket);
-
+            NetworkStream ns = new NetworkStream(socket);
+            try {
                 m = (Movie)formatter.Deserialize(ns);
-
-                listMovies.Items.Add(m.Title);
+            } catch (Exception ex) {
+                rTxtMessages.Text = ex.Message;
             }
-
-                //data = Encoding.ASCII.GetBytes(BROWSE);
-
-                //writer.Write(data, 0, data.Length);
-                //reader.Read(data, 0, data.Length);
-                //data = reader.ReadLine();
-
-                stream.Read(data, 0, data.Length);
-            
-
         }
 
 
