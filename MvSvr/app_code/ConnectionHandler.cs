@@ -12,17 +12,12 @@ using System.Threading.Tasks;
 namespace MvSvr {
     class ConnectionHandler {
         // Attributes
-        private int i = 0;
-        private String path;
         private Socket client;
-        private TcpClient tcpclient;
         private Form1 form;
         private NetworkStream ns;
-        private FileStream fs;
         private StreamReader reader;
         private StreamWriter writer;
-        private IFormatter formatter;
-        private MemoryStream memory;
+        private BinaryFormatter formatter;
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
         private static int connections = 0;
         private byte[] data = new byte[1024];
@@ -34,8 +29,8 @@ namespace MvSvr {
         public const String FINISH = "[QUIT]";
 
         // Constructor
-        public ConnectionHandler(TcpClient client, Form1 form, ref Dictionary<String, Movie> movies) {
-            this.tcpclient = client;
+        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movies) {
+            this.client = client;
             this.form = form;
             this.movies = movies;
         }
@@ -43,13 +38,9 @@ namespace MvSvr {
         // Methods
         public void HandleConnection(Object state) {
             try {
-                // ns = new NetworkStream(client);
-                path = i + ".dat";
-                ns = new NetworkStream(tcpclient.Client);
-                fs = new FileStream(path, FileMode.Create);
+                ns = new NetworkStream(client);
                 reader = new StreamReader(ns);
                 writer = new StreamWriter(ns);
-                memory = new MemoryStream(data);
                 connections++;
 
                 String msg = "New client accepted: " + connections + " active connection";
@@ -61,9 +52,8 @@ namespace MvSvr {
                 while (true) {
                     data = new Byte[1024];
                     /* R */
-                    ns.Read(data, 0, data.Length);
-                    // int size = client.Receive(data);
-                    cmd = Encoding.ASCII.GetString(data, 0, data.Length).Trim('\0');
+                    int size = client.Receive(data);
+                    cmd = Encoding.ASCII.GetString(data, 0, size);
                     form.DisplayMsg(cmd); // (!) Remove when complete
                     
                     switch (cmd) {
@@ -81,6 +71,10 @@ namespace MvSvr {
                     if (cmd == FINISH)
                         break;
                 }    
+                ns.Close();
+                client.Close();
+                connections--;
+                form.DisplayMsg("Client disconnected: " + connections + " active connections");
             } catch (Exception) {
                 connections--;
                 form.DisplayMsg("Client disconnected: " + connections + " active connections");
@@ -95,28 +89,12 @@ namespace MvSvr {
 
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
-            String msg = "Sending " + movies.Count.ToString() + " movie";
-            form.DisplayMsg(msg);
-            if (movies.Count != 1)
-                msg += "s";
-            /* S */ ns.Write(data, 0, data.Length);
-                    ns.Flush();
+            form.DisplayMsg(movies.Count.ToString());
+            /* S */ client.Send(data);
             /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
-                        formatter.Serialize(fs, m);
+                        formatter.Serialize(ns, m);
+                        form.DisplayMsg("Sending movie...");
                     }
-
-            FileInfo f = new FileInfo(path);
-            long numbytes = f.Length;
-            byte[] bytedata = Encoding.ASCII.GetBytes(path);
-            data = Encoding.ASCII.GetBytes(numbytes.ToString());
-            /* S */ ns.Write(data, 0, bytedata.Length);
-                    ns.Flush();
-
-            data = File.ReadAllBytes(path);
-            /* S */ ns.Write(data, 0, bytedata.Length);
-                    ns.Flush();
-
-            form.DisplayMsg("Serialize completed");
 
             // End of file
             //data = Encoding.ASCII.GetBytes(ENDOFF);
