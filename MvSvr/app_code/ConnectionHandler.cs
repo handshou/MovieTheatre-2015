@@ -12,11 +12,13 @@ namespace MvSvr {
     class ConnectionHandler {
         // Attributes
         private Socket client;
+        private TcpClient tcpclient;
         private Form1 form;
         private NetworkStream ns;
         private StreamReader reader;
         private StreamWriter writer;
         private BinaryFormatter formatter;
+        private MemoryStream memory;
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
         private static int connections = 0;
         private byte[] data = new byte[1024];
@@ -28,8 +30,8 @@ namespace MvSvr {
         public const String FINISH = "[QUIT]";
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movies) {
-            this.client = client;
+        public ConnectionHandler(TcpClient client, Form1 form, ref Dictionary<String, Movie> movies) {
+            this.tcpclient = client;
             this.form = form;
             this.movies = movies;
         }
@@ -37,9 +39,11 @@ namespace MvSvr {
         // Methods
         public void HandleConnection(Object state) {
             try {
-                ns = new NetworkStream(client);
+                // ns = new NetworkStream(client);
+                ns = new NetworkStream(tcpclient.Client);
                 reader = new StreamReader(ns);
                 writer = new StreamWriter(ns);
+                memory = new MemoryStream(data);
                 connections++;
 
                 String msg = "New client accepted: " + connections + " active connection";
@@ -84,11 +88,13 @@ namespace MvSvr {
 
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
-            form.DisplayMsg(movies.Count.ToString()); // (!) Remove when complete
+            String msg = "Sending " + movies.Count.ToString() + " movie";
+            form.DisplayMsg(msg);
+            if (movies.Count > 1)
+                msg += "s";
             /* S */ client.Send(data);
             /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
                         formatter.Serialize(ns, m);
-                        form.DisplayMsg("Sending movie...");
                     }
 
             // End of file
@@ -107,8 +113,10 @@ namespace MvSvr {
         }
 
         public void Quit() {
-            ns.Close();
-            client.Close();
+            if(ns != null)
+                ns.Close();
+            if(client != null)
+                client.Close();
             connections--;
             form.DisplayMsg("Client disconnected: " + connections + " active connections");
         }

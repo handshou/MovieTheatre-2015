@@ -27,6 +27,7 @@ namespace MvSvr {
 
         public List<Socket> clients = new List<Socket>();
         private static int port = 9070;
+        private static TcpClient tcpclient;
         private static Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
         private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -60,8 +61,9 @@ namespace MvSvr {
             while(true) {
                 try {
                     Socket client = server.Accept();
+                    tcpclient = new TcpClient(endpoint);
                     clients.Add(client);
-                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movies);
+                    ConnectionHandler handler = new ConnectionHandler(tcpclient, this, ref movies);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(
                                                         handler.HandleConnection));
                 } catch(Exception ex) {
