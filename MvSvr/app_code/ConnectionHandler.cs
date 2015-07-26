@@ -56,8 +56,9 @@ namespace MvSvr {
                 while (true) {
                     data = new Byte[1024];
                     /* R */
-                    int size = client.Receive(data);
-                    cmd = Encoding.ASCII.GetString(data, 0, size);
+                    ns.Read(data, 0, data.Length);
+                    // int size = client.Receive(data);
+                    cmd = Encoding.ASCII.GetString(data, 0, data.Length);
                     form.DisplayMsg(cmd); // (!) Remove when complete
                     
                     switch (cmd) {

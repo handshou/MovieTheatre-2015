@@ -60,14 +60,13 @@ namespace MvSvr {
         public void ConnectClient() {
             // server.Bind(endpoint);
             // server.Listen(10);
+
+            tcplistener = new TcpListener(endpoint);
+            tcplistener.Start();
             while(true) {
                 try {
                     // Socket client = server.Accept();
                     //tcpclient = new TcpClient(endpoint);
-                    
-                    tcplistener = new TcpListener(endpoint);
-
-                    tcplistener.Start();
 
                     tcpclient = tcplistener.AcceptTcpClient();
                     
