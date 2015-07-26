@@ -110,9 +110,11 @@ namespace MvSvr {
             byte[] bytedata = Encoding.ASCII.GetBytes(path);
             data = Encoding.ASCII.GetBytes(numbytes.ToString());
             /* S */ ns.Write(data, 0, bytedata.Length);
+                    ns.Flush();
 
             data = File.ReadAllBytes(path);
             /* S */ ns.Write(data, 0, bytedata.Length);
+                    ns.Flush();
 
             form.DisplayMsg("Serialize completed");
 
