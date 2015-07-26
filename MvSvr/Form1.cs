@@ -48,6 +48,10 @@ namespace MvSvr {
             Movie m = new Movie();
             m.Title = "Bat man";
             movies.Add(m.Title, m);
+
+            m = new Movie();
+            m.Title = "Bat man of the Future";
+            movies.Add(m.Title, m);
         }
 
         public void ConnectClient() {

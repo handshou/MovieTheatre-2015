@@ -48,35 +48,25 @@ namespace MvSvr {
                 while (true) {
                     data = new Byte[1024];
                     /* R */
-
                     int size = client.Receive(data);
                     cmd = Encoding.ASCII.GetString(data, 0, size);
-                    form.DisplayMsg(cmd);
-                    
-                    //switch (cmd) {
-                    //    case BROWSE: Browse();
-                    //        form.DisplayMsg("Browsing");
-                    //        break;
-                    //    case SEARCH: Search();
-                    //        break;
-                    //    case BOOKNG: Book();
-                    //        break;
-                    //    default:
-                    //        form.DisplayMsg("Unknown Command Message");
-                    //        break;
-                    //}
+                    form.DisplayMsg(cmd); // (!) Remove when complete
+                    do {
+                        switch (cmd) {
+                            case BROWSE: Browse();
+                                break;
+                            case SEARCH: Search();
+                                break;
+                            case BOOKNG: Book();
+                                break;
+                            default:
+                                form.DisplayMsg("Unknown command received!");
+                                break;
+                        }
+                    } while (cmd != FINISH);
 
-                    if (cmd == BROWSE)
-                        Browse();
-                    else 
-                        if (cmd == SEARCH)
-                            Search();
-                    else 
-                        if (cmd == BOOKNG) {
-                            Book();
-                    } else 
-                        if (cmd == FINISH)
-                            break;
+                    if (cmd == FINISH)
+                        break;
                 }    
                 ns.Close();
                 client.Close();
@@ -96,14 +86,12 @@ namespace MvSvr {
 
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
-            /* S */ ns.Write(data, 0, data.Length);
-                    ns.Flush();
-
-            /* S */
-            foreach (KeyValuePair<String, Movie> m in movies) {
-                formatter.Serialize(ns, m);
-                form.DisplayMsg("Sending movie...");
-            }
+            form.DisplayMsg(movies.Count.ToString());
+            /* S */ client.Send(data);
+            /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
+                        formatter.Serialize(ns, m);
+                        form.DisplayMsg("Sending movie...");
+                    }
 
             // End of file
             //data = Encoding.ASCII.GetBytes(ENDOFF);
