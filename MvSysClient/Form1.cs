@@ -10,24 +10,78 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections;
+using System.Net;
+using System.Net.Sockets;
+using System.IO;
 
 namespace MvSysClient {
-    public partial class Form1 : Form {
+    public partial class Form1 : Form 
+    {
+
+        public static Socket socket = new Socket(AddressFamily.InterNetwork,
+                          SocketType.Stream, ProtocolType.Tcp);
+
+        public NetworkStream stream = new NetworkStream(socket);
+
+        public const String BROWSE = "[BRWS]";
+        public const String SEARCH = "[SRCH]";
+        public const String BOOKNG = "[BOOK]";
+        public const String ENDOFF = "[ENDO]";
+        public const String FINISH = "[QUIT]";
+
         public Form1()
         {
 
             InitializeComponent();
-            Thread t = new Thread(runClient);
-            t.IsBackground = true;
-            t.Start(1);
+
+            
+
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse
+                                              ("127.0.0.1"), 9050);
+
+            try
+            {
+                rTxtMessages.Text += "Trying to connect to server...";
+                socket.Connect(remoteEP);
+                rTxtMessages.Text += "\nConnection established.";
+                rTxtMessages.Text += "\nConnected to server with IP Address of" +
+                    "127.0.0.1 and port 9070";
+
+                Thread t = new Thread(runClient);
+                t.IsBackground = true;
+                t.Start();
+
+            }
+            catch (SocketException)
+            {
+                rTxtMessages.Text = "Unable to connect to the movie server.";
+                rTxtMessages.AppendText("\nPlease check if the server is running.");
+                return;
+            }
+
+        }
+
+        public void runClient()
+            //this method starts a thread
+            //called when the client has connected to the server
+        {
+            rTxtMessages.Text = "Welcome to the Movie Booking System.";
+            rTxtMessages.AppendText("\nYou may find your desired movies either by browsing or searching with a keyword.");
+
+            cobSearch.SelectedIndex = 0;
+
+            byte[] data = new byte[1024];
+
+            data = Encoding.ASCII.GetBytes(BROWSE);
+
+            stream.Write(data, 0, data.Length);
 
             loadMovieDetails();
-
         }
 
         public void loadMovieDetails()
             //this method adds the details of a selected movie to the form for users to refer to
-            //called by 
+            //called when a thread is started
         {
             //hardcoded times:
 
@@ -118,12 +172,12 @@ namespace MvSysClient {
 
         }
 
-        /*public void processkiller()
+        public struct Block
         {
-            Thread t = new Thread(runClient);
-            t.IsBackground = true;
-            //make thread background
-        }*/
+            public string Name { get; set; }
+            public int Rows { get; set; }
+            public int Seats { get; set; }
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -131,18 +185,10 @@ namespace MvSysClient {
             //kills all bckgrnd thread under this prog
         }
 
-        public void runClient(object state)
+        private void btnBrowse_Click(object sender, EventArgs e)
         {
-            //thread created
-            rTxtMessages.Text = "Thread " + state.ToString() + "established";
-            
-        }
+            //request for movies from server
 
-        public struct Block
-        {
-            public string Name { get; set; }
-            public int Rows { get; set; }
-            public int Seats { get; set; }
         }
 
     }

@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -35,7 +35,7 @@
             this.labelTime = new System.Windows.Forms.Label();
             this.rTxtMessages = new System.Windows.Forms.RichTextBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cobSearch = new System.Windows.Forms.ComboBox();
             this.listMovies = new System.Windows.Forms.ListBox();
             this.lblShowName = new System.Windows.Forms.Label();
             this.lblShowGenre = new System.Windows.Forms.Label();
@@ -53,21 +53,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtUser = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(64, 23);
+            this.btnBrowse.Location = new System.Drawing.Point(64, 55);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(123, 52);
             this.btnBrowse.TabIndex = 1;
             this.btnBrowse.Text = "Browse movies";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(12, 158);
+            this.btnSearch.Location = new System.Drawing.Point(13, 181);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(208, 35);
             this.btnSearch.TabIndex = 2;
@@ -97,8 +100,8 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
             this.listTime.Location = new System.Drawing.Point(855, 212);
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(100, 346);
@@ -134,23 +137,23 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(12, 121);
+            this.txtSearch.Location = new System.Drawing.Point(12, 153);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(217, 22);
             this.txtSearch.TabIndex = 14;
             // 
-            // comboBox2
+            // cobSearch
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.cobSearch.FormattingEnabled = true;
+            this.cobSearch.Items.AddRange(new object[] {
             "Name",
             "Genre",
             "Director"});
-            this.comboBox2.Location = new System.Drawing.Point(12, 91);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(106, 24);
-            this.comboBox2.TabIndex = 15;
-            this.comboBox2.Text = "--Search By--";
+            this.cobSearch.Location = new System.Drawing.Point(12, 123);
+            this.cobSearch.Name = "cobSearch";
+            this.cobSearch.Size = new System.Drawing.Size(106, 24);
+            this.cobSearch.TabIndex = 15;
+            this.cobSearch.Text = "--Search By--";
             // 
             // listMovies
             // 
@@ -161,9 +164,9 @@
             "(this list should be empty",
             "and then populated by values after ",
             "clicking Search/Browse)"});
-            this.listMovies.Location = new System.Drawing.Point(12, 228);
+            this.listMovies.Location = new System.Drawing.Point(12, 260);
             this.listMovies.Name = "listMovies";
-            this.listMovies.Size = new System.Drawing.Size(357, 324);
+            this.listMovies.Size = new System.Drawing.Size(357, 292);
             this.listMovies.TabIndex = 18;
             // 
             // lblShowName
@@ -292,7 +295,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 208);
+            this.label2.Location = new System.Drawing.Point(10, 233);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 17);
             this.label2.TabIndex = 34;
@@ -301,7 +304,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(141, 208);
+            this.label3.Location = new System.Drawing.Point(139, 233);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 17);
             this.label3.TabIndex = 35;
@@ -310,17 +313,35 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(265, 208);
+            this.label4.Location = new System.Drawing.Point(263, 233);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 17);
             this.label4.TabIndex = 36;
             this.label4.Text = "Directed By";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 17);
+            this.label5.TabIndex = 37;
+            this.label5.Text = "User:";
+            // 
+            // txtUser
+            // 
+            this.txtUser.Location = new System.Drawing.Point(64, 23);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(145, 22);
+            this.txtUser.TabIndex = 38;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
+            this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -338,7 +359,7 @@
             this.Controls.Add(this.lblShowGenre);
             this.Controls.Add(this.lblShowName);
             this.Controls.Add(this.listMovies);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cobSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.rTxtMessages);
             this.Controls.Add(this.labelTime);
@@ -367,7 +388,7 @@
         private System.Windows.Forms.Label labelTime;
         private System.Windows.Forms.RichTextBox rTxtMessages;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cobSearch;
         private System.Windows.Forms.ListBox listMovies;
         private System.Windows.Forms.Label lblShowName;
         private System.Windows.Forms.Label lblShowGenre;
@@ -385,6 +406,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtUser;
     }
 }
 
