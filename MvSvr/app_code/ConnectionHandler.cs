@@ -13,6 +13,7 @@ namespace MvSvr {
     class ConnectionHandler {
         // Attributes
         private Socket client;
+        private List<Socket> clients = new List<Socket>();
         private Form1 form;
         private NetworkStream ns;
         private StreamReader reader;
@@ -43,10 +44,10 @@ namespace MvSvr {
                 writer = new StreamWriter(ns);
                 connections++;
 
-                String msg = "New client accepted: " + connections + " active connection";
-                if (connections != 1)
-                    msg += "s";
-                form.DisplayMsg(msg);
+                if (connections == 1)
+                    form.DisplayMsg("New client accepted: " + connections + " active connection");
+                else
+                    form.DisplayMsg("New client accepted: " + connections + " active connections");
 
                 string cmd;
                 while (true) {
@@ -74,10 +75,16 @@ namespace MvSvr {
                 ns.Close();
                 client.Close();
                 connections--;
-                form.DisplayMsg("Client disconnected: " + connections + " active connections");
+                if (connections == 1)
+                    form.DisplayMsg("Client disconnected: " + connections + " active connection");
+                else
+                    form.DisplayMsg("Client disconnected: " + connections + " active connections");
             } catch (Exception) {
                 connections--;
-                form.DisplayMsg("Client disconnected: " + connections + " active connections");
+                if (connections == 1)
+                    form.DisplayMsg("Client disconnected: " + connections + " active connection");
+                else
+                    form.DisplayMsg("Client disconnected: " + connections + " active connections");
             }
         }
 
