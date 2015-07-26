@@ -24,8 +24,8 @@ namespace MvSvr {
         private static int port = 9070;
         private Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
-        private IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, port);
-        private Dictionary<String, Movie> movies;
+        private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+        public Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
 
         public delegate void DisplayMsgCallBack(String msg);
         public void DisplayMsg(String msg) {
@@ -40,11 +40,7 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, Movie> GetMovies(){
-            return movies;
-        }
-
-        private void ConnectClient() {
+        public void ConnectClient() {
             server.Bind(endpoint);
             server.Listen(10);
             while(true) {

@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="app_code\Hall.cs" />
     <Compile Include="app_code\Movie.cs" />
+    <Compile Include="app_code\MovieList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="app_code\Seat.cs" />
