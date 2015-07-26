@@ -52,22 +52,30 @@ namespace MvSvr {
                     cmd = Encoding.ASCII.GetString(data);
                     form.DisplayMsg(cmd);
                     
-                        switch (cmd) {
-                            case BROWSE: Browse();
-                                form.DisplayMsg("Browsing");
-                                break;
-                            case SEARCH: Search();
-                                break;
-                            case BOOKNG: Book();
-                                break;
-                            default:
-                                form.DisplayMsg("Unknown Command Message");
-                                break;
-                        }
-                    
-                    
-                    if (cmd == FINISH)
-                        break;
+                    //switch (cmd) {
+                    //    case BROWSE: Browse();
+                    //        form.DisplayMsg("Browsing");
+                    //        break;
+                    //    case SEARCH: Search();
+                    //        break;
+                    //    case BOOKNG: Book();
+                    //        break;
+                    //    default:
+                    //        form.DisplayMsg("Unknown Command Message");
+                    //        break;
+                    //}
+
+                    if (cmd == BROWSE)
+                        Browse();
+                    else 
+                        if (cmd == SEARCH)
+                            Search();
+                    else 
+                        if (cmd == BOOKNG) {
+                            Book();
+                    } else 
+                        if (cmd == FINISH)
+                            break;
                 }    
                 ns.Close();
                 client.Close();
