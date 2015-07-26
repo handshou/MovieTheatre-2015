@@ -21,7 +21,7 @@ namespace MvSysClient {
         public static Socket socket = new Socket(AddressFamily.InterNetwork,
                           SocketType.Stream, ProtocolType.Tcp);
 
-        public NetworkStream stream = new NetworkStream(socket);
+        public NetworkStream stream;
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -34,10 +34,8 @@ namespace MvSysClient {
 
             InitializeComponent();
 
-            
-
             IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse
-                                              ("127.0.0.1"), 9050);
+                                              ("127.0.0.1"), 9070);
 
             try
             {
@@ -47,8 +45,10 @@ namespace MvSysClient {
                 rTxtMessages.Text += "\nConnected to server with IP Address of" +
                     "127.0.0.1 and port 9070";
 
+                stream = new NetworkStream(socket);
+
                 Thread t = new Thread(runClient);
-                t.IsBackground = true;
+                //t.IsBackground = true;
                 t.Start();
 
             }
@@ -61,22 +61,25 @@ namespace MvSysClient {
 
         }
 
+        
+        
+
         public void runClient()
             //this method starts a thread
             //called when the client has connected to the server
         {
             rTxtMessages.Text = "Welcome to the Movie Booking System.";
-            rTxtMessages.AppendText("\nYou may find your desired movies either by browsing or searching with a keyword.");
+            //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
 
             cobSearch.SelectedIndex = 0;
 
             byte[] data = new byte[1024];
 
-            data = Encoding.ASCII.GetBytes(BROWSE);
+            //data = Encoding.ASCII.GetBytes(BROWSE);
 
-            stream.Write(data, 0, data.Length);
+            //stream.Write(data, 0, data.Length);
 
-            loadMovieDetails();
+            //loadMovieDetails();
         }
 
         public void loadMovieDetails()
@@ -192,4 +195,5 @@ namespace MvSysClient {
         }
 
     }
+
 }

@@ -25,11 +25,11 @@ namespace MvSvr {
 
         private ConcurrentDictionary<String, Movie> movies = new ConcurrentDictionary<String, Movie>();
 
-        private List<Socket> clients;
+        public List<Socket> clients = new List<Socket>();
         private static int port = 9070;
-        private Socket server = new Socket(AddressFamily.InterNetwork,
+        private static Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
-        private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+        private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
 
         public delegate void DisplayMsgCallback(String msg);
         public void DisplayMsg(String msg) {
@@ -58,9 +58,10 @@ namespace MvSvr {
                     ConnectionHandler handler = new ConnectionHandler(client, this, ref movies);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(
                                                         handler.HandleConnection));
-                } catch(Exception) {
+                } catch(Exception ex) {
                     // Error output
                     tbDisplay.AppendText("Connection failed on port " + port + "\r\n");
+                    tbDisplay.AppendText(ex.ToString());
                 }
             }
         }
