@@ -41,8 +41,11 @@ namespace MvSvr {
                 reader = new StreamReader(ns);
                 writer = new StreamWriter(ns);
                 connections++;
-                form.DisplayMsg("New client accepted: " + connections +
-                    "active connections");
+
+                String msg = "New client accepted: " + connections + " active connection";
+                if (connections > 1)
+                    msg += "s";
+                form.DisplayMsg(msg);
 
                 string cmd;
                 while (true) {
@@ -51,27 +54,22 @@ namespace MvSvr {
                     int size = client.Receive(data);
                     cmd = Encoding.ASCII.GetString(data, 0, size);
                     form.DisplayMsg(cmd); // (!) Remove when complete
-                    do {
-                        switch (cmd) {
-                            case BROWSE: Browse();
-                                break;
-                            case SEARCH: Search();
-                                break;
-                            case BOOKNG: Book();
-                                break;
-                            default:
-                                form.DisplayMsg("Unknown command received!");
-                                break;
-                        }
-                    } while (cmd != FINISH);
-
+                    
+                    switch (cmd) {
+                        case BROWSE: Browse();
+                            break;
+                        case SEARCH: Search();
+                            break;
+                        case BOOKNG: Book();
+                            break;
+                        case FINISH: Quit();
+                            break;
+                        default:     form.DisplayMsg("Unknown command received!");
+                            break;
+                    }
                     if (cmd == FINISH)
                         break;
                 }    
-                ns.Close();
-                client.Close();
-                connections--;
-                form.DisplayMsg("Client disconnected: " + connections + " active connections");
             } catch (Exception) {
                 connections--;
                 form.DisplayMsg("Client disconnected: " + connections + " active connections");
@@ -86,7 +84,7 @@ namespace MvSvr {
 
             // Number of movies
             data = Encoding.ASCII.GetBytes(movies.Count.ToString());
-            form.DisplayMsg(movies.Count.ToString());
+            form.DisplayMsg(movies.Count.ToString()); // (!) Remove when complete
             /* S */ client.Send(data);
             /* S */ foreach (KeyValuePair<String, Movie> m in movies) {
                         formatter.Serialize(ns, m);
@@ -106,6 +104,13 @@ namespace MvSvr {
 
         public void Book() {
             
+        }
+
+        public void Quit() {
+            ns.Close();
+            client.Close();
+            connections--;
+            form.DisplayMsg("Client disconnected: " + connections + " active connections");
         }
     }
 }
