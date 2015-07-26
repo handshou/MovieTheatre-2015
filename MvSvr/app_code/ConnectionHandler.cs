@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace MvSvr {
         private StreamReader reader;
         private StreamWriter writer;
         private BinaryFormatter formatter;
-        private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
+        private ConcurrentDictionary<String, Movie> movies = new ConcurrentDictionary<String, Movie>();
         private static int connections = 0;
 
         public const String BROWSE = "[BRWS]";
@@ -26,9 +27,10 @@ namespace MvSvr {
         public const String FINISH = "[QUIT]";
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form) {
+        public ConnectionHandler(Socket client, Form1 form, ref ConcurrentDictionary<String, Movie> movies) {
             this.client = client;
             this.form = form;
+            this.movies = movies;
         }
 
         // Methods
@@ -68,12 +70,10 @@ namespace MvSvr {
             } catch (Exception) {
                 connections--;
                 form.DisplayMsg("Client disconnected: " + connections + " active connections");
-                movies = form.movies;
             }
         }
 
         public void Browse() {
-            movies = form.movies;
             formatter = new BinaryFormatter();
             byte[] data = new byte[1024];
 
@@ -95,11 +95,11 @@ namespace MvSvr {
         }
 
         public void Search() {
-            movies = form.movies;
+
         }
 
         public void Book() {
-            movies = form.movies;
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,21 +17,24 @@ namespace MvSvr {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
+            LoadMovies();
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
         }
+
+        private ConcurrentDictionary<String, Movie> movies = new ConcurrentDictionary<String, Movie>();
+
         private List<Socket> clients;
         private static int port = 9070;
         private Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
         private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-        public Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
 
-        public delegate void DisplayMsgCallBack(String msg);
+        public delegate void DisplayMsgCallback(String msg);
         public void DisplayMsg(String msg) {
             if (this.InvokeRequired) {
-                DisplayMsgCallBack d = new DisplayMsgCallBack(DisplayMsg);
+                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
                 this.Invoke(d, msg);
                 return;
             }
@@ -40,6 +44,10 @@ namespace MvSvr {
             }
         }
 
+        public void LoadMovies() {
+            
+        }
+
         public void ConnectClient() {
             server.Bind(endpoint);
             server.Listen(10);
@@ -47,7 +55,7 @@ namespace MvSvr {
                 try {
                     Socket client = server.Accept();
                     clients.Add(client);
-                    ConnectionHandler handler = new ConnectionHandler(client, this);
+                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movies);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(
                                                         handler.HandleConnection));
                 } catch(Exception) {

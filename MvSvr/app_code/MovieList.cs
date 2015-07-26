@@ -17,9 +17,10 @@ namespace MvSvr {
         }
         public MovieList(SerializationInfo info, StreamingContext context, Dictionary<String, Movie> ml) {
             Movies = ml;
-            Movies.Add();
 
-            info.GetValue(m.Key, m.Key.GetType());
+            foreach (KeyValuePair<String, Movie> m in Movies) {
+                info.GetValue(m.Key, m.Key.GetType());
+            }
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context) {
