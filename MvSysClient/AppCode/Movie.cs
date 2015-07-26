@@ -6,8 +6,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MvSvr {
-    [Serializable()]
+namespace MvSysClient
+{
+    [Serializable]
     class Movie {
         // Attributes + Get Set
         private Image poster;

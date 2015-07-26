@@ -43,7 +43,11 @@ namespace MvSysClient {
             try
             {
                 rTxtMessages.Text += "Trying to connect to server...";
-                socket.Connect(remoteEP);
+                TcpClient client = new TcpClient();
+                client.Connect(remoteEP);
+
+                socket = client.Client;
+
                 rTxtMessages.Text += "\nConnection established.";
                 rTxtMessages.Text += "\nConnected to server with IP Address of" +
                     "127.0.0.1 and port 9070";
@@ -57,9 +61,9 @@ namespace MvSysClient {
                 t.Start();
 
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
-                rTxtMessages.Text = "Unable to connect to the movie server.";
+                rTxtMessages.Text = "Unable to connect to the movie server." + ex;
                 rTxtMessages.AppendText("\nPlease check if the server is running.");
                 return;
             }
@@ -188,6 +192,11 @@ namespace MvSysClient {
 
             public Movie() { }
 
+            public Movie(String title)
+            {
+                Title = title;
+            }
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -205,21 +214,36 @@ namespace MvSysClient {
 
             data = Encoding.ASCII.GetBytes(BROWSE);
 
-            socket.Send(data);
+            socket.Send(data); //this ends the browse request
 
-            //data = Encoding.ASCII.GetBytes(BROWSE);
+            int size = socket.Receive(data); //this receives the amount of movies for loop
 
-            //writer.Write(data, 0, data.Length);
-            writer.Write(BROWSE);
-            writer.Flush();
-            //reader.Read(data, 0, data.Length);
-            //data = reader.ReadLine();
-            stream.Read(data, 0, data.Length);
-            int num =Convert.ToInt32(Encoding.ASCII.GetString(data));
+            int amt = Convert.ToInt32(Encoding.ASCII.GetString(data, 0, size)); //sets the amount of movies
 
-            Movie m = (Movie)formatter.Deserialize(stream);
+            rTxtMessages.Text = amt + " movies received.";
 
-            listMovies.Items.Add(m);
+            Movie m = null;
+
+            for (int i = 0; i <= amt; i++)
+            {
+
+                size = socket.Receive(data);
+
+                MemoryStream ms = new MemoryStream();
+
+                m = (Movie)formatter.Deserialize(ms);
+
+                listMovies.Items.Add(m.Title);
+            }
+
+                //data = Encoding.ASCII.GetBytes(BROWSE);
+
+                //writer.Write(data, 0, data.Length);
+                //reader.Read(data, 0, data.Length);
+                //data = reader.ReadLine();
+
+                stream.Read(data, 0, data.Length);
+            
 
         }
 
