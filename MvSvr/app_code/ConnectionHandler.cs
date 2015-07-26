@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace MvSvr {
         private NetworkStream ns;
         private StreamReader reader;
         private StreamWriter writer;
-        private BinaryFormatter formatter;
+        private IFormatter formatter;
         private MemoryStream memory;
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
         private static int connections = 0;
