@@ -37,5 +37,10 @@ namespace MvSvr {
             Poster = poster;
             Shows = shows;
         }        
+
+        public string toString()
+        {
+            return Title + " " + Genre;
+        }
     }
 }

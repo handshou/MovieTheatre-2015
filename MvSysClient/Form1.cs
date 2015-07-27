@@ -256,6 +256,9 @@ namespace MvSysClient {
                     foreach (KeyValuePair<String, Movie> infos in movieInfo) {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+
+                        listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+
                     }
                 }
             } catch (Exception ex) {
@@ -268,6 +271,22 @@ namespace MvSysClient {
             //} catch (Exception ex) {
             //    rTxtMessages.Text = ex.Message;
             //}
+        }
+
+        public delegate void DisplayMsgCallback(String msg);
+        public void DisplayMsg(String msg)
+        {
+            if (this.InvokeRequired)
+            {
+                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                rTxtMessages.AppendText(lines[i] + "\r\n");
+            }
         }
 
 
