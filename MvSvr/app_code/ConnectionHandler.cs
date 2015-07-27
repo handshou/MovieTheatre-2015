@@ -88,12 +88,13 @@ namespace MvSvr {
                     form.DisplayMsg("Client disconnected: " + connections + " active connection");
                 else
                     form.DisplayMsg("Client disconnected: " + connections + " active connections");
-            } catch (Exception) {
+            } catch (Exception ex) {
                 connections--;
                 if (connections == 1)
                     form.DisplayMsg("Client disconnected: " + connections + " active connection");
                 else
                     form.DisplayMsg("Client disconnected: " + connections + " active connections");
+                form.DisplayMsg(ex.Message);
             }
         }
 
@@ -110,11 +111,10 @@ namespace MvSvr {
 
             carInfo.Add(car.Name, car);
 
-            fs = new FileStream(infoFile, FileMode.Create, 
-                        FileAccess.Write);
-            formatter.Serialize(fs, carInfo.Values.ToArray());
-
-
+            using (fs = new FileStream(infoFile, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, carInfo.Values.ToArray());
+                fs.Close();
+            }
 
             f = new FileInfo(infoFile);
             filesize = f.Length;
@@ -124,8 +124,18 @@ namespace MvSvr {
             client.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
             form.DisplayMsg(filesize.ToString());
             /* S */ // sending file
-            data = File.ReadAllBytes(infoFile);
-            client.Send(data);
+            byte[] buffer = null;
+            using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
+                buffer = new byte[fs.Length];
+                fs.Read(buffer, 0, (int)fs.Length);
+                fs.Close();
+            }
+            // byte[] buffer = File.ReadAllBytes(infoFile);
+            try {
+                client.Send(buffer);
+            } catch (Exception ex) {
+                form.DisplayMsg(ex.Message);
+            }
 
             form.DisplayMsg("Files sent");
 

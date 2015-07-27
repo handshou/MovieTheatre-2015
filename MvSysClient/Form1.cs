@@ -216,38 +216,41 @@ namespace MvSysClient {
             data = new byte[1024];
             try {
                 size = socket.Receive(data);
-                filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
             } catch (Exception) {
                 rTxtMessages.AppendText("Receiving file size error" + "\r\n");
             }
+
+            filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
             rTxtMessages.Clear();
             rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
 
             /* R */ // receiving file
+            data = new byte[filesize];
             try {
-                data = new byte[filesize];
                 size = socket.Receive(data);
+                rTxtMessages.AppendText("File received" + "\r\n");
             } catch (Exception) {
                 rTxtMessages.AppendText("Receiving file error" + "\r\n");
             }
-            
-            rTxtMessages.AppendText("File received" + "\r\n");
 
             //if (!File.Exists(infoFile)) {
             //    File.Create(infoFile);
             //}
-
-            using (fs = new FileStream(infoFile, FileMode.OpenOrCreate)) {
+            if (!File.Exists(infoFile)) {
+                File.Create(infoFile);
+            }
+            using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write)) {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
+                rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                 fs.Close();
-                rTxtMessages.AppendText("File written" + "\r\n");
             }
 
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
                     Car[] c_info = (Car[])formatter.Deserialize(fs);
+                    fs.Flush();
                     fs.Close();
                     carInfo = c_info.ToDictionary((u) => u.Name, (u) => u);
                     foreach (KeyValuePair<String, Car> infos in carInfo) {
