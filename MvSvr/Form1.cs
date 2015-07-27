@@ -28,7 +28,7 @@ namespace MvSvr {
         private FileStream fs;
         private String infoFile = @"info.dat";
         private IFormatter formatter;
-        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+        public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
 
         public List<Socket> clients = new List<Socket>();
 
@@ -54,13 +54,11 @@ namespace MvSvr {
         public void LoadMovies() {
             Movie m = new Movie();
             m.Title = "Batman";
-            m.Genre = "Action";
-            movieInfo.Add(m.Title, m);
+            movies.Add(m.Title, m);
 
-            m = new Movie();
-            m.Title = "Batman Of The Future";
-            m.Genre = "Cartoon";
-            movieInfo.Add(m.Title, m);
+            //m = new Movie();
+            //m.Title = "Batman of the Future";
+            //movies.Add(m.Title, m);
         }
 
         public void ConnectClient() {
@@ -70,7 +68,7 @@ namespace MvSvr {
                 try {
                     Socket client = server.Accept();
                     clients.Add(client);
-                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movieInfo);
+                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movies);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(
                                                         handler.HandleConnection));
                 } catch(Exception ex) {
@@ -86,12 +84,12 @@ namespace MvSvr {
             formatter = new BinaryFormatter();
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
-                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                    Car[] c_info = (Car[])formatter.Deserialize(fs);
                     fs.Close();
-                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
-                        tbDisplay.AppendText(infos.Value.Title + "\r\n");
-                        tbDisplay.AppendText(infos.Value.Genre + "\r\n");
+                    carInfo = c_info.ToDictionary((u) => u.Name, (u) => u);
+                    foreach (KeyValuePair<String, Car> infos in carInfo) {
+                        tbDisplay.AppendText(infos.Value.Name + "\r\n");
+                        tbDisplay.AppendText(infos.Value.Number + "\r\n");
                     }
                 }
             } catch (Exception ex) {
