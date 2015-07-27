@@ -22,7 +22,7 @@ namespace MvSvr {
         private StreamWriter writer;
         private BinaryReader br;
         private IFormatter formatter;
-        private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
+        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
         // Test
         public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
@@ -39,10 +39,10 @@ namespace MvSvr {
         public const String FINISH = "[QUIT]";
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movies) {
+        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movieInfo) {
             this.client = client;
             this.form = form;
-            this.movies = movies;
+            this.movieInfo = movieInfo;
         }
 
         // Methods
@@ -103,16 +103,8 @@ namespace MvSvr {
         /// </summary>
         public void Browse() {
             formatter = new BinaryFormatter();
-
-            Car car;
-            car = new Car();
-            car.Name = "Test";
-            car.Number = 1;
-
-            carInfo.Add(car.Name, car);
-
             using (fs = new FileStream(infoFile, FileMode.Create, FileAccess.Write)) {
-                formatter.Serialize(fs, carInfo.Values.ToArray());
+                formatter.Serialize(fs, movieInfo.Values.ToArray());
                 fs.Close();
             }
 

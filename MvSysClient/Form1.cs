@@ -30,7 +30,7 @@ namespace MvSysClient {
         public StreamWriter writer;
 
         private long filesize = 0;
-        public Dictionary<String, Movie> movieList = new Dictionary<String, Movie>();
+        public Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -250,13 +250,13 @@ namespace MvSysClient {
 
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
-                    Movie[] movie_array = (Movie[])formatter.Deserialize(fs);
+                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
                     fs.Flush();
                     fs.Close();
-                    movieList = movie_array.ToDictionary((u) => m.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieList) {
-                        rTxtMessages.AppendText(infos.Value.Title + "\r\n");
-                        rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
+                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
+                        rTxtMessages.AppendText("Movie: " + infos.Value.Title + "\r\n");
+                        rTxtMessages.AppendText("Genre: " + infos.Value.Genre + "\r\n");
                     }
                 }
             } catch (Exception ex) {
