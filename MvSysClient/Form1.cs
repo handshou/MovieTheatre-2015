@@ -30,7 +30,7 @@ namespace MvSysClient {
         public StreamWriter writer;
 
         private long filesize = 0;
-        public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
+        public Dictionary<String, Movie> movieList = new Dictionary<String, Movie>();
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -208,16 +208,16 @@ namespace MvSysClient {
 
             socket.Send(data); //this ends the browse request
             
-            Car m = null;
+            Movie m = null;
             int size = 0;
-            string infoFile = @"info.dat";
+            string infoFile = @"movies.dat";
 
             /* R */ // receiving file size
             data = new byte[1024];
             try {
                 size = socket.Receive(data);
             } catch (Exception) {
-                rTxtMessages.AppendText("Receiving file size error" + "\r\n");
+                rTxtMessages.AppendText("Receiving file size error \r\n");
             }
 
             filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
@@ -229,7 +229,7 @@ namespace MvSysClient {
             data = new byte[filesize];
             try {
                 size = socket.Receive(data);
-                rTxtMessages.AppendText("File received" + "\r\n");
+                rTxtMessages.AppendText("Movie file received" + "\r\n");
             } catch (Exception) {
                 rTxtMessages.AppendText("Receiving file error" + "\r\n");
             }
@@ -244,18 +244,19 @@ namespace MvSysClient {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
                 rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
+                //delete messages for final submission
                 fs.Close();
             }
 
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
-                    Car[] c_info = (Car[])formatter.Deserialize(fs);
+                    Movie[] movie_array = (Movie[])formatter.Deserialize(fs);
                     fs.Flush();
                     fs.Close();
-                    carInfo = c_info.ToDictionary((u) => u.Name, (u) => u);
-                    foreach (KeyValuePair<String, Car> infos in carInfo) {
-                        rTxtMessages.AppendText(infos.Value.Name + "\r\n");
-                        rTxtMessages.AppendText(infos.Value.Number + "\r\n");
+                    movieList = movie_array.ToDictionary((u) => m.Title, (u) => u);
+                    foreach (KeyValuePair<String, Movie> infos in movieList) {
+                        rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                        rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
                     }
                 }
             } catch (Exception ex) {
