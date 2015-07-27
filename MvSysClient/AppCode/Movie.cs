@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MvSysClient
 {
-    [Serializable]
+    [Serializable()]
     class Movie {
         // Attributes + Get Set
         private Image poster;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MvSvr {
     [Serializable()]
-    class MovieList : ISerializable {
+    public class MovieList : ISerializable {
         public Dictionary<String, Movie> Movies { get; set; }
 
         public MovieList(SerializationInfo info, StreamingContext context) {

@@ -15,6 +15,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using MvSvr;
 
 namespace MvSysClient {
     public partial class Form1 : Form 
@@ -203,14 +204,14 @@ namespace MvSysClient {
 
             socket.Send(data); //this ends the browse request
             
-            Movie m = null;
+            Car m = null;
 
-            data = new byte[1024];
+            data = new byte[8192];
             int size = socket.Receive(data);
 
             NetworkStream ns = new NetworkStream(socket);
             try {
-                m = (Movie)formatter.Deserialize(ns);
+                m = (Car) formatter.Deserialize(ns);
             } catch (Exception ex) {
                 rTxtMessages.Text = ex.Message;
             }

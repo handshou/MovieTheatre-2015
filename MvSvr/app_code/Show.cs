@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MvSvr {
-    class Show {
+    [Serializable()]
+    public class Show {
         // Attributes + Get Set
         public Movie Movie { get; set; }
         public DateTime TimeStart { get; set; }

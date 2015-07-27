@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MvSvr {
-    class Booking {
+    [Serializable()]
+    public class Booking {
         // Attributes + Get Set
         private static double fee = 1.50;
         public double Subtotal { get; set; }

@@ -35,6 +35,7 @@
             this.tbClient = new System.Windows.Forms.RichTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lblInput = new System.Windows.Forms.Label();
+            this.lbClients = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -141,11 +142,20 @@
             this.lblInput.TabIndex = 10;
             this.lblInput.Text = "Input";
             // 
+            // lbClients
+            // 
+            this.lbClients.FormattingEnabled = true;
+            this.lbClients.Location = new System.Drawing.Point(338, 125);
+            this.lbClients.Name = "lbClients";
+            this.lbClients.Size = new System.Drawing.Size(75, 108);
+            this.lbClients.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 296);
+            this.Controls.Add(this.lbClients);
             this.Controls.Add(this.lblInput);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.tbClient);
@@ -180,6 +190,7 @@
         private System.Windows.Forms.RichTextBox tbClient;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lblInput;
+        private System.Windows.Forms.ListBox lbClients;
     }
 }
 

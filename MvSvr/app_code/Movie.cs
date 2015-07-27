@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MvSvr {
     [Serializable()]
-    class Movie {
+    public class Movie {
         // Attributes + Get Set
         private Image poster;
         public String Title { get; set; }

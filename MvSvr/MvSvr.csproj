@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="app_code\Booking.cs" />
     <Compile Include="app_code\ConnectionHandler.cs" />
+    <Compile Include="app_code\Car.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

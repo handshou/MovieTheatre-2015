@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MvSysClient {
+    [Serializable()]
     class Booking {
         // Attributes + Get Set
         private static double fee = 1.50;

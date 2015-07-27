@@ -90,17 +90,17 @@ namespace MvSvr {
 
         public void Browse() {
             formatter = new BinaryFormatter();
-            data = new byte[1024];
+            data = new byte[8192];
 
             form.DisplayMsg("Browsing...");
 
             // Number of movies
-            data = Encoding.ASCII.GetBytes(movies.Count.ToString());
+            // data = Encoding.ASCII.GetBytes(movies.Count.ToString());
             form.DisplayMsg(movies.Count.ToString());
             /* S */ //client.Send(data);
             /* S */ //foreach (KeyValuePair<String, Movie> m in movies) {
-                        Movie m = new Movie();
-                        m.Title = "test";
+                        Car m = new Car();
+                        m.Name = "test";
                         formatter.Serialize(ns, m);
                         form.DisplayMsg("Sending movie...");
                     //}

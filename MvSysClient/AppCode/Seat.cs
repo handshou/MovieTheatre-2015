@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MvSysClient
 {
+    [Serializable()]
     class Seat {
         // Attributes + Get Set
         private bool vacant = true;

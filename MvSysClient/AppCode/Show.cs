@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MvSysClient
 {
+    [Serializable()]
     class Show {
         // Attributes + Get Set
         public Movie Movie { get; set; }

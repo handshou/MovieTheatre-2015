@@ -22,10 +22,9 @@ namespace MvSvr {
             t.IsBackground = true;
             t.Start();
         }
+        public List<Socket> clients = new List<Socket>();
 
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
-
-        public List<Socket> clients = new List<Socket>();
         private static int port = 9070;
         private Socket server = new Socket(AddressFamily.InterNetwork,
                             SocketType.Stream, ProtocolType.Tcp);
@@ -46,11 +45,11 @@ namespace MvSvr {
 
         public void LoadMovies() {
             Movie m = new Movie();
-            m.Title = "Bat man";
+            m.Title = "Batman";
             movies.Add(m.Title, m);
 
             //m = new Movie();
-            //m.Title = "Bat man of the Future";
+            //m.Title = "Batman of the Future";
             //movies.Add(m.Title, m);
         }
 
@@ -74,7 +73,7 @@ namespace MvSvr {
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
-
+            
         }
 
         private void btnList_Click(object sender, EventArgs e) {

@@ -6,7 +6,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MvSvr {
-    class Seat {
+    [Serializable()]
+    public class Seat {
         // Attributes + Get Set
         private bool vacant = true;
         private String name;

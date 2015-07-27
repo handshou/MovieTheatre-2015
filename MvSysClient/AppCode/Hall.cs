@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MvSysClient {
+    [Serializable()]
     class Hall {
         // Attributes + Get Set
         private int capacity_max = 25;

@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MvSvr {
-    class Hall {
+    [Serializable()]
+    public class Hall {
         // Attributes + Get Set
         private int capacity_max = 25;
         public String Name { get; set; }
