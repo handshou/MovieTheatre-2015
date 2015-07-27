@@ -208,16 +208,16 @@ namespace MvSysClient {
 
             socket.Send(data); //this ends the browse request
             
-            Movie m = null;
+            Car m = null;
             int size = 0;
-            string infoFile = @"movies.dat";
+            string infoFile = @"info.dat";
 
             /* R */ // receiving file size
             data = new byte[1024];
             try {
                 size = socket.Receive(data);
             } catch (Exception) {
-                rTxtMessages.AppendText("Receiving file size error \r\n");
+                rTxtMessages.AppendText("Receiving file size error" + "\r\n");
             }
 
             filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
@@ -229,7 +229,7 @@ namespace MvSysClient {
             data = new byte[filesize];
             try {
                 size = socket.Receive(data);
-                rTxtMessages.AppendText("Movie file received" + "\r\n");
+                rTxtMessages.AppendText("File received" + "\r\n");
             } catch (Exception) {
                 rTxtMessages.AppendText("Receiving file error" + "\r\n");
             }
@@ -244,7 +244,6 @@ namespace MvSysClient {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
                 rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
-                //delete messages for final submission
                 fs.Close();
             }
 
