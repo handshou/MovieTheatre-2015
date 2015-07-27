@@ -15,11 +15,20 @@ namespace MvSvr {
         private Socket client;
         private List<Socket> clients = new List<Socket>();
         private Form1 form;
+        private FileInfo f;
+        private FileStream fs;
         private NetworkStream ns;
         private StreamReader reader;
         private StreamWriter writer;
-        private BinaryFormatter formatter;
+        private BinaryReader br;
+        private IFormatter formatter;
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
+
+        // Test
+        public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
+
+        string infoFile = @"info.dat";
+        private long filesize = 0;
         private static int connections = 0;
         private byte[] data = new byte[1024];
 
@@ -88,29 +97,63 @@ namespace MvSvr {
             }
         }
 
+        /// <summary>
+        /// https://www.youtube.com/watch?v=0VmFdYWdSSU
+        /// </summary>
         public void Browse() {
             formatter = new BinaryFormatter();
-            data = new byte[8192];
 
-            form.DisplayMsg("Browsing...");
+            Car car;
+            car = new Car();
+            car.Name = "Test";
+            car.Number = 1;
 
-            // Number of movies
-            // data = Encoding.ASCII.GetBytes(movies.Count.ToString());
-            form.DisplayMsg(movies.Count.ToString());
-            /* S */ //client.Send(data);
-            /* S */ //foreach (KeyValuePair<String, Movie> m in movies) {
-                        Car m = new Car();
-                        m.Name = "test";
-                        formatter.Serialize(ns, m);
-                        form.DisplayMsg("Sending movie...");
-                    //}
+            carInfo.Add(car.Name, car);
 
-            // End of file
-            //data = Encoding.ASCII.GetBytes(ENDOFF);
-            ///* S */ ns.Write(data, 0, data.Length);
-            //        ns.Flush();
+            fs = new FileStream(infoFile, FileMode.Create, 
+                        FileAccess.Write);
+            formatter.Serialize(fs, carInfo.Values.ToArray());
+
+
+
+            f = new FileInfo(infoFile);
+            filesize = f.Length;
+            data = new byte[filesize]; // create data for file
+
+            /* S */ // sending filesize
+            client.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
+            form.DisplayMsg(filesize.ToString());
+            /* S */ // sending file
+            data = File.ReadAllBytes(infoFile);
+            client.Send(data);
+
+            form.DisplayMsg("Files sent");
 
         }
+
+        //public void Browse() {
+        //    formatter = new BinaryFormatter();
+        //    data = new byte[8192];
+
+        //    form.DisplayMsg("Browsing...");
+
+        //    // Number of movies
+        //    // data = Encoding.ASCII.GetBytes(movies.Count.ToString());
+        //    form.DisplayMsg(movies.Count.ToString());
+        //    /* S */ //client.Send(data);
+        //    /* S */ //foreach (KeyValuePair<String, Movie> m in movies) {
+        //                Car m = new Car();
+        //                m.Name = "test";
+        //                formatter.Serialize(ns, m);
+        //                form.DisplayMsg("Sending movie...");
+        //            //}
+
+        //    // End of file
+        //    //data = Encoding.ASCII.GetBytes(ENDOFF);
+        //    ///* S */ ns.Write(data, 0, data.Length);
+        //    //        ns.Flush();
+
+        //}
 
         public void Search() {
 

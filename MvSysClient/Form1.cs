@@ -24,9 +24,13 @@ namespace MvSysClient {
         public static Socket socket = new Socket(AddressFamily.InterNetwork,
                           SocketType.Stream, ProtocolType.Tcp);
 
+        public FileStream fs;
         public NetworkStream stream;
         public StreamReader reader;
         public StreamWriter writer;
+
+        private long filesize = 0;
+        public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -196,7 +200,7 @@ namespace MvSysClient {
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //request for movies from server
-            BinaryFormatter formatter = new BinaryFormatter();
+            IFormatter formatter = new BinaryFormatter();
 
             byte[] data = new byte[1024];
 
@@ -205,16 +209,62 @@ namespace MvSysClient {
             socket.Send(data); //this ends the browse request
             
             Car m = null;
+            int size = 0;
+            string infoFile = @"info.dat";
 
-            data = new byte[8192];
-            int size = socket.Receive(data);
-
-            NetworkStream ns = new NetworkStream(socket);
+            /* R */ // receiving file size
+            data = new byte[1024];
             try {
-                m = (Car) formatter.Deserialize(ns);
-            } catch (Exception ex) {
-                rTxtMessages.Text = ex.Message;
+                size = socket.Receive(data);
+                filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+            } catch (Exception) {
+                rTxtMessages.AppendText("Receiving file size error" + "\r\n");
             }
+
+            rTxtMessages.Clear();
+            rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+
+            /* R */ // receiving file
+            try {
+                data = new byte[filesize];
+                size = socket.Receive(data);
+            } catch (Exception) {
+                rTxtMessages.AppendText("Receiving file error" + "\r\n");
+            }
+            
+            rTxtMessages.AppendText("File received" + "\r\n");
+
+            //if (!File.Exists(infoFile)) {
+            //    File.Create(infoFile);
+            //}
+
+            using (fs = new FileStream(infoFile, FileMode.OpenOrCreate)) {
+                fs.Write(data, 0, Convert.ToInt32(filesize));
+                fs.Flush();
+                fs.Close();
+                rTxtMessages.AppendText("File written" + "\r\n");
+            }
+
+            try {
+                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
+                    Car[] c_info = (Car[])formatter.Deserialize(fs);
+                    fs.Close();
+                    carInfo = c_info.ToDictionary((u) => u.Name, (u) => u);
+                    foreach (KeyValuePair<String, Car> infos in carInfo) {
+                        rTxtMessages.AppendText(infos.Value.Name + "\r\n");
+                        rTxtMessages.AppendText(infos.Value.Number + "\r\n");
+                    }
+                }
+            } catch (Exception ex) {
+                rTxtMessages.AppendText(ex.Message);
+            }
+
+            //NetworkStream ns = new NetworkStream(socket);
+            //try {
+            //    m = (Car) formatter.Deserialize(ns);
+            //} catch (Exception ex) {
+            //    rTxtMessages.Text = ex.Message;
+            //}
         }
 
 

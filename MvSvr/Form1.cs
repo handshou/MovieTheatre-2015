@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +24,12 @@ namespace MvSvr {
             t.IsBackground = true;
             t.Start();
         }
+
+        private FileStream fs;
+        private String infoFile = @"info.dat";
+        private IFormatter formatter;
+        public Dictionary<String, Car> carInfo = new Dictionary<String, Car>();
+
         public List<Socket> clients = new List<Socket>();
 
         private Dictionary<String, Movie> movies = new Dictionary<String, Movie>();
@@ -73,7 +81,20 @@ namespace MvSvr {
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
-            
+            formatter = new BinaryFormatter();
+            try {
+                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
+                    Car[] c_info = (Car[])formatter.Deserialize(fs);
+                    fs.Close();
+                    carInfo = c_info.ToDictionary((u) => u.Name, (u) => u);
+                    foreach (KeyValuePair<String, Car> infos in carInfo) {
+                        tbDisplay.AppendText(infos.Value.Name + "\r\n");
+                        tbDisplay.AppendText(infos.Value.Number + "\r\n");
+                    }
+                }
+            } catch (Exception ex) {
+                tbDisplay.AppendText(ex.Message + "\r\n");
+            }
         }
 
         private void btnList_Click(object sender, EventArgs e) {
