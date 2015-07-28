@@ -134,7 +134,7 @@ namespace MvSvr {
             Dictionary<String, Movie> d = new Dictionary<String, Movie>();
             if (type == "Genre") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Value.Genre.ToLower().Contains(terms)) {
+                    if (m.Value.Genre.ToLower().Contains(terms.ToLower())) {
                         form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
@@ -143,7 +143,7 @@ namespace MvSvr {
             }
             if (type == "Director") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Value.Director.ToLower().Contains(terms)) {
+                    if (m.Value.Director.ToLower().Contains(terms.ToLower())) {
                         form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
@@ -152,7 +152,7 @@ namespace MvSvr {
             }
             if (type == "Name") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Key.ToLower().Contains(terms)) {
+                    if (m.Key.ToLower().Contains(terms.ToLower())) {
                         form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
