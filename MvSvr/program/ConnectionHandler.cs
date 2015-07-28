@@ -114,7 +114,7 @@ namespace MvSvr {
 
             String type = "", 
                    terms = "";
-
+            Thread.Sleep(1000);
             /* R */ // Receive search type + terms
             terms = ReceiveTypeTerms(out type);
 
@@ -135,7 +135,6 @@ namespace MvSvr {
                 SendCommand(SFOUND);
                 SaveToFile(searchFile, searchInfo);
                 SendFile(searchFile);
-                Thread.Sleep(1000);
             }
         }
 
@@ -274,13 +273,9 @@ namespace MvSvr {
             } catch (Exception ex) {
                 form.DisplayMsg("Error receiving file (file)\n" + ex.Message);
             }
-
-            if (!File.Exists(filePath)) {
-                File.Create(filePath);
-            }
-
+            
             // Will overwrite existing file
-            using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Write)) {
+            using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write)) {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
                 fs.Close();

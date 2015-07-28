@@ -16,6 +16,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using MvSvr;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 
 namespace MvSysClient {
     public partial class Form1 : Form 
@@ -29,8 +31,11 @@ namespace MvSysClient {
         public StreamReader reader;
         public StreamWriter writer;
 
+        private int size = 0;
+        private string infoFile = @"infomo.dat";
+        private string srchFile = @"search.dat";
         private long filesize = 0;
-        public Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -126,6 +131,7 @@ namespace MvSysClient {
             btnBook.Enabled = false;
             cobSearch.Enabled = false;
             cobSeat.Enabled = false;
+            cobDate.Enabled = false;
             cobTime.Enabled = false;
         }
 
@@ -177,7 +183,7 @@ namespace MvSysClient {
 
                 Label label = new Label();
                 label.Top = y * 20;
-                label.Width = 50;
+                label.Width = 40;
                 label.Height = 20;
                 label.Text = (y + 1).ToString();
                 this.pnSeats.Controls.Add(label);
@@ -187,9 +193,9 @@ namespace MvSysClient {
 
                     {
                         CheckBox chkbx = new CheckBox();
-                        chkbx.Left = x * 50;
+                        chkbx.Left = x * 40;
                         chkbx.Top = y * 20;
-                        chkbx.Width = 50;
+                        chkbx.Width = 40;
                         chkbx.Height = 20;
                         chkbx.Checked = false;
 
@@ -216,14 +222,13 @@ namespace MvSysClient {
 
             IFormatter formatter = new BinaryFormatter();
 
+            Thread.Sleep(1000);
+
             byte[] data = new byte[1024];
 
             data = Encoding.ASCII.GetBytes(BROWSE);
 
             socket.Send(data); //this sends the Browse request
-            
-            int size = 0;
-            string infoFile = @"info.dat";
 
             //receiving file size
             data = new byte[1024];
@@ -247,20 +252,12 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("Receiving file error" + "\r\n");
             }
 
-            //if (!File.Exists(infoFile)) {
-            //    File.Create(infoFile);
-            //}
-            if (!File.Exists(infoFile)) {
-                File.Create(infoFile);
-            }
-            using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write)) {
+            using (fs = new FileStream(infoFile, FileMode.OpenOrCreate, FileAccess.Write)) {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
                 rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                 fs.Close();
             }
-            
-            Thread.Sleep(1000);
 
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
@@ -318,30 +315,89 @@ namespace MvSysClient {
             lblMvDirector.Text = m.Director;
             lblMvDescription.Text = m.Description;
 
-            picPoster.Image = m.Poster;
+            picPoster.Image = FixedSize(m.Poster, 200, 200);
 
+            cobDate.Enabled = true;
+            cobDate.Items.Clear();
             cobTime.Enabled = true;
             cobTime.Items.Clear();
+            listTime.Items.Clear();
             cobSeat.Enabled = true;
 
             List<Show> listShow = m.Shows;
+            List<String> dates = GetDatesByMovie(m);
 
-            foreach( Show sh in listShow)
-            {
-                cobTime.Items.Add(sh.TimeStart);
-                listTime.Items.Add(sh.TimeStart);
+            foreach (String s in dates) {
+                cobDate.Items.Add(s);
             }
 
-            cobTime.SelectedIndex = 0;
+            cobDate.Items.Insert(0, "-- Select Value --");
+
+            cobDate.SelectedIndex = 0;
 
             double price = 0;
             lblPrice.Text = price.ToString();
             
         }
 
+        public List<String> GetDatesByMovie(Movie m) {
+            List<Show> shows = m.Shows;
+            List<String> all = new List<String>();
+            foreach(Show s in shows){
+                if(!all.Contains(s.Date))
+                    all.Add(s.Date);
+            }
+            all.Sort();
+            rTxtMessages.Text = all.Count.ToString();
+            return all;
+        }
+
+        public List<String> GetShowTimesByDate(Movie m, String date) {
+            List<String> l = new List<String>();
+            try {
+                List<Show> shows = m.Shows;
+                Dictionary<String, String> d = new Dictionary<String, String>();
+                for (int i = 0; i < shows.Count; i++) {
+                    d.Add(shows[i].Date, shows[i].TimeStart);
+                }
+                foreach (KeyValuePair<String, String> p in d) {
+                    if (p.Key.Equals(date)) {
+                        l.Add(p.Value);
+                    }
+                }
+                l.Sort();
+                rTxtMessages.Text = l.Count.ToString();
+            } catch (Exception ex) {
+                rTxtMessages.Text = ex.Message;
+            }
+            return l;
+        }
+
+        private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            cobTime.Items.Clear();
+
+            List<String> showtimes = GetShowTimesByDate(m, cobDate.SelectedValue.ToString());
+            for(int i = 0; i < showtimes.Count; i++) {
+                cobTime.Items.Add(showtimes[i]);
+            }
+            rTxtMessages.Text = showtimes.Count.ToString();
+            //cobTime.Items.Clear();
+            //string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            //Movie m = movieInfo[movie];
+
+            //cobTime.SelectedIndex = 0;
+            //foreach (Show show in m.Shows) {
+            //    cobTime.Items.Add(show.TimeStart);
+            //    listTime.Items.Add(show.TimeStart);
+            //}
+        }
+
         private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            cobSeat.Items.Clear();
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
             Movie m = movieInfo[movie];
 
@@ -349,12 +405,18 @@ namespace MvSysClient {
 
             Hall h = s.Hall;
 
-            foreach (Seat seat in h.Seats)
+            foreach (Seat seat in h.AvailableSeats())
             {
                 cobSeat.Items.Add(seat.Name);
             }
 
             loadSeats();
+        }
+
+        public Movie GetMovie() {
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+            return m;
         }
 
         public Show GetShow(Movie m)
@@ -421,8 +483,6 @@ namespace MvSysClient {
 
                 if (answer == SFOUND)
                 {
-                    string infoFile = @"info.dat"; //temporary file for storage
-
                     // receiving file size
                     data = new byte[1024];
                     try
@@ -451,11 +511,11 @@ namespace MvSysClient {
                         rTxtMessages.AppendText("Receiving file error" + "\r\n");
                     }
 
-                    if (!File.Exists(infoFile))
+                    if (!File.Exists(srchFile))
                     {
-                        File.Create(infoFile);
+                        File.Create(srchFile);
                     }
-                    using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
+                    using (fs = new FileStream(srchFile, FileMode.Open, FileAccess.Write))
                     {
                         fs.Write(data, 0, Convert.ToInt32(filesize));
                         fs.Flush();
@@ -465,7 +525,7 @@ namespace MvSysClient {
 
                     try
                     {
-                        using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
+                        using (fs = new FileStream(srchFile, FileMode.Open, FileAccess.Read))
                         {
                             Movie[] m_info = (Movie[])formatter.Deserialize(fs);
                             fs.Flush();
@@ -627,6 +687,54 @@ namespace MvSysClient {
         private void btnSaveBHistory_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
+        public static Image FixedSize(Image imgPhoto, int Width, int Height) {
+
+            int sourceWidth = imgPhoto.Width;
+            int sourceHeight = imgPhoto.Height;
+            int sourceX = 0;
+            int sourceY = 0;
+            int destX = 0;
+            int destY = 0;
+
+            float nPercent = 0;
+            float nPercentW = 0;
+            float nPercentH = 0;
+
+            nPercentW = ((float)Width / (float)sourceWidth);
+            nPercentH = ((float)Height / (float)sourceHeight);
+            if (nPercentH < nPercentW) {
+                nPercent = nPercentH;
+                destX = System.Convert.ToInt16((Width -
+                              (sourceWidth * nPercent)) / 2);
+            } else {
+                nPercent = nPercentW;
+                destY = System.Convert.ToInt16((Height -
+                              (sourceHeight * nPercent)) / 2);
+            }
+
+            int destWidth = (int)(sourceWidth * nPercent);
+            int destHeight = (int)(sourceHeight * nPercent);
+
+            Bitmap bmPhoto = new Bitmap(Width, Height,
+                              PixelFormat.Format24bppRgb);
+            bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
+                             imgPhoto.VerticalResolution);
+
+            Graphics grPhoto = Graphics.FromImage(bmPhoto);
+            grPhoto.Clear(Color.Black);
+            grPhoto.InterpolationMode =
+                    InterpolationMode.HighQualityBicubic;
+
+            grPhoto.DrawImage(imgPhoto,
+                new Rectangle(destX, destY, destWidth, destHeight),
+                new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+                GraphicsUnit.Pixel);
+
+            grPhoto.Dispose();
+            return bmPhoto;
         }
 
     }

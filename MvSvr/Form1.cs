@@ -76,56 +76,7 @@ namespace MvSvr {
         public Image GetImage(String imgPath) {
 
             Image img = Image.FromFile(imgPath);
-                  //img = FixedSize(img, 120, 120);
             return img;
-        }
-
-        /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
-        public static Image FixedSize(Image imgPhoto, int Width, int Height) {
-
-            int sourceWidth = imgPhoto.Width;
-            int sourceHeight = imgPhoto.Height;
-            int sourceX = 0;
-            int sourceY = 0;
-            int destX = 0;
-            int destY = 0;
-
-            float nPercent = 0;
-            float nPercentW = 0;
-            float nPercentH = 0;
-
-            nPercentW = ((float)Width / (float)sourceWidth);
-            nPercentH = ((float)Height / (float)sourceHeight);
-            if (nPercentH < nPercentW) {
-                nPercent = nPercentH;
-                destX = System.Convert.ToInt16((Width -
-                              (sourceWidth * nPercent)) / 2);
-            } else {
-                nPercent = nPercentW;
-                destY = System.Convert.ToInt16((Height -
-                              (sourceHeight * nPercent)) / 2);
-            }
-
-            int destWidth = (int)(sourceWidth * nPercent);
-            int destHeight = (int)(sourceHeight * nPercent);
-
-            Bitmap bmPhoto = new Bitmap(Width, Height,
-                              PixelFormat.Format24bppRgb);
-            bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
-                             imgPhoto.VerticalResolution);
-
-            Graphics grPhoto = Graphics.FromImage(bmPhoto);
-            grPhoto.Clear(Color.Red);
-            grPhoto.InterpolationMode =
-                    InterpolationMode.HighQualityBicubic;
-
-            grPhoto.DrawImage(imgPhoto,
-                new Rectangle(destX, destY, destWidth, destHeight),
-                new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
-                GraphicsUnit.Pixel);
-
-            grPhoto.Dispose();
-            return bmPhoto;
         }
 
         public void LoadMovies() {
@@ -134,11 +85,14 @@ namespace MvSvr {
             m.Title = "Batman";
             m.Genre = "Drama";
             m.Director = "Christopher Nolan";
-            m.Poster = GetImage("poster\\the_dark_knight.bmp");
+            m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
                 new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
-                new Show(m, "1 January 2015", new Hall(), "2000", "2200", 8.00)
+                new Show(m, "2 January 2015", new Hall(), "2000", "2200", 8.00),
+                new Show(m, "2 January 2015", new Hall(), "0800", "1000", 8.00),
+                new Show(m, "3 January 2015", new Hall(), "1600", "1800", 8.00),
+                new Show(m, "3 January 2015", new Hall(), "2000", "2200", 8.00),
             };
             movieInfo.Add(m.Title, m);
 
@@ -146,7 +100,7 @@ namespace MvSvr {
             m.Title = "Batman Of The Future";
             m.Genre = "Animated";
             m.Director = "Steven Lim";
-            m.Poster = GetImage("poster\\batman_of_the_future.bmp");
+            m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),
