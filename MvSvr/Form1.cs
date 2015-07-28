@@ -76,7 +76,7 @@ namespace MvSvr {
         public Image GetImage(String imgPath) {
 
             Image img = Image.FromFile(imgPath);
-                  img = FixedSize(img, 120, 120);
+                  //img = FixedSize(img, 120, 120);
             return img;
         }
 

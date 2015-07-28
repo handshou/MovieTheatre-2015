@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 /// https://www.youtube.com/watch?v=0VmFdYWdSSU - Serialize Deserialize into Collection
 
@@ -134,6 +135,7 @@ namespace MvSvr {
                 SendCommand(SFOUND);
                 SaveToFile(searchFile, searchInfo);
                 SendFile(searchFile);
+                Thread.Sleep(1000);
             }
         }
 

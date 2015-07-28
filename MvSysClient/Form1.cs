@@ -159,43 +159,16 @@ namespace MvSysClient {
             //loadMovieDetails();
         }
 
-        public void loadShowDetails()
+        public void loadSeats()
             //this method adds the details of a selected show to the form for users to refer to
         {
 
             List<Block> blocks = new List<Block>
             {
-                new Block { Name = "A", Rows = 3, Seats = 5 },
+                new Block { Name = "A", Rows = 5, Seats = 5 },
             };
 
             Block block = blocks[0];
-
-            //rTxtMessages.Text = "Showing seat block: " + block.Name;
-
-            for (int y = 0; y <= 1; y++)
-            {
-
-                Label column1 = new Label();
-                column1.Top = y * 20;
-                column1.Width = 50;
-                column1.Height = 20;
-                column1.Text = (y + 1).ToString();
-                this.pnSeats.Controls.Add(column1);
-
-                for (int x = 0; x <= block.Seats; x++)
-                {
-
-                    {
-                        Label column = new Label();
-                        column.Top = y * 20;
-                        column.Width = 50;
-                        column.Height = 20;
-                        column.Text = (y + 1).ToString();
-                        this.pnSeats.Controls.Add(column);
-                    }
-
-                }
-            }
 
             for (int y = 0; y < block.Rows; y++)
             {
@@ -236,6 +209,9 @@ namespace MvSysClient {
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //request for movies from server
+
+            listMovies.Items.Clear();
+
             IFormatter formatter = new BinaryFormatter();
 
             byte[] data = new byte[1024];
@@ -281,6 +257,8 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                 fs.Close();
             }
+            
+            Thread.Sleep(1000);
 
             try {
                 using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
@@ -303,13 +281,6 @@ namespace MvSysClient {
             } catch (Exception ex) {
                 rTxtMessages.AppendText(ex.Message);
             }
-
-            //NetworkStream ns = new NetworkStream(socket);
-            //try {
-            //    m = (Car) formatter.Deserialize(ns);
-            //} catch (Exception ex) {
-            //    rTxtMessages.Text = ex.Message;
-            //}
         }
 
         private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
@@ -356,6 +327,7 @@ namespace MvSysClient {
             foreach( Show sh in listShow)
             {
                 cobTime.Items.Add(sh.TimeStart);
+                listTime.Items.Add(sh.TimeStart);
             }
 
             cobTime.SelectedIndex = 0;
@@ -379,6 +351,8 @@ namespace MvSysClient {
             {
                 cobSeat.Items.Add(seat.Name);
             }
+
+            loadSeats();
         }
 
         public Show GetShow(Movie m)
@@ -405,7 +379,6 @@ namespace MvSysClient {
 
         private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
              btnSearch.Enabled = true;
         }
 
@@ -519,15 +492,16 @@ namespace MvSysClient {
                     }
                 }
 
-                if (answer == SEMPTY)
-                {
-                    rTxtMessages.AppendText("\nNo results attained. If this is not expected, please change the search terms.");
-                }
-
                 else
-                {
-                    rTxtMessages.AppendText("\nSomething bad has happened. Please restart the application.");
-                }
+                    if (answer == SEMPTY)
+                    {
+                        rTxtMessages.AppendText("\nNo results attained. If this is not expected, please change the search terms.");
+                    }
+
+                    else
+                    {
+                        rTxtMessages.AppendText("\nSomething bad has happened. Please restart the application.");
+                    }
 
             }
 
@@ -652,12 +626,6 @@ namespace MvSysClient {
         {
 
         }
-
-        
-
-        
-
-        
 
     }
 
