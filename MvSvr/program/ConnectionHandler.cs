@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 
 /// https://www.youtube.com/watch?v=0VmFdYWdSSU - Serialize Deserialize into Collection
 
@@ -14,10 +15,12 @@ namespace MvSvr {
     class ConnectionHandler {
 
         // Attributes
-        public string cmd;
-        public string user;
+        private string cmd;
+        private string user;
 
-        private String infoFile = @"moviecollection.dat";
+        private String browseFile = @"browse.dat";
+        private String searchFile = @"search.dat";
+        private int size = 0;
         private long filesize = 0;
         private static int connections = 0;
         private byte[] data = new byte[1024];
@@ -61,15 +64,13 @@ namespace MvSvr {
                 // Receive user
                 data = new byte[1024];
 
-                size = client.Receive(data);
-                user = Encoding.ASCII.GetString(data, 0, size);
+                user = ReceiveCommand();
                 form.DisplayMsg("Welcome " + user + "!");
 
                 while (true) {
                     /* R */
                     // Receive command
-                    size = client.Receive(data);
-                    cmd = Encoding.ASCII.GetString(data, 0, size);
+                    cmd = ReceiveCommand();
                     form.DisplayMsg(cmd); // (!) Remove when complete
 
                     switch (cmd) {
@@ -102,21 +103,60 @@ namespace MvSvr {
 
         public void Browse() {
 
-            SaveMoviesToFile(infoFile);
-            SendFile(infoFile);
+            SaveToFile(browseFile, movieInfo);
+            SendFile(browseFile);
         }
 
         public void Search() {
 
-            // Receive search term
-            // Look through dictionary
-            // Send files
+            String type = "", 
+                   terms = "";
+
+            /* R */ // Receive search type
+            /* R */ // Receive search terms
+            type = ReceiveCommand();
+            terms = ReceiveCommand().ToLower();
+
+            Dictionary<String, Movie> searchInfo;
+            searchInfo = SearchMovies(type, terms);
+
+            SaveToFile(searchFile, searchInfo);
+            SendFile(searchFile);
+        }
+
+        public Dictionary<String, Movie> SearchMovies(String type, String terms){
+
+            Dictionary<String, Movie> d = new Dictionary<String, Movie>();
+            if (type == "genre") {
+                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                    if (m.Value.Genre.Contains(terms)) {
+                        d.Add(m.Key, m.Value);
+                    }
+                }
+            }
+            if (type == "director") {
+                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                    if (m.Value.Director.Contains(terms)) {
+                        d.Add(m.Key, m.Value);
+                    }
+                }
+            }
+            if (type == "title") {
+                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                    if (m.Key.Contains(terms)) {
+                        d.Add(m.Key, m.Value);
+                    }
+                }
+            }
+            return d;
         }
 
         public void Book() {
-
-            // Lock
-            // 
+            
+            Booking b = new Booking();
+            lock (b) {
+                
+            }
         }
 
         public void Quit() {
@@ -131,15 +171,29 @@ namespace MvSvr {
             form.DisplayMsg("Client disconnected: " + connections + " active connections");
         }
 
+        public void SaveToFile(String filePath, Dictionary<String, Movie> d) {
 
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, d.Values.ToArray());
+                fs.Close();
+            }
+        }
 
-        public void SaveMoviesToFile(String filePath) {
+        public void SaveMovieToFile(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 formatter.Serialize(fs, movieInfo.Values.ToArray());
                 fs.Close();
             }
+        }
+
+        public String ReceiveCommand() {
+            data = new byte[1024];
+            size = client.Receive(data);
+
+            return Encoding.ASCII.GetString(data, 0, size);
         }
 
         public void SendFile(String filePath) {
