@@ -127,11 +127,11 @@ namespace MvSvr {
 
             if (searchInfo.Count == 0)
                 SendCommand(SEMPTY);
-            else
+            else {
                 SendCommand(SFOUND);
-
-            SaveToFile(searchFile, searchInfo);
-            SendFile(searchFile);
+                SaveToFile(searchFile, searchInfo);
+                SendFile(searchFile);
+            }
         }
 
         public Dictionary<String, Movie> SearchMovies(String type, String terms){
