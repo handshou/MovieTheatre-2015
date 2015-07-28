@@ -134,6 +134,7 @@ namespace MvSvr {
             Movie m = new Movie();
             m.Title = "Batman";
             m.Genre = "Drama";
+            m.Director = "Christopher Nolan";
             m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
@@ -145,6 +146,7 @@ namespace MvSvr {
             m = new Movie();
             m.Title = "Batman Of The Future";
             m.Genre = "Animated";
+            m.Director = "Steven Lim";
             m.Poster = GetImage("poster\\batman_of_the_future.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),

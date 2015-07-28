@@ -116,7 +116,9 @@ namespace MvSvr {
             /* R */ // Receive search type
             /* R */ // Receive search terms
             type = ReceiveCommand();
+            form.DisplayMsg(type);
             terms = ReceiveCommand().ToLower();
+            form.DisplayMsg(terms);
 
             Dictionary<String, Movie> searchInfo;
             searchInfo = SearchMovies(type, terms);
@@ -128,26 +130,32 @@ namespace MvSvr {
         public Dictionary<String, Movie> SearchMovies(String type, String terms){
 
             Dictionary<String, Movie> d = new Dictionary<String, Movie>();
-            if (type == "genre") {
+            if (type == "Genre") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Value.Genre.Contains(terms)) {
+                    if (m.Value.Genre.ToLower().Contains(terms)) {
+                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
                 }
+                form.DisplayMsg("After for each");
             }
-            if (type == "director") {
+            if (type == "Director") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Value.Director.Contains(terms)) {
+                    if (m.Value.Director.ToLower().Contains(terms)) {
+                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
                 }
+                form.DisplayMsg("After for each");
             }
-            if (type == "title") {
+            if (type == "Name") {
                 foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                    if (m.Key.Contains(terms)) {
+                    if (m.Key.ToLower().Contains(terms)) {
+                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
                 }
+                form.DisplayMsg("After for each");
             }
             return d;
         }
