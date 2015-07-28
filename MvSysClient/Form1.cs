@@ -349,7 +349,15 @@ namespace MvSysClient {
             s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
             cobTime.DataSource = s;
             cobTime.SelectedIndex = 0;
-            
+
+            //Show s = new Show(m, );
+
+            //upload time to listTime
+            //populate cobTime from listTime
+            //populate seats from derived Seat list
+
+            double price = 0;//s.Price;
+            lblPrice.Text = price.ToString();
             
         }
 
@@ -482,6 +490,24 @@ namespace MvSysClient {
         {
             Application.Exit();
             //kills all bckgrnd thread under this prog
+        }
+
+        private void btnBook_Click(object sender, EventArgs e)
+        {
+
+            string time = (string)cobSearch.SelectedItem;
+            string seatNo = (string)cobSeat.SelectedItem;
+            string price = lblPrice.Text;
+
+            string line = "";
+            line = time + ";" + seatNo + ";" + price;
+
+            //sending to server
+            byte[] data = new byte[1024];
+
+            data = Encoding.ASCII.GetBytes(BOOKNG);
+            socket.Send(data);
+
         }
 
         

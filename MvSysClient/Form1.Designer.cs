@@ -57,6 +57,8 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblPrice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,13 +89,14 @@
             // btnBook
             // 
             this.btnBook.Enabled = false;
-            this.btnBook.Location = new System.Drawing.Point(708, 348);
+            this.btnBook.Location = new System.Drawing.Point(708, 344);
             this.btnBook.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBook.Name = "btnBook";
             this.btnBook.Size = new System.Drawing.Size(93, 78);
             this.btnBook.TabIndex = 3;
             this.btnBook.Text = "Book";
             this.btnBook.UseVisualStyleBackColor = true;
+            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
             // 
             // picPoster
             // 
@@ -376,11 +379,33 @@
             this.btnLogout.UseVisualStyleBackColor = true;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(983, 191);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(90, 31);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "Price:";
+            // 
+            // lblPrice
+            // 
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPrice.Location = new System.Drawing.Point(1079, 191);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(54, 31);
+            this.lblPrice.TabIndex = 45;
+            this.lblPrice.Text = "----";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
+            this.Controls.Add(this.lblPrice);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblMvDescription);
@@ -453,6 +478,8 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPrice;
     }
 }
 
