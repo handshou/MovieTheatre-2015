@@ -141,8 +141,6 @@ namespace MvSvr {
                 new Show(m, "1 January 2015", new Hall(), "2000", "2200", 8.00)
             };
             movieInfo.Add(m.Title, m);
-            genreInfo.Add(m.Genre, m);
-            dirtrInfo.Add(m.Director, m);
 
             m = new Movie();
             m.Title = "Batman Of The Future";
@@ -154,8 +152,6 @@ namespace MvSvr {
                 new Show(m, "3 July 2015", new Hall(), "2100", "2300", 8.00)
             };
             movieInfo.Add(m.Title, m);
-            genreInfo.Add(m.Genre, m);
-            dirtrInfo.Add(m.Director, m);
         }
 
         private void LoadFile(String filePath) {
