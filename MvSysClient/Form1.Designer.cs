@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -44,8 +44,8 @@
             this.lblMvGenre = new System.Windows.Forms.Label();
             this.lblMvDirector = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnSaveBH = new System.Windows.Forms.Button();
-            this.btnViewBH = new System.Windows.Forms.Button();
+            this.btnSaveBHistory = new System.Windows.Forms.Button();
+            this.btnViewBHistory = new System.Windows.Forms.Button();
             this.lblBoardMessage = new System.Windows.Forms.Label();
             this.cobSeat = new System.Windows.Forms.ComboBox();
             this.lblSeatNo = new System.Windows.Forms.Label();
@@ -112,8 +112,8 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2});
             this.listTime.Location = new System.Drawing.Point(867, 201);
             this.listTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTime.Name = "listTime";
@@ -130,6 +130,7 @@
             this.cobTime.Name = "cobTime";
             this.cobTime.Size = new System.Drawing.Size(137, 24);
             this.cobTime.TabIndex = 8;
+            this.cobTime.SelectedIndexChanged += new System.EventHandler(this.cobTime_SelectedIndexChanged);
             // 
             // labelTime
             // 
@@ -264,27 +265,29 @@
             this.label1.Text = "lblBookMessage";
             this.label1.Visible = false;
             // 
-            // btnSaveBH
+            // btnSaveBHistory
             // 
-            this.btnSaveBH.Enabled = false;
-            this.btnSaveBH.Location = new System.Drawing.Point(1161, 91);
-            this.btnSaveBH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnSaveBH.Name = "btnSaveBH";
-            this.btnSaveBH.Size = new System.Drawing.Size(123, 52);
-            this.btnSaveBH.TabIndex = 26;
-            this.btnSaveBH.Text = "Save booking history";
-            this.btnSaveBH.UseVisualStyleBackColor = true;
+            this.btnSaveBHistory.Enabled = false;
+            this.btnSaveBHistory.Location = new System.Drawing.Point(1161, 91);
+            this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSaveBHistory.Name = "btnSaveBHistory";
+            this.btnSaveBHistory.Size = new System.Drawing.Size(123, 52);
+            this.btnSaveBHistory.TabIndex = 26;
+            this.btnSaveBHistory.Text = "Save booking history";
+            this.btnSaveBHistory.UseVisualStyleBackColor = true;
+            this.btnSaveBHistory.Click += new System.EventHandler(this.btnSaveBHistory_Click);
             // 
-            // btnViewBH
+            // btnViewBHistory
             // 
-            this.btnViewBH.Enabled = false;
-            this.btnViewBH.Location = new System.Drawing.Point(1161, 23);
-            this.btnViewBH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnViewBH.Name = "btnViewBH";
-            this.btnViewBH.Size = new System.Drawing.Size(123, 52);
-            this.btnViewBH.TabIndex = 27;
-            this.btnViewBH.Text = "View booking history";
-            this.btnViewBH.UseVisualStyleBackColor = true;
+            this.btnViewBHistory.Enabled = false;
+            this.btnViewBHistory.Location = new System.Drawing.Point(1161, 23);
+            this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnViewBHistory.Name = "btnViewBHistory";
+            this.btnViewBHistory.Size = new System.Drawing.Size(123, 52);
+            this.btnViewBHistory.TabIndex = 27;
+            this.btnViewBHistory.Text = "View booking history";
+            this.btnViewBHistory.UseVisualStyleBackColor = true;
+            this.btnViewBHistory.Click += new System.EventHandler(this.btnViewBHistory_Click);
             // 
             // lblBoardMessage
             // 
@@ -416,8 +419,8 @@
             this.Controls.Add(this.lblSeatNo);
             this.Controls.Add(this.cobSeat);
             this.Controls.Add(this.lblBoardMessage);
-            this.Controls.Add(this.btnViewBH);
-            this.Controls.Add(this.btnSaveBH);
+            this.Controls.Add(this.btnViewBHistory);
+            this.Controls.Add(this.btnSaveBHistory);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMvDirector);
             this.Controls.Add(this.lblMvGenre);
@@ -465,8 +468,8 @@
         private System.Windows.Forms.Label lblMvGenre;
         private System.Windows.Forms.Label lblMvDirector;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnSaveBH;
-        private System.Windows.Forms.Button btnViewBH;
+        private System.Windows.Forms.Button btnSaveBHistory;
+        private System.Windows.Forms.Button btnViewBHistory;
         private System.Windows.Forms.Label lblBoardMessage;
         private System.Windows.Forms.ComboBox cobSeat;
         private System.Windows.Forms.Label lblSeatNo;

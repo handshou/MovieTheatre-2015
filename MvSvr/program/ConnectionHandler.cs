@@ -33,8 +33,9 @@ namespace MvSvr {
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
         public const String BOOKNG = "[BOOK]";
-        public const String ENDOFF = "[ENDO]";
+        //public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
+        public const String HISTRY = "[HSTY]";
 
         // Connection Attributes
         private Form1 form;
