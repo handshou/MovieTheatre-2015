@@ -115,9 +115,11 @@ namespace MvSvr {
 
             /* R */ // Receive search type
             /* R */ // Receive search terms
-            type = ReceiveCommand();
+            ReceiveTypeTerms(out type, out terms);
+
+            // type = ReceiveCommand();
             form.DisplayMsg(type);
-            terms = ReceiveCommand().ToLower();
+            // terms = ReceiveCommand().ToLower();
             form.DisplayMsg(terms);
 
             Dictionary<String, Movie> searchInfo;
@@ -196,6 +198,17 @@ namespace MvSvr {
                 formatter.Serialize(fs, movieInfo.Values.ToArray());
                 fs.Close();
             }
+        }
+
+        public void ReceiveTypeTerms(out String type, out String terms) {
+
+            data = new byte[1024];
+            size = client.Receive(data);
+            String typeterms = Encoding.ASCII.GetString(data, 0, size);
+
+            String[] substring = typeterms.Split(';');
+            type = substring[0];
+            terms = substring[1];
         }
 
         public String ReceiveCommand() {
