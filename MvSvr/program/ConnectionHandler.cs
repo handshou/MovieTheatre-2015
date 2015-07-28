@@ -125,9 +125,12 @@ namespace MvSvr {
             Dictionary<String, Movie> searchInfo;
             searchInfo = SearchMovies(type, terms);
 
+            /* S */ // Send empty
             if (searchInfo.Count == 0)
                 SendCommand(SEMPTY);
             else {
+            /* S */ // Send found
+            /* S */ // Send file
                 SendCommand(SFOUND);
                 SaveToFile(searchFile, searchInfo);
                 SendFile(searchFile);

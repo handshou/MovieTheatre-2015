@@ -76,8 +76,7 @@ namespace MvSvr {
         public Image GetImage(String imgPath) {
 
             Image img = Image.FromFile(imgPath);
-            //Image img_res = FixedSize(img, 300, 300);
-
+                  img = FixedSize(img, 120, 120);
             return img;
         }
 
@@ -135,7 +134,7 @@ namespace MvSvr {
             m.Title = "Batman";
             m.Genre = "Drama";
             m.Director = "Christopher Nolan";
-            m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            m.Poster = GetImage("poster\\the_dark_knight.bmp");
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
                 new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
@@ -147,7 +146,7 @@ namespace MvSvr {
             m.Title = "Batman Of The Future";
             m.Genre = "Animated";
             m.Director = "Steven Lim";
-            m.Poster = GetImage("poster\\batman_of_the_future.jpg");
+            m.Poster = GetImage("poster\\batman_of_the_future.bmp");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),

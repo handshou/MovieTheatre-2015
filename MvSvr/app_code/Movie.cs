@@ -9,7 +9,6 @@ namespace MvSvr {
     public class Movie {
 
         // Attributes + Get Set
-        private Image poster;
         public String Title { get; set; }
         public double Runtime { get; set; }
         public String Description { get; set; }
@@ -24,25 +23,14 @@ namespace MvSvr {
 
         // Constructors
         public Movie() { }
-        public Movie(String title, String description, String genre, List<Show> shows) {
-            Title = title;
-            //Runtime = runtime;
-            Description = description;
-            Genre = genre;
-            //Poster = poster;
-            Shows = shows;
+        public Movie(String Title, String Description, String Director, 
+            String Genre, List<Show> Shows, Image Poster) {
+            this.Title = Title;
+            this.Description = Description;
+            this.Director = Director;
+            this.Genre = Genre;
+            this.Shows = Shows;
+            this.Poster = Poster;
         }
-
-        /*public Movie(String title, double runtime, String description,
-                    String rating, String genre, Image poster, List<Show> shows)
-        {
-            Title = title;
-            Runtime = runtime;
-            Description = description;
-            Rating = rating;
-            Genre = genre;
-            Poster = poster;
-            Shows = shows;
-        }   */
     }
 }

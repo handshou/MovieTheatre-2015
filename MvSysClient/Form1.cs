@@ -292,7 +292,8 @@ namespace MvSysClient {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director, 
+                            infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
 
                         //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
                         listMovies.Items.Add(mv.Title);
@@ -500,7 +501,8 @@ namespace MvSysClient {
                                 rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                                 rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                                Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
+                                Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director,
+                            infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
 
                                 //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
                                 listMovies.Items.Add(mv.Title);

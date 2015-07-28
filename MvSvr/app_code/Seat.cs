@@ -11,7 +11,7 @@ namespace MvSvr {
         private bool vacant = true;
         private String name;
         public Hall Hall { get; set; }
-        public bool Vacanct {
+        public bool Vacant {
             get { return vacant; }
             set { vacant = value; }
         }

@@ -41,10 +41,19 @@ namespace MvSvr {
         // Methods
         public bool IsFull() {
             foreach(Seat seat in Seats){
-                if (seat.Vacanct)
+                if (seat.Vacant)
                     return false;
             }
             return true;
+        }
+
+        public List<Seat> AvailableSeats() {
+            List<Seat> avail = new List<Seat>();
+            foreach (Seat seat in Seats) {
+                if (seat.Vacant)
+                    avail.Add(seat);
+            }
+            return avail;
         }
     }
 }
