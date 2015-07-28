@@ -286,7 +286,7 @@ namespace MvSysClient {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre);
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
 
                         //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
                         listMovies.Items.Add(mv.Title);
