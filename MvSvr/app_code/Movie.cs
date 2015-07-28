@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MvSvr {
+
     [Serializable()]
+
     public class Movie {
+
         // Attributes + Get Set
         private Image poster;
         public String Title { get; set; }

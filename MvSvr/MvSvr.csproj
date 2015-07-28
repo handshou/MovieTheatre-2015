@@ -55,7 +55,6 @@
     </Compile>
     <Compile Include="app_code\Hall.cs" />
     <Compile Include="app_code\Movie.cs" />
-    <Compile Include="app_code\MovieList.cs" />
     <Compile Include="program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="app_code\Seat.cs" />
@@ -72,6 +71,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="moviecollection.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

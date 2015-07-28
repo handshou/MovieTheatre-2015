@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,30 +6,23 @@ using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Threading.Tasks;
 
 /// https://www.youtube.com/watch?v=0VmFdYWdSSU - Serialize Deserialize into Collection
 
 namespace MvSvr {
+
     class ConnectionHandler {
 
         // Attributes
-        private Socket client;
-        private List<Socket> clients = new List<Socket>();
-        private Form1 form;
-        private FileInfo f;
-        private FileStream fs;
-        private NetworkStream ns;
-        private StreamReader reader;
-        private StreamWriter writer;
-        private BinaryReader br;
-        private IFormatter formatter;
-        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
-
-        string infoFile = @"info.dat";
+        private String infoFile = @"moviecollection.dat";
         private long filesize = 0;
         private static int connections = 0;
         private byte[] data = new byte[1024];
+
+        private FileInfo f;
+        private FileStream fs;
+        private NetworkStream ns;
+        private IFormatter formatter;
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
@@ -38,12 +30,19 @@ namespace MvSvr {
         public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
 
+        // Connection Attributes
+        private Form1 form;
+        private Socket client;
+        private List<Socket> clients = new List<Socket>();
+        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movieInfo) {
+        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movieInfo, ref List<Socket> clients) {
 
             this.client = client;
             this.form = form;
             this.movieInfo = movieInfo;
+            this.clients = clients;
         }
 
         // Methods
@@ -53,8 +52,6 @@ namespace MvSvr {
             string cmd;
             try {
                 ns = new NetworkStream(client);
-                reader = new StreamReader(ns);
-                writer = new StreamWriter(ns);
                 connections++;
                 DisplayClientMsg(connections);
 
@@ -87,9 +84,14 @@ namespace MvSvr {
                 connections--;
                 DisplayDisconnectMsg(connections);
 
-            } catch (Exception ex) {
+            } catch (SocketException) {
+
+                clients.Remove(client);
                 connections--;
                 DisplayDisconnectMsg(connections);
+
+            } catch (Exception ex) {
+
                 form.DisplayMsg(ex.Message);
             }
         }
@@ -102,10 +104,15 @@ namespace MvSvr {
 
         public void Search() {
 
+            // Receive search term
+            // Look through dictionary
+            // Send files
         }
 
         public void Book() {
 
+            // Lock
+            // 
         }
 
         public void Quit() {
@@ -114,9 +121,13 @@ namespace MvSvr {
                 ns.Close();
             if (client != null)
                 client.Close();
+
+            clients.Remove(client);
             connections--;
             form.DisplayMsg("Client disconnected: " + connections + " active connections");
         }
+
+
 
         public void SaveMoviesToFile(String filePath) {
 

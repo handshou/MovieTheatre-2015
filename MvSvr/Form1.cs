@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MvSvr {
+
     public partial class Form1 : Form {
 
         // Attributes
-        private FileStream fs;
         private String infoFile = @"info.dat";
+        private FileStream fs;
         private IFormatter formatter;
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
         // Connection Attributes
         private static int port = 9070;
-        private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+        private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private List<Socket> clients = new List<Socket>();
 
         public delegate void DisplayMsgCallback(String msg);
@@ -49,10 +44,11 @@ namespace MvSvr {
                 try {
                     Socket client = server.Accept();
                     clients.Add(client);
-                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movieInfo);
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(
-                                                        handler.HandleConnection));
+                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movieInfo, ref clients);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
+
                 } catch(Exception ex) {
+
                     // Error output
                     tbDisplay.AppendText("Connection failed on port " + port + "\r\n");
                     tbDisplay.AppendText(ex.ToString());
@@ -101,6 +97,7 @@ namespace MvSvr {
                     }
                 }
             } catch (Exception ex) {
+
                 tbDisplay.AppendText(ex.Message + "\r\n");
             }
         }
