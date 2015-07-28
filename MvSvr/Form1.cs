@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -72,39 +74,89 @@ namespace MvSvr {
         }
 
         public Image GetImage(String imgPath) {
-            Image img = null;
+
+            Image img = null, res_img = null;
             try {
                 img = Image.FromFile(@imgPath);
+                res_img = FixedSize(img, 200, 200);
             } catch (Exception ex) {
                 tbDisplay.AppendText(ex + "\r\n");
             }
-            
-            return img;
+            return res_img;
+        }
+
+        public static Image FixedSize(Image imgPhoto, int Width, int Height) {
+
+            /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
+            int sourceWidth = imgPhoto.Width;
+            int sourceHeight = imgPhoto.Height;
+            int sourceX = 0;
+            int sourceY = 0;
+            int destX = 0;
+            int destY = 0;
+
+            float nPercent = 0;
+            float nPercentW = 0;
+            float nPercentH = 0;
+
+            nPercentW = ((float)Width / (float)sourceWidth);
+            nPercentH = ((float)Height / (float)sourceHeight);
+            if (nPercentH < nPercentW) {
+                nPercent = nPercentH;
+                destX = System.Convert.ToInt16((Width -
+                              (sourceWidth * nPercent)) / 2);
+            } else {
+                nPercent = nPercentW;
+                destY = System.Convert.ToInt16((Height -
+                              (sourceHeight * nPercent)) / 2);
+            }
+
+            int destWidth = (int)(sourceWidth * nPercent);
+            int destHeight = (int)(sourceHeight * nPercent);
+
+            Bitmap bmPhoto = new Bitmap(Width, Height,
+                              PixelFormat.Format24bppRgb);
+            bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
+                             imgPhoto.VerticalResolution);
+
+            Graphics grPhoto = Graphics.FromImage(bmPhoto);
+            grPhoto.Clear(Color.Red);
+            grPhoto.InterpolationMode =
+                    InterpolationMode.HighQualityBicubic;
+
+            grPhoto.DrawImage(imgPhoto,
+                new Rectangle(destX, destY, destWidth, destHeight),
+                new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+                GraphicsUnit.Pixel);
+
+            grPhoto.Dispose();
+            return bmPhoto;
         }
 
         public void LoadMovies() {
 
             Movie m = new Movie();
             m.Title = "Batman";
-            m.Genre = "Action";
+            m.Genre = "Drama";
             movieInfo.Add(m.Title, m);
-
-            try {
-                m.Poster = GetImage("poster\\the_dark_knight.bmp");
-            } catch (Exception ex) {
-                tbDisplay.AppendText(ex + "\r\n");
-            }
-
+            m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            m.Shows = new List<Show> { 
+                new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
+                new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
+                new Show(m, "1 January 2015", new Hall(), "2000", "2200", 8.00)
+            };
+            
             m = new Movie();
             m.Title = "Batman Of The Future";
             m.Genre = "Cartoon";
             movieInfo.Add(m.Title, m);
-
-            try {
-                m.Poster = Image.FromFile(@"poster\\the_dark_knight.jpg");
-            } catch (Exception ex) {
-                tbDisplay.AppendText(ex + "\r\n");
-            }
+            m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            m.Shows = new List<Show> { 
+                new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
+                new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),
+                new Show(m, "3 July 2015", new Hall(), "2100", "2300", 8.00)
+            };
+        
         }
 
         private void LoadFile(String filePath) {
