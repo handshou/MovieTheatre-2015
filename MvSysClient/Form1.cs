@@ -163,6 +163,8 @@ namespace MvSysClient {
             //this method adds the details of a selected show to the form for users to refer to
         {
 
+            pnSeats.Controls.Clear();
+
             List<Block> blocks = new List<Block>
             {
                 new Block { Name = "A", Rows = 5, Seats = 5 },
@@ -313,8 +315,8 @@ namespace MvSysClient {
             lblMvName.Text = m.Title;
             lblMvGenre.Text = m.Genre;
 
-            //lblMvDirector.Text = m.Director;
-            //lblMvDescription.Text = m.Description;
+            lblMvDirector.Text = m.Director;
+            lblMvDescription.Text = m.Description;
 
             picPoster.Image = m.Poster;
 
