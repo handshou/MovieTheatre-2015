@@ -16,8 +16,8 @@ namespace MvSvr {
         public String Rating { get; set; }
         public String Genre { get; set; }
         public Image Poster { // = Image.FromFile("poster\\the_dark_knight.jpg");
-            get { return poster; }
-            set { Image.FromFile(value.ToString()); }
+            get;
+            set;
         }
         public List<Show> Shows { get; set; }
 

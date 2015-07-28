@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -81,6 +82,12 @@ namespace MvSvr {
             m.Title = "Batman Of The Future";
             m.Genre = "Cartoon";
             movieInfo.Add(m.Title, m);
+
+            try {
+                m.Poster = Image.FromFile(@"C:\Users\Hansel\Google Drive\Visual Studio\WAD\MvSvr\MvSvr\bin\Debug\poster\the_dark_knight.bmp");
+            } catch (Exception ex) {
+                tbDisplay.AppendText(ex + "\r\n");
+            }
         }
 
         private void LoadFile(String filePath) {
