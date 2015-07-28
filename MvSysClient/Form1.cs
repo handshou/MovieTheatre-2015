@@ -427,11 +427,8 @@ namespace MvSysClient {
             data = Encoding.ASCII.GetBytes(SEARCH);
             socket.Send(data); //this sends the Search request
 
-            data = Encoding.ASCII.GetBytes(searchType);
-            socket.Send(data); //this sends the search term
-
-            data = Encoding.ASCII.GetBytes(searchKey);
-            socket.Send(data); //this sends the search key
+            data = Encoding.ASCII.GetBytes(searchType + ";" + searchKey);
+            socket.Send(data); //this sends the search type
 
             int size = 0;
             string infoFile = @"info.dat"; //temporary file for storage
