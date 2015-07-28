@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -71,13 +71,15 @@
             // 
             // btnSearch
             // 
+            this.btnSearch.Enabled = false;
             this.btnSearch.Location = new System.Drawing.Point(13, 181);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(208, 34);
+            this.btnSearch.Size = new System.Drawing.Size(216, 34);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search movie:";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnBook
             // 
@@ -104,8 +106,8 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
+            listViewItem9,
+            listViewItem10});
             this.listTime.Location = new System.Drawing.Point(855, 212);
             this.listTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTime.Name = "listTime";
@@ -164,6 +166,7 @@
             this.cobSearch.Size = new System.Drawing.Size(105, 24);
             this.cobSearch.TabIndex = 15;
             this.cobSearch.Text = "--Search By--";
+            this.cobSearch.SelectedIndexChanged += new System.EventHandler(this.cobSearch_SelectedIndexChanged);
             // 
             // listMovies
             // 

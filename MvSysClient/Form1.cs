@@ -180,12 +180,12 @@ namespace MvSysClient {
 
             data = Encoding.ASCII.GetBytes(BROWSE);
 
-            socket.Send(data); //this ends the browse request
+            socket.Send(data); //this sends the Browse request
             
             int size = 0;
             string infoFile = @"info.dat";
 
-            /* R */ // receiving file size
+            //receiving file size
             data = new byte[1024];
             try {
                 size = socket.Receive(data);
@@ -198,7 +198,7 @@ namespace MvSysClient {
             rTxtMessages.Clear();
             rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
 
-            /* R */ // receiving file
+            //receiving file
             data = new byte[filesize];
             try {
                 size = socket.Receive(data);
@@ -309,6 +309,117 @@ namespace MvSysClient {
                 rTxtMessages.AppendText(lines[i] + "\r\n");
             }
         }
+
+        private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cobSearch.SelectedIndex != 0)
+            {
+                btnSearch.Enabled = true;
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            //requests for movies from server under a search type and key
+            //Sends request, search type and key
+            //search runs in the server, results sent back
+            //process results and show
+
+            listMovies.Items.Clear();
+
+            string searchType = (string)cobSearch.SelectedItem;
+            string searchKey = txtSearch.Text;
+
+            rTxtMessages.AppendText(searchType + searchKey);
+
+            IFormatter formatter = new BinaryFormatter();
+
+            byte[] data = new byte[1024];
+
+            data = Encoding.ASCII.GetBytes(SEARCH);
+            socket.Send(data); //this sends the Search request
+
+            data = Encoding.ASCII.GetBytes(searchType);
+            socket.Send(data); //this sends the search term
+
+            data = Encoding.ASCII.GetBytes(searchKey);
+            socket.Send(data); //this sends the search key
+
+            /*
+            int size = 0;
+            string infoFile = @"info.dat"; //temporary file for storage
+
+            // receiving file size
+            data = new byte[1024];
+            try
+            {
+                size = socket.Receive(data);
+            }
+            catch (Exception)
+            {
+                rTxtMessages.AppendText("Receiving file size error" + "\r\n");
+            }
+
+            filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+
+            rTxtMessages.Clear();
+            rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+
+            // receiving file
+            data = new byte[filesize];
+            try
+            {
+                size = socket.Receive(data);
+                rTxtMessages.AppendText("File received" + "\r\n");
+            }
+            catch (Exception)
+            {
+                rTxtMessages.AppendText("Receiving file error" + "\r\n");
+            }
+
+            //if (!File.Exists(infoFile)) {
+            //    File.Create(infoFile);
+            //}
+            if (!File.Exists(infoFile))
+            {
+                File.Create(infoFile);
+            }
+            using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
+            {
+                fs.Write(data, 0, Convert.ToInt32(filesize));
+                fs.Flush();
+                rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
+                fs.Close();
+            }
+
+            try
+            {
+                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
+                {
+                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
+                    foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                    {
+                        rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                        rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre);
+
+                        //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+                        listMovies.Items.Add(mv.Title);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                rTxtMessages.AppendText(ex.Message);
+            }*/
+        }
+
+        
 
     }
 
