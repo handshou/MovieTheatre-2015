@@ -132,6 +132,8 @@ namespace MvSysClient {
             //called when the client has connected to the server and logged in with a userID
         {
 
+            Control.CheckForIllegalCrossThreadCalls = false;
+
             userID = txtUser.Text;
             userInside = true;
 

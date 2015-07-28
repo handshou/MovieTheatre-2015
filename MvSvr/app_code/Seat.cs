@@ -30,15 +30,15 @@ namespace MvSvr {
             Num = num;
         }
         public Seat(Hall hall, String name) {    
-            String p1 = @"^[a-zA-Z]";
-            Regex r1 = new Regex(p1);
-            String[] substrings = r1.Split(name);
-
+            //String p1 = @"^[a-zA-Z]";
+            //Regex r1 = new Regex(p1);
+            
+            //String[] substrings = r1.Split(name);
             Hall = hall;
             this.name = name;
             try {
-                Row = substrings[0];
-                Num = Convert.ToInt32(substrings[1]);
+                Row = name.Substring(0, 1);
+                Num = Convert.ToInt32(name.Substring(1, name.Length - 1));
             } catch (FormatException) {
                 Row = "-";
                 Num = 0;
