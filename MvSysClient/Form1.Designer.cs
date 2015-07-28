@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -55,15 +55,17 @@
             this.txtUser = new System.Windows.Forms.TextBox();
             this.lblMvDescription = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.btnLogout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(64, 55);
+            this.btnBrowse.Location = new System.Drawing.Point(14, 121);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(123, 52);
+            this.btnBrowse.Size = new System.Drawing.Size(123, 79);
             this.btnBrowse.TabIndex = 1;
             this.btnBrowse.Text = "Browse movies";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -72,10 +74,10 @@
             // btnSearch
             // 
             this.btnSearch.Enabled = false;
-            this.btnSearch.Location = new System.Drawing.Point(13, 181);
+            this.btnSearch.Location = new System.Drawing.Point(150, 175);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(216, 34);
+            this.btnSearch.Size = new System.Drawing.Size(147, 34);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search movie:";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -106,8 +108,8 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10});
+            listViewItem13,
+            listViewItem14});
             this.listTime.Location = new System.Drawing.Point(855, 212);
             this.listTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTime.Name = "listTime";
@@ -137,20 +139,20 @@
             // rTxtMessages
             // 
             this.rTxtMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rTxtMessages.Location = new System.Drawing.Point(245, 12);
+            this.rTxtMessages.Location = new System.Drawing.Point(307, 12);
             this.rTxtMessages.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rTxtMessages.Name = "rTxtMessages";
             this.rTxtMessages.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rTxtMessages.Size = new System.Drawing.Size(896, 143);
+            this.rTxtMessages.Size = new System.Drawing.Size(834, 143);
             this.rTxtMessages.TabIndex = 13;
             this.rTxtMessages.Text = "I am text box";
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(12, 153);
+            this.txtSearch.Location = new System.Drawing.Point(150, 149);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(217, 22);
+            this.txtSearch.Size = new System.Drawing.Size(147, 22);
             this.txtSearch.TabIndex = 14;
             // 
             // cobSearch
@@ -160,7 +162,7 @@
             "Name",
             "Genre",
             "Director"});
-            this.cobSearch.Location = new System.Drawing.Point(12, 123);
+            this.cobSearch.Location = new System.Drawing.Point(150, 119);
             this.cobSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cobSearch.Name = "cobSearch";
             this.cobSearch.Size = new System.Drawing.Size(105, 24);
@@ -173,10 +175,10 @@
             this.listMovies.DisplayMember = "string";
             this.listMovies.FormattingEnabled = true;
             this.listMovies.ItemHeight = 16;
-            this.listMovies.Location = new System.Drawing.Point(12, 260);
+            this.listMovies.Location = new System.Drawing.Point(12, 244);
             this.listMovies.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listMovies.Name = "listMovies";
-            this.listMovies.Size = new System.Drawing.Size(357, 292);
+            this.listMovies.Size = new System.Drawing.Size(357, 308);
             this.listMovies.TabIndex = 18;
             this.listMovies.SelectedIndexChanged += new System.EventHandler(this.listMovies_SelectedIndexChanged);
             // 
@@ -269,6 +271,7 @@
             // 
             // btnViewBH
             // 
+            this.btnViewBH.Enabled = false;
             this.btnViewBH.Location = new System.Drawing.Point(1161, 23);
             this.btnViewBH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnViewBH.Name = "btnViewBH";
@@ -280,7 +283,7 @@
             // lblBoardMessage
             // 
             this.lblBoardMessage.AutoSize = true;
-            this.lblBoardMessage.Location = new System.Drawing.Point(252, 167);
+            this.lblBoardMessage.Location = new System.Drawing.Point(304, 175);
             this.lblBoardMessage.Name = "lblBoardMessage";
             this.lblBoardMessage.Size = new System.Drawing.Size(117, 17);
             this.lblBoardMessage.TabIndex = 28;
@@ -316,7 +319,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 233);
+            this.label2.Location = new System.Drawing.Point(9, 221);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 17);
             this.label2.TabIndex = 34;
@@ -325,7 +328,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 23);
+            this.label5.Location = new System.Drawing.Point(32, 26);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(42, 17);
             this.label5.TabIndex = 37;
@@ -333,10 +336,10 @@
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(64, 23);
+            this.txtUser.Location = new System.Drawing.Point(80, 23);
             this.txtUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(145, 22);
+            this.txtUser.Size = new System.Drawing.Size(175, 22);
             this.txtUser.TabIndex = 38;
             // 
             // lblMvDescription
@@ -348,11 +351,34 @@
             this.lblMvDescription.TabIndex = 39;
             this.lblMvDescription.Visible = false;
             // 
+            // btnLogin
+            // 
+            this.btnLogin.Location = new System.Drawing.Point(35, 62);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(102, 40);
+            this.btnLogin.TabIndex = 40;
+            this.btnLogin.Text = "Log In";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Enabled = false;
+            this.btnLogout.Location = new System.Drawing.Point(164, 62);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(102, 40);
+            this.btnLogout.TabIndex = 43;
+            this.btnLogout.Text = "Log Out";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
+            this.Controls.Add(this.btnLogout);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblMvDescription);
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.label5);
@@ -421,6 +447,8 @@
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.Label lblMvDescription;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnLogout;
     }
 }
 

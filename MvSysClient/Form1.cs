@@ -38,52 +38,96 @@ namespace MvSysClient {
         public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
 
+        public Thread t = null;
+
+        public Boolean userInside = false;
+        public String userID = "";
+
         public Form1()
         {
 
             InitializeComponent();
 
-            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse
-                                              ("127.0.0.1"), 9070);
-
-            try
-            {
-                rTxtMessages.Text += "Trying to connect to server...";
-                TcpClient client = new TcpClient();
-                client.Connect(remoteEP);
-
-                socket = client.Client;
-
-                rTxtMessages.Text += "\nConnection established.";
-                rTxtMessages.Text += "\nConnected to server with IP Address of" +
-                    "127.0.0.1 and port 9070";
-
-                stream = new NetworkStream(socket);
-                writer = new StreamWriter(stream);
-                reader = new StreamReader(stream);
-                
-                Thread t = new Thread(runClient);
-                //t.IsBackground = true;
-                t.Start();
-
-            }
-            catch (SocketException ex)
-            {
-                rTxtMessages.Text = "Unable to connect to the movie server." + ex;
-                rTxtMessages.AppendText("\nPlease check if the server is running.");
-                return;
-            }
-
         }
 
-        
-        
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+
+            if (!string.IsNullOrWhiteSpace(txtUser.Text))
+                //checks if userID textbox is either empty or only has white spaces
+            {
+
+                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse
+                                              ("127.0.0.1"), 9070);
+                try
+                {
+                    rTxtMessages.Clear();
+                    rTxtMessages.Text += "Trying to connect to server...";
+                    TcpClient client = new TcpClient();
+                    client.Connect(remoteEP);
+
+                    socket = client.Client;
+
+                    rTxtMessages.Text += "\nConnection established.";
+                    rTxtMessages.Text += "\nConnected to server with IP Address of" +
+                        "127.0.0.1 and port 9070";
+
+                    stream = new NetworkStream(socket);
+                    writer = new StreamWriter(stream);
+                    reader = new StreamReader(stream);
+
+                    btnLogin.Enabled = true;
+
+                }
+                catch (SocketException ex)
+                {
+                    rTxtMessages.AppendText("\nUnable to connect to the movie server." + ex);
+                    rTxtMessages.AppendText("\nPlease check if the server is running.");
+                    return;
+                }
+
+                t = new Thread(runClient);
+                t.Start();
+            }
+
+            else
+            {
+                txtUser.Text = null;
+                rTxtMessages.AppendText("\nPlease enter a user ID");
+            }
+            
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            byte[] data = new byte[1024];
+            data = Encoding.ASCII.GetBytes(FINISH);
+            socket.Send(data);
+            t.Abort();
+            //socket.Close();
+            rTxtMessages.Text = "You have logged out.";
+            userID = "";
+            txtUser.Clear();
+            txtUser.Enabled = true;
+            btnLogin.Enabled = true;
+            btnLogout.Enabled = false;
+        }
 
         public void runClient()
             //this method starts a thread
-            //called when the client has connected to the server
+            //called when the client has connected to the server and logged in with a userID
         {
-            rTxtMessages.Text = "Welcome to the Movie Booking System.";
+
+            userID = txtUser.Text;
+            userInside = true;
+
+            //prevents changes to the user text box
+            txtUser.Enabled = false;
+            btnLogin.Enabled = false;
+            btnLogout.Enabled = true;
+
+            rTxtMessages.Clear();
+            rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
             //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
 
             cobSearch.SelectedIndex = 0;
@@ -163,12 +207,6 @@ namespace MvSysClient {
             public string Name { get; set; }
             public int Rows { get; set; }
             public int Seats { get; set; }
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-            //kills all bckgrnd thread under this prog
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -257,7 +295,7 @@ namespace MvSysClient {
 
             if (listMovies.SelectedItem !=  null)
             {
-                String index = listMovies.GetItemText(listMovies.SelectedItem);
+                String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
                 m = movieInfo[index];
 
                 rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
@@ -278,20 +316,23 @@ namespace MvSysClient {
             lblMvDirector.Visible = true;
             lblMvDescription.Visible = true;
 
-            cobTime.Enabled = true;
-            cobSeat.Enabled = true;
-
-            ArrayList s = new ArrayList();
-            s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
-            cobTime.DataSource = s;
-
-            cobTime.SelectedIndex = 0;
-
             lblMvName.Text = m.Title;
             lblMvGenre.Text = m.Genre;
 
             //lblMvDirector.Text = m.Director;
             //lblMvDescription.Text = m.Description;
+
+            if (userInside == true)
+            {
+                cobTime.Enabled = true;
+                cobSeat.Enabled = true;
+
+                ArrayList s = new ArrayList();
+                s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
+                cobTime.DataSource = s;
+                cobTime.SelectedIndex = 0;
+            }
+            
         }
 
         public delegate void DisplayMsgCallback(String msg);
@@ -418,6 +459,14 @@ namespace MvSysClient {
                 rTxtMessages.AppendText(ex.Message);
             }*/
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+            //kills all bckgrnd thread under this prog
+        }
+
+        
 
         
 

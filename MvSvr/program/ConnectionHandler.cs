@@ -79,11 +79,6 @@ namespace MvSvr {
                         break;
                 }
 
-                ns.Close();
-                client.Close();
-                connections--;
-                DisplayDisconnectMsg(connections);
-
             } catch (SocketException) {
 
                 clients.Remove(client);
