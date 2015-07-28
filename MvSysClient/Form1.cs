@@ -420,108 +420,121 @@ namespace MvSysClient {
             string searchType = (string)cobSearch.SelectedItem;
             string searchKey = txtSearch.Text;
 
-            rTxtMessages.AppendText(searchType + searchKey);
-
-            IFormatter formatter = new BinaryFormatter();
-
-            byte[] data = new byte[1024];
-
-            int size = 0;
-
-            data = Encoding.ASCII.GetBytes(SEARCH);
-            socket.Send(data); //this sends the Search request
-
-            data = Encoding.ASCII.GetBytes(searchType + ";" + searchKey);
-            socket.Send(data); //this sends the search terms
-
-            size = socket.Receive(data); //this receives the confirmation answer
-
-            string answer = "";
-
-            answer = Encoding.ASCII.GetString(data, 0, size);
-
-            if (answer == SFOUND)
+            if (!string.IsNullOrWhiteSpace(txtSearch.Text))
             {
-                string infoFile = @"info.dat"; //temporary file for storage
 
-                // receiving file size
-                data = new byte[1024];
-                try
-                {
-                    size = socket.Receive(data);
-                }
-                catch (Exception)
-                {
-                    rTxtMessages.AppendText("Receiving file size error" + "\r\n");
-                }
+                rTxtMessages.AppendText(searchType + searchKey);
 
-                filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+                IFormatter formatter = new BinaryFormatter();
 
-                rTxtMessages.Clear();
-                rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+                byte[] data = new byte[1024];
 
-                // receiving file
-                data = new byte[filesize];
-                try
-                {
-                    size = socket.Receive(data);
-                    rTxtMessages.AppendText("File received" + "\r\n");
-                }
-                catch (Exception)
-                {
-                    rTxtMessages.AppendText("Receiving file error" + "\r\n");
-                }
+                int size = 0;
 
-                if (!File.Exists(infoFile))
-                {
-                    File.Create(infoFile);
-                }
-                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
-                {
-                    fs.Write(data, 0, Convert.ToInt32(filesize));
-                    fs.Flush();
-                    rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
-                    fs.Close();
-                }
+                data = Encoding.ASCII.GetBytes(SEARCH);
+                socket.Send(data); //this sends the Search request
 
-                try
+                data = Encoding.ASCII.GetBytes(searchType + ";" + searchKey);
+                socket.Send(data); //this sends the search terms
+
+                size = socket.Receive(data); //this receives the confirmation answer
+
+                string answer = "";
+
+                answer = Encoding.ASCII.GetString(data, 0, size);
+
+                if (answer == SFOUND)
                 {
-                    using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
+                    string infoFile = @"info.dat"; //temporary file for storage
+
+                    // receiving file size
+                    data = new byte[1024];
+                    try
                     {
-                        Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                        size = socket.Receive(data);
+                    }
+                    catch (Exception)
+                    {
+                        rTxtMessages.AppendText("Receiving file size error" + "\r\n");
+                    }
+
+                    filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+
+                    rTxtMessages.Clear();
+                    rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+
+                    // receiving file
+                    data = new byte[filesize];
+                    try
+                    {
+                        size = socket.Receive(data);
+                        rTxtMessages.AppendText("File received" + "\r\n");
+                    }
+                    catch (Exception)
+                    {
+                        rTxtMessages.AppendText("Receiving file error" + "\r\n");
+                    }
+
+                    if (!File.Exists(infoFile))
+                    {
+                        File.Create(infoFile);
+                    }
+                    using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
+                    {
+                        fs.Write(data, 0, Convert.ToInt32(filesize));
                         fs.Flush();
+                        rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                         fs.Close();
-                        movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                        foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                    }
+
+                    try
+                    {
+                        using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
                         {
-                            rTxtMessages.AppendText(infos.Value.Title + "\r\n");
-                            rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+                            Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                            fs.Flush();
+                            fs.Close();
+                            movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
+                            foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                            {
+                                rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                                rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                            Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
+                                Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
 
-                            //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
-                            listMovies.Items.Add(mv.Title);
+                                //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+                                listMovies.Items.Add(mv.Title);
 
+                            }
                         }
+
+                        rTxtMessages.AppendText("\nResults established.");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        rTxtMessages.AppendText("\nError. Please restart the application." + ex.Message);
                     }
                 }
-                catch (Exception ex)
+
+                if (answer == SEMPTY)
                 {
-                    rTxtMessages.AppendText("Error. Please restart the application." + ex.Message);
+                    rTxtMessages.AppendText("\nNo results attained. If this is not expected, please change the search terms.");
                 }
+
+                else
+                {
+                    rTxtMessages.AppendText("\nSomething bad has happened. Please restart the application.");
+                }
+
             }
 
-            if (answer == SEMPTY)
+            else //triggers when textbox for search query is either null or has whitespaces
             {
-                rTxtMessages.AppendText("No results attained");
-            }
 
-            else
-            {
-                rTxtMessages.AppendText("Something bad has happened. Please restart the application.");
-            }
+                rTxtMessages.AppendText("\nSearch bar is empty: please input a key word.");
 
-            
+            }
 
         }
 
