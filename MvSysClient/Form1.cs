@@ -279,12 +279,7 @@ namespace MvSysClient {
                 rTxtMessages.AppendText(ex.Message);
             }
 
-            //NetworkStream ns = new NetworkStream(socket);
-            //try {
-            //    m = (Car) formatter.Deserialize(ns);
-            //} catch (Exception ex) {
-            //    rTxtMessages.Text = ex.Message;
-            //}
+            Thread.Sleep(1000);
         }
 
         private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
