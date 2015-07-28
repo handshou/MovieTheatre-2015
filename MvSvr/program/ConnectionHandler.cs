@@ -32,8 +32,9 @@ namespace MvSvr {
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
+        public const String SFOUND = "[SRHF]";
+        public const String SEMPTY = "[SRHE]";
         public const String BOOKNG = "[BOOK]";
-        //public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
         public const String HISTRY = "[HSTY]";
 
@@ -113,9 +114,8 @@ namespace MvSvr {
             String type = "", 
                    terms = "";
 
-            /* R */ // Receive search type
-            /* R */ // Receive search terms
-            ReceiveTypeTerms(out type, out terms);
+            /* R */ // Receive search type + terms
+            terms = ReceiveTypeTerms(out type);
 
             // type = ReceiveCommand();
             form.DisplayMsg(type);
@@ -125,39 +125,34 @@ namespace MvSvr {
             Dictionary<String, Movie> searchInfo;
             searchInfo = SearchMovies(type, terms);
 
-            SaveToFile(searchFile, searchInfo);
-            SendFile(searchFile);
+            if (searchInfo.Count == 0)
+                SendCommand(SEMPTY);
+            else {
+                SendCommand(SFOUND);
+                SaveToFile(searchFile, searchInfo);
+                SendFile(searchFile);
+            }
         }
 
         public Dictionary<String, Movie> SearchMovies(String type, String terms){
 
             Dictionary<String, Movie> d = new Dictionary<String, Movie>();
-            if (type == "Genre") {
-                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+            foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                if (type == "Genre") {
                     if (m.Value.Genre.ToLower().Contains(terms.ToLower())) {
-                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
-                }
-                form.DisplayMsg("After for each");
-            }
-            if (type == "Director") {
-                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                } else
+                if (type == "Director") {
                     if (m.Value.Director.ToLower().Contains(terms.ToLower())) {
-                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
-                }
-                form.DisplayMsg("After for each");
-            }
-            if (type == "Name") {
-                foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                } else
+                if (type == "Name") {
                     if (m.Key.ToLower().Contains(terms.ToLower())) {
-                        form.DisplayMsg("Found something");
                         d.Add(m.Key, m.Value);
                     }
                 }
-                form.DisplayMsg("After for each");
             }
             return d;
         }
@@ -200,8 +195,9 @@ namespace MvSvr {
             }
         }
 
-        public void ReceiveTypeTerms(out String type, out String terms) {
+        public String ReceiveTypeTerms(out String type) {
 
+            String terms = "";
             data = new byte[1024];
             size = client.Receive(data);
             String typeterms = Encoding.ASCII.GetString(data, 0, size);
@@ -209,13 +205,23 @@ namespace MvSvr {
             String[] substring = typeterms.Split(';');
             type = substring[0];
             terms = substring[1];
+
+            return terms;
         }
 
         public String ReceiveCommand() {
+
             data = new byte[1024];
             size = client.Receive(data);
 
             return Encoding.ASCII.GetString(data, 0, size);
+        }
+
+        public void SendCommand(String cmd) {
+
+            data = new byte[1024];
+            data = Encoding.ASCII.GetBytes(cmd);
+            size = client.Send(data);
         }
 
         public void SendFile(String filePath) {
