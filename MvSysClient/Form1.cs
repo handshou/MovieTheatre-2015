@@ -93,33 +93,7 @@ namespace MvSysClient {
 
         public void loadMovieDetails()
             //this method adds the details of a selected movie to the form for users to refer to
-            //called when a thread is started
         {
-            //hardcoded times:
-
-            lblShowName.Visible = true;
-            lblShowDirector.Visible = true;
-            lblShowGenre.Visible = true;
-
-            lblMvName.Visible = true;
-            lblMvGenre.Visible = true;
-            lblMvDirector.Visible = true;
-
-            cobTime.Enabled = true;
-            cobSeat.Enabled = true;
-
-            lblMvName.Text = "Best Movie 5";
-            lblMvGenre.Text = "Action";
-            lblMvDirector.Text = "Bobby Han";
-
-            //cobTime.Items.Add("10:00");
-            //cobTime.Items.Add(5);
-
-            ArrayList s = new ArrayList();
-            s.Add("10:00");  s.Add("12:00");  s.Add("14:00");
-            cobTime.DataSource = s;
-
-            cobTime.SelectedIndex = 0;
 
             List<Block> blocks = new List<Block>
             {
@@ -286,11 +260,38 @@ namespace MvSysClient {
                 String index = listMovies.GetItemText(listMovies.SelectedItem);
                 m = movieInfo[index];
 
-                rTxtMessages.AppendText("Movie " + m.Title + " selected.");
+                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
+                showMovieDetails(m);
             }
 
-            
+        }
 
+        private void showMovieDetails(Movie m)
+        {
+
+            lblShowName.Visible = true;
+            lblShowDirector.Visible = true;
+            lblShowGenre.Visible = true;
+
+            lblMvName.Visible = true;
+            lblMvGenre.Visible = true;
+            lblMvDirector.Visible = true;
+            lblMvDescription.Visible = true;
+
+            cobTime.Enabled = true;
+            cobSeat.Enabled = true;
+
+            ArrayList s = new ArrayList();
+            s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
+            cobTime.DataSource = s;
+
+            cobTime.SelectedIndex = 0;
+
+            lblMvName.Text = m.Title;
+            lblMvGenre.Text = m.Genre;
+
+            //lblMvDirector.Text = m.Director;
+            //lblMvDescription.Text = m.Description;
         }
 
         public delegate void DisplayMsgCallback(String msg);
