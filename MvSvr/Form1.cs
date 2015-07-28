@@ -71,6 +71,17 @@ namespace MvSvr {
             Application.Exit();
         }
 
+        public Image GetImage(String imgPath) {
+            Image img = null;
+            try {
+                img = Image.FromFile(@imgPath);
+            } catch (Exception ex) {
+                tbDisplay.AppendText(ex + "\r\n");
+            }
+            
+            return img;
+        }
+
         public void LoadMovies() {
 
             Movie m = new Movie();
@@ -79,7 +90,7 @@ namespace MvSvr {
             movieInfo.Add(m.Title, m);
 
             try {
-                m.Poster = Image.FromFile(@"poster\\the_dark_knight.bmp");
+                m.Poster = GetImage("poster\\the_dark_knight.bmp");
             } catch (Exception ex) {
                 tbDisplay.AppendText(ex + "\r\n");
             }
