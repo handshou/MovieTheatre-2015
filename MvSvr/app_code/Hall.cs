@@ -24,11 +24,14 @@ namespace MvSvr {
 
         // Constructors
         public Hall() {
+            Seats = new List<Seat>();
             for (int i = 0; i < seatNames.Length; i++) {
                 Seats.Add(new Seat(this, seatNames[i]));
             }
         }
+
         public Hall(String name) {
+            Seats = new List<Seat>();
             for (int i = 0; i < seatNames.Length; i++) {
                 Seats.Add(new Seat(this, seatNames[i]));
             }

@@ -15,10 +15,7 @@ namespace MvSvr {
         public String Description { get; set; }
         public String Rating { get; set; }
         public String Genre { get; set; }
-        public Image Poster { // = Image.FromFile("poster\\the_dark_knight.jpg");
-            get;
-            set;
-        }
+        public Image Poster { get; set; }
         public List<Show> Shows { get; set; }
 
         // https://msdn.microsoft.com/en-us/library/stf701f5(v=vs.110).aspx
@@ -26,13 +23,13 @@ namespace MvSvr {
 
         // Constructors
         public Movie() { }
-        public Movie(String title, String description, String genre) {
+        public Movie(String title, String description, String genre, List<Show> shows) {
             Title = title;
             //Runtime = runtime;
             Description = description;
             Genre = genre;
             //Poster = poster;
-            //Shows = shows;
+            Shows = shows;
         }
 
         /*public Movie(String title, double runtime, String description,

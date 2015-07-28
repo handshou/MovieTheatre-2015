@@ -17,7 +17,7 @@ namespace MvSvr {
     public partial class Form1 : Form {
 
         // Attributes
-        private String infoFile = @"info.dat";
+        private String infoFile = @"movieInfo.dat";
         private FileStream fs;
         private IFormatter formatter;
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
@@ -75,19 +75,20 @@ namespace MvSvr {
 
         public Image GetImage(String imgPath) {
 
-            Image img = null, res_img = null;
+            Image img = null;
             try {
                 img = Image.FromFile(@imgPath);
-                res_img = FixedSize(img, 200, 200);
             } catch (Exception ex) {
                 tbDisplay.AppendText(ex + "\r\n");
             }
-            return res_img;
+            //Image img_res = FixedSize(img, 200, 200);
+
+            return img;
         }
 
+        /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
         public static Image FixedSize(Image imgPhoto, int Width, int Height) {
 
-            /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
             int sourceWidth = imgPhoto.Width;
             int sourceHeight = imgPhoto.Height;
             int sourceX = 0;
@@ -138,25 +139,24 @@ namespace MvSvr {
             Movie m = new Movie();
             m.Title = "Batman";
             m.Genre = "Drama";
-            movieInfo.Add(m.Title, m);
             m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
                 new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
                 new Show(m, "1 January 2015", new Hall(), "2000", "2200", 8.00)
             };
-            
+            movieInfo.Add(m.Title, m);
+
             m = new Movie();
             m.Title = "Batman Of The Future";
-            m.Genre = "Cartoon";
-            movieInfo.Add(m.Title, m);
+            m.Genre = "Animated";
             m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "2100", "2300", 8.00)
             };
-        
+            movieInfo.Add(m.Title, m);        
         }
 
         private void LoadFile(String filePath) {
