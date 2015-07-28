@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MvSvr {
+
     [Serializable()]
+
     public class Show {
+
         // Attributes + Get Set
         public Movie Movie { get; set; }
         public DateTime TimeStart { get; set; }

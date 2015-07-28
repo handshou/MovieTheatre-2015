@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MvSvr {
+
     [Serializable()]
+
     public class Seat {
+
         // Attributes + Get Set
         private bool vacant = true;
         private String name;

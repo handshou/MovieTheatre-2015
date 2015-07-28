@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MvSvr {
+
     [Serializable()]
+
     public class Booking {
+
         // Attributes + Get Set
         private static double fee = 1.50;
         public double Subtotal { get; set; }
