@@ -37,6 +37,8 @@ namespace MvSysClient {
         public const String BOOKNG = "[BOOK]";
         public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
+        public const String SFOUND = "[SRHF]";
+        public const String SEMPTY = "[SRHE]";
 
         public Thread t = null;
 
@@ -402,10 +404,8 @@ namespace MvSysClient {
 
         private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cobSearch.SelectedIndex != 0)
-            {
-                btnSearch.Enabled = true;
-            }
+            
+             btnSearch.Enabled = true;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -426,28 +426,35 @@ namespace MvSysClient {
 
             byte[] data = new byte[1024];
 
+            int size = 0;
+
             data = Encoding.ASCII.GetBytes(SEARCH);
             socket.Send(data); //this sends the Search request
 
             data = Encoding.ASCII.GetBytes(searchType + ";" + searchKey);
-            socket.Send(data); //this sends the search type
+            socket.Send(data); //this sends the search terms
 
-            int size = 0;
-            string infoFile = @"info.dat"; //temporary file for storage
+            size = socket.Receive(data); //this receives the confirmation answer
 
-            // receiving file size
-            data = new byte[1024];
-            try
-            {
-                size = socket.Receive(data);
-            }
-            catch (Exception)
-            {
-                rTxtMessages.AppendText("Receiving file size error" + "\r\n");
-            }
+            string answer = "";
 
-            if (size != 0)
+            answer = Encoding.ASCII.GetString(data, 0, size);
+
+            if (answer == SFOUND)
             {
+                string infoFile = @"info.dat"; //temporary file for storage
+
+                // receiving file size
+                data = new byte[1024];
+                try
+                {
+                    size = socket.Receive(data);
+                }
+                catch (Exception)
+                {
+                    rTxtMessages.AppendText("Receiving file size error" + "\r\n");
+                }
+
                 filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
                 rTxtMessages.Clear();
@@ -500,14 +507,21 @@ namespace MvSysClient {
                 }
                 catch (Exception ex)
                 {
-                    rTxtMessages.AppendText("No movies can be found. " + ex.Message);
+                    rTxtMessages.AppendText("Error. Please restart the application." + ex.Message);
                 }
+            }
+
+            if (answer == SEMPTY)
+            {
+                rTxtMessages.AppendText("No results attained");
             }
 
             else
             {
-                rTxtMessages.AppendText("Search results returns nothing.");
+                rTxtMessages.AppendText("Something bad has happened. Please restart the application.");
             }
+
+            
 
         }
 
