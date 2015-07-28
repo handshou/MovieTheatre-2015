@@ -76,10 +76,12 @@ namespace MvSysClient {
                     writer = new StreamWriter(stream);
                     reader = new StreamReader(stream);
 
-                    //sends user data to server
-                    //byte[] data = new byte[1024];
-                    //data = Encoding.ASCII.GetBytes(userID);
-                    //socket.Send(data);
+                    userID = txtUser.Text;
+
+                    // sends user data to server
+                    byte[] data = new byte[1024];
+                    data = Encoding.ASCII.GetBytes(userID);
+                    socket.Send(data);
 
                 }
                 catch (SocketException ex)

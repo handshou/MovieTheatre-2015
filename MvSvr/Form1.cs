@@ -76,9 +76,9 @@ namespace MvSvr {
         public Image GetImage(String imgPath) {
 
             Image img = Image.FromFile(imgPath);
-            Image img_res = FixedSize(img, 300, 300);
+            //Image img_res = FixedSize(img, 300, 300);
 
-            return img_res;
+            return img;
         }
 
         /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio

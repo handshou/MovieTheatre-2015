@@ -14,6 +14,9 @@ namespace MvSvr {
     class ConnectionHandler {
 
         // Attributes
+        public string cmd;
+        public string user;
+
         private String infoFile = @"moviecollection.dat";
         private long filesize = 0;
         private static int connections = 0;
@@ -49,14 +52,20 @@ namespace MvSvr {
         public void HandleConnection(Object state) {
 
             int size = 0;
-            string cmd;
             try {
                 ns = new NetworkStream(client);
                 connections++;
                 DisplayClientMsg(connections);
 
+                /* R */
+                // Receive user
+                data = new byte[1024];
+
+                size = client.Receive(data);
+                user = Encoding.ASCII.GetString(data, 0, size);
+                form.DisplayMsg("Welcome " + user + "!");
+
                 while (true) {
-                    data = new Byte[1024];
                     /* R */
                     // Receive command
                     size = client.Receive(data);
