@@ -27,8 +27,18 @@ namespace MvSvr {
 
         // Constructors
         public Movie() { }
-        public Movie(String title, double runtime, String description,
-                    String rating, String genre, Image poster, List<Show> shows) {
+        public Movie(String title, String description, String genre) {
+            Title = title;
+            //Runtime = runtime;
+            Description = description;
+            Genre = genre;
+            //Poster = poster;
+            //Shows = shows;
+        }
+
+        /*public Movie(String title, double runtime, String description,
+                    String rating, String genre, Image poster, List<Show> shows)
+        {
             Title = title;
             Runtime = runtime;
             Description = description;
@@ -36,7 +46,7 @@ namespace MvSvr {
             Genre = genre;
             Poster = poster;
             Shows = shows;
-        }        
+        }   */
 
         public string toString()
         {

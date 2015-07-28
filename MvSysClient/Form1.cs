@@ -257,7 +257,10 @@ namespace MvSysClient {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                        listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre);
+
+                        //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+                        listMovies.Items.Add(mv.Title);
 
                     }
                 }
@@ -271,6 +274,24 @@ namespace MvSysClient {
             //} catch (Exception ex) {
             //    rTxtMessages.Text = ex.Message;
             //}
+        }
+
+        
+
+        private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Movie m = null;
+
+            if (listMovies.SelectedItem !=  null)
+            {
+                String index = listMovies.GetItemText(listMovies.SelectedItem);
+                m = movieInfo[index];
+
+                rTxtMessages.AppendText("Movie " + m.Title + " selected.");
+            }
+
+            
+
         }
 
         public delegate void DisplayMsgCallback(String msg);
@@ -288,8 +309,6 @@ namespace MvSysClient {
                 rTxtMessages.AppendText(lines[i] + "\r\n");
             }
         }
-
-
 
     }
 
