@@ -78,13 +78,19 @@ namespace MvSvr {
             m.Genre = "Action";
             movieInfo.Add(m.Title, m);
 
+            try {
+                m.Poster = Image.FromFile(@"poster\\the_dark_knight.bmp");
+            } catch (Exception ex) {
+                tbDisplay.AppendText(ex + "\r\n");
+            }
+
             m = new Movie();
             m.Title = "Batman Of The Future";
             m.Genre = "Cartoon";
             movieInfo.Add(m.Title, m);
 
             try {
-                m.Poster = Image.FromFile(@"C:\Users\Hansel\Google Drive\Visual Studio\WAD\MvSvr\MvSvr\bin\Debug\poster\the_dark_knight.bmp");
+                m.Poster = Image.FromFile(@"poster\\the_dark_knight.jpg");
             } catch (Exception ex) {
                 tbDisplay.AppendText(ex + "\r\n");
             }
