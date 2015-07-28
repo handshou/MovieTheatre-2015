@@ -76,7 +76,10 @@ namespace MvSysClient {
                     writer = new StreamWriter(stream);
                     reader = new StreamReader(stream);
 
-                    btnLogin.Enabled = true;
+                    //sends user data to server
+                    //byte[] data = new byte[1024];
+                    //data = Encoding.ASCII.GetBytes(userID);
+                    //socket.Send(data);
 
                 }
                 catch (SocketException ex)
@@ -111,6 +114,15 @@ namespace MvSysClient {
             txtUser.Enabled = true;
             btnLogin.Enabled = true;
             btnLogout.Enabled = false;
+
+            btnBrowse.Enabled = false;
+            btnSearch.Enabled = false;
+            btnViewBH.Enabled = false;
+            btnSaveBH.Enabled = false;
+            btnBook.Enabled = false;
+            cobSearch.Enabled = false;
+            cobSeat.Enabled = false;
+            cobTime.Enabled = false;
         }
 
         public void runClient()
@@ -126,17 +138,23 @@ namespace MvSysClient {
             btnLogin.Enabled = false;
             btnLogout.Enabled = true;
 
+            btnBrowse.Enabled = true;
+            btnViewBH.Enabled = true;
+
+            cobSearch.Enabled = true;
+            txtSearch.Enabled = true;
+
+
             rTxtMessages.Clear();
             rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
             //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
 
-            cobSearch.SelectedIndex = 0;
 
             //loadMovieDetails();
         }
 
-        public void loadMovieDetails()
-            //this method adds the details of a selected movie to the form for users to refer to
+        public void loadShowDetails()
+            //this method adds the details of a selected show to the form for users to refer to
         {
 
             List<Block> blocks = new List<Block>
@@ -297,7 +315,7 @@ namespace MvSysClient {
             {
                 String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
                 m = movieInfo[index];
-
+                rTxtMessages.Clear();
                 rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
                 showMovieDetails(m);
             }
@@ -322,16 +340,16 @@ namespace MvSysClient {
             //lblMvDirector.Text = m.Director;
             //lblMvDescription.Text = m.Description;
 
-            if (userInside == true)
-            {
-                cobTime.Enabled = true;
-                cobSeat.Enabled = true;
+            picPoster.Image = m.Poster;
 
-                ArrayList s = new ArrayList();
-                s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
-                cobTime.DataSource = s;
-                cobTime.SelectedIndex = 0;
-            }
+            cobTime.Enabled = true;
+            cobSeat.Enabled = true;
+
+            ArrayList s = new ArrayList();
+            s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
+            cobTime.DataSource = s;
+            cobTime.SelectedIndex = 0;
+            
             
         }
 

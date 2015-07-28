@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("wdwdw");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("ffdwewdw");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("wdwdw");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ffdwewdw");
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
@@ -62,6 +62,7 @@
             // 
             // btnBrowse
             // 
+            this.btnBrowse.Enabled = false;
             this.btnBrowse.Location = new System.Drawing.Point(14, 121);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBrowse.Name = "btnBrowse";
@@ -108,9 +109,9 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14});
-            this.listTime.Location = new System.Drawing.Point(855, 212);
+            listViewItem5,
+            listViewItem6});
+            this.listTime.Location = new System.Drawing.Point(867, 201);
             this.listTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(100, 346);
@@ -149,6 +150,7 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.Enabled = false;
             this.txtSearch.Location = new System.Drawing.Point(150, 149);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearch.Name = "txtSearch";
@@ -157,6 +159,7 @@
             // 
             // cobSearch
             // 
+            this.cobSearch.Enabled = false;
             this.cobSearch.FormattingEnabled = true;
             this.cobSearch.Items.AddRange(new object[] {
             "Name",
@@ -292,6 +295,7 @@
             // 
             // cobSeat
             // 
+            this.cobSeat.Enabled = false;
             this.cobSeat.FormattingEnabled = true;
             this.cobSeat.Location = new System.Drawing.Point(719, 303);
             this.cobSeat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -310,10 +314,10 @@
             // 
             // pnSeats
             // 
-            this.pnSeats.Location = new System.Drawing.Point(973, 242);
+            this.pnSeats.Location = new System.Drawing.Point(983, 242);
             this.pnSeats.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnSeats.Name = "pnSeats";
-            this.pnSeats.Size = new System.Drawing.Size(309, 270);
+            this.pnSeats.Size = new System.Drawing.Size(299, 270);
             this.pnSeats.TabIndex = 32;
             // 
             // label2
