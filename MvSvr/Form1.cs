@@ -17,7 +17,23 @@ using System.Windows.Forms;
 
 namespace MvSvr {
     public partial class Form1 : Form {
+
+        // Attributes
+        private FileStream fs;
+        private String infoFile = @"info.dat";
+        private IFormatter formatter;
+        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+
+        // Connection Attributes
+        private static int port = 9070;
+        private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+        private List<Socket> clients = new List<Socket>();
+
+        public delegate void DisplayMsgCallback(String msg);
+
         public Form1() {
+
             InitializeComponent();
             LoadMovies();
             Thread t = new Thread(ConnectClient);
@@ -25,42 +41,8 @@ namespace MvSvr {
             t.Start();
         }
 
-        private FileStream fs;
-        private String infoFile = @"info.dat";
-        private IFormatter formatter;
-        public List<Socket> clients = new List<Socket>();
-
-        private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
-        private static int port = 9070;
-        private Socket server = new Socket(AddressFamily.InterNetwork,
-                            SocketType.Stream, ProtocolType.Tcp);
-        private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-
-        public delegate void DisplayMsgCallback(String msg);
-        public void DisplayMsg(String msg) {
-            if (this.InvokeRequired) {
-                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
-                this.Invoke(d, msg);
-                return;
-            }
-            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; i++) {
-                tbDisplay.AppendText(lines[i] + "\r\n");
-            }
-        }
-
-        public void LoadMovies() {
-            Movie m = new Movie();
-            m.Title = "Batman";
-            m.Genre = "Action";
-            movieInfo.Add(m.Title, m);
-
-            m = new Movie();
-            m.Title = "Batman Of The Future";
-            movieInfo.Add(m.Title, m);
-        }
-
         public void ConnectClient() {
+
             server.Bind(endpoint);
             server.Listen(10);
             while(true) {
@@ -80,13 +62,40 @@ namespace MvSvr {
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
+            
+        }
+
+        private void btnList_Click(object sender, EventArgs e) {
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+
+            Application.Exit();
+        }
+
+        public void LoadMovies() {
+
+            Movie m = new Movie();
+            m.Title = "Batman";
+            m.Genre = "Action";
+            movieInfo.Add(m.Title, m);
+
+            m = new Movie();
+            m.Title = "Batman Of The Future";
+            m.Genre = "Cartoon";
+            movieInfo.Add(m.Title, m);
+        }
+
+        private void LoadFile(String filePath) {
+
             formatter = new BinaryFormatter();
             try {
-                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
+                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
                     Movie[] m_info = (Movie[])formatter.Deserialize(fs);
                     fs.Close();
                     movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
+                    foreach (KeyValuePair<String, Movie> infos in movieInfo) { // (!) Remove when complete
                         tbDisplay.AppendText("Title: " + infos.Value.Title + "\r\n");
                         tbDisplay.AppendText(infos.Value.Genre + "\r\n");
                     }
@@ -96,13 +105,17 @@ namespace MvSvr {
             }
         }
 
-        private void btnList_Click(object sender, EventArgs e) {
+        public void DisplayMsg(String msg) {
 
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
+            if (this.InvokeRequired) {
+                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++) {
+                tbDisplay.AppendText(lines[i] + "\r\n");
+            }
         }
     }
 }

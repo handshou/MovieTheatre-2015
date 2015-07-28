@@ -208,7 +208,6 @@ namespace MvSysClient {
 
             socket.Send(data); //this ends the browse request
             
-            Car m = null;
             int size = 0;
             string infoFile = @"info.dat";
 

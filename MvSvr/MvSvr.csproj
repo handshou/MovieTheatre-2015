@@ -46,8 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app_code\Booking.cs" />
-    <Compile Include="app_code\ConnectionHandler.cs" />
-    <Compile Include="app_code\Car.cs" />
+    <Compile Include="program\ConnectionHandler.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,7 +56,7 @@
     <Compile Include="app_code\Hall.cs" />
     <Compile Include="app_code\Movie.cs" />
     <Compile Include="app_code\MovieList.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="app_code\Seat.cs" />
     <Compile Include="app_code\Show.cs" />
