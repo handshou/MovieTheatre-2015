@@ -119,8 +119,8 @@ namespace MvSysClient {
 
             btnBrowse.Enabled = false;
             btnSearch.Enabled = false;
-            btnViewBH.Enabled = false;
-            btnSaveBH.Enabled = false;
+            btnViewBHistory.Enabled = false;
+            btnSaveBHistory.Enabled = false;
             btnBook.Enabled = false;
             cobSearch.Enabled = false;
             cobSeat.Enabled = false;
@@ -141,7 +141,7 @@ namespace MvSysClient {
             btnLogout.Enabled = true;
 
             btnBrowse.Enabled = true;
-            btnViewBH.Enabled = true;
+            btnViewBHistory.Enabled = true;
 
             cobSearch.Enabled = true;
             txtSearch.Enabled = true;
@@ -307,8 +307,6 @@ namespace MvSysClient {
             //}
         }
 
-        
-
         private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             Movie m = null;
@@ -345,22 +343,43 @@ namespace MvSysClient {
             picPoster.Image = m.Poster;
 
             cobTime.Enabled = true;
+            cobTime.Items.Clear();
             cobSeat.Enabled = true;
 
-            ArrayList s = new ArrayList();
-            s.Add("10:00"); s.Add("12:00"); s.Add("14:00");
-            cobTime.DataSource = s;
+            List<Show> listShow = m.Shows;
+
+            foreach( Show sh in listShow)
+            {
+                cobTime.Items.Add(sh.TimeStart);
+            }
+
             cobTime.SelectedIndex = 0;
 
-            //Show s = new Show(m, );
-
-            //upload time to listTime
-            //populate cobTime from listTime
-            //populate seats from derived Seat list
-
-            double price = 0;//s.Price;
+            double price = 0;
             lblPrice.Text = price.ToString();
             
+        }
+
+        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            Show s = GetShow(m);
+
+            Hall h = s.Hall;
+
+            foreach (Seat seat in h.Seats)
+            {
+                cobSeat.Items.Add(seat.Name);
+            }
+        }
+
+        public Show GetShow(Movie m)
+        {
+            int index = cobTime.SelectedIndex;
+            return m.Shows[index];
         }
 
         public delegate void DisplayMsgCallback(String msg);
@@ -414,7 +433,6 @@ namespace MvSysClient {
             data = Encoding.ASCII.GetBytes(searchKey);
             socket.Send(data); //this sends the search key
 
-            /*
             int size = 0;
             string infoFile = @"info.dat"; //temporary file for storage
 
@@ -429,63 +447,69 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("Receiving file size error" + "\r\n");
             }
 
-            filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+            if (size != 0)
+            {
+                filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
-            rTxtMessages.Clear();
-            rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+                rTxtMessages.Clear();
+                rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
 
-            // receiving file
-            data = new byte[filesize];
-            try
-            {
-                size = socket.Receive(data);
-                rTxtMessages.AppendText("File received" + "\r\n");
-            }
-            catch (Exception)
-            {
-                rTxtMessages.AppendText("Receiving file error" + "\r\n");
-            }
-
-            //if (!File.Exists(infoFile)) {
-            //    File.Create(infoFile);
-            //}
-            if (!File.Exists(infoFile))
-            {
-                File.Create(infoFile);
-            }
-            using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
-            {
-                fs.Write(data, 0, Convert.ToInt32(filesize));
-                fs.Flush();
-                rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
-                fs.Close();
-            }
-
-            try
-            {
-                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
+                // receiving file
+                data = new byte[filesize];
+                try
                 {
-                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                    size = socket.Receive(data);
+                    rTxtMessages.AppendText("File received" + "\r\n");
+                }
+                catch (Exception)
+                {
+                    rTxtMessages.AppendText("Receiving file error" + "\r\n");
+                }
+
+                if (!File.Exists(infoFile))
+                {
+                    File.Create(infoFile);
+                }
+                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Write))
+                {
+                    fs.Write(data, 0, Convert.ToInt32(filesize));
                     fs.Flush();
+                    rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                     fs.Close();
-                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                }
+
+                try
+                {
+                    using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
                     {
-                        rTxtMessages.AppendText(infos.Value.Title + "\r\n");
-                        rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+                        Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                        fs.Flush();
+                        fs.Close();
+                        movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
+                        foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                        {
+                            rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                            rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre);
+                            Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Genre, infos.Value.Shows);
 
-                        //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
-                        listMovies.Items.Add(mv.Title);
+                            //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
+                            listMovies.Items.Add(mv.Title);
 
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    rTxtMessages.AppendText("No movies can be found. " + ex.Message);
+                }
             }
-            catch (Exception ex)
+
+            else
             {
-                rTxtMessages.AppendText(ex.Message);
-            }*/
+                rTxtMessages.AppendText("Search results returns nothing.");
+            }
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -498,19 +522,110 @@ namespace MvSysClient {
         {
 
             string time = (string)cobSearch.SelectedItem;
-            string seatNo = (string)cobSeat.SelectedItem;
+            int seatIndex = cobSeat.SelectedIndex;
             string price = lblPrice.Text;
-
             string line = "";
-            line = time + ";" + seatNo + ";" + price;
+
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+            Show s = GetShow(m);
+
+            line = userID + ";" + m.Title + ";" + time + ";" + seatIndex + ";" + price;
+            //hall or show + index of seat
 
             //sending to server
             byte[] data = new byte[1024];
 
-            data = Encoding.ASCII.GetBytes(BOOKNG);
+            data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive a booking
             socket.Send(data);
 
+            data = Encoding.ASCII.GetBytes(line); //sends the booking information
+            socket.Send(data);
+
+            string result = "";
+
+            try
+            {
+                int size = 0;
+                size = socket.Receive(data);
+                result = Encoding.ASCII.GetString(data, 0, size);
+            }
+
+            catch (Exception)
+            {
+                lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                lblBoardMessage.ForeColor = Color.Red;
+                result = "Failed";
+            }
+
+            finally
+            {
+                lblBoardMessage.Visible = true;
+            }
+
+            if (result == "Success")
+            {
+                lblBoardMessage.Text = "Your booking has been successful";
+                lblBoardMessage.Font = new Font(lblBoardMessage.Font, FontStyle.Bold);
+            }
+
+            else
+            {
+                lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                lblBoardMessage.ForeColor = Color.Red;
+            }
+
         }
+
+        private void btnViewBHistory_Click(object sender, EventArgs e)
+            //event is fired when user clicks view booking history
+        {
+            byte[] data = new byte[1024];
+
+            data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive booking history
+            socket.Send(data);
+
+            data = Encoding.ASCII.GetBytes(userID); //sends the user ID
+            socket.Send(data);
+
+            string history = "";
+
+            try
+            {
+                int size = 0;
+                size = socket.Receive(data);
+                history = Encoding.ASCII.GetString(data, 0, size);
+                rTxtMessages.Clear();
+                rTxtMessages.AppendText("Booking History:\n");
+
+                if (!string.IsNullOrWhiteSpace(history))
+                {
+                    rTxtMessages.AppendText(history);
+                }
+
+                else
+                {
+                    rTxtMessages.AppendText("No booking history found.");
+                }
+
+                
+            }
+
+            catch (Exception ex)
+            {
+                rTxtMessages.AppendText("Error: " + ex.Message);
+            }
+
+            btnSaveBHistory.Enabled = true;
+
+        }
+
+        private void btnSaveBHistory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
 
         
 
