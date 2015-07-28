@@ -75,15 +75,9 @@ namespace MvSvr {
 
         public Image GetImage(String imgPath) {
 
-            Image img = null;
-            try {
-                img = Image.FromFile(@imgPath);
-            } catch (Exception ex) {
-                tbDisplay.AppendText(ex + "\r\n");
-            }
-            //Image img_res = FixedSize(img, 200, 200);
+            Image img = Image.FromFile(imgPath);
 
-            return img;
+            return FixedSize(img, 200, 200);
         }
 
         /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
@@ -150,7 +144,7 @@ namespace MvSvr {
             m = new Movie();
             m.Title = "Batman Of The Future";
             m.Genre = "Animated";
-            m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            m.Poster = GetImage("poster\\batman_of_the_future.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),
