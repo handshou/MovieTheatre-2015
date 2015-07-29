@@ -10,16 +10,18 @@ namespace MvSvr {
         // Attributes + Get Set
         private static double fee = 1.50;
         public double Subtotal { get; set; }
-        public int Id { get; set; }
+        public String User { get; set; }
         public Show Show { get; set; }
         public List<Seat> Seats { get; set; }
+        public DateTime BookingTime;
 
         // Constructors
         public Booking() { }
-        public Booking(int id, Show show, List<Seat> seats) {
-            Id = id;
+        public Booking(String user, Show show, List<Seat> seats) {
+            User = user;
             Show = show;
             Seats = seats;
+            BookingTime = DateTime.Now;
         }
 
         // Methods

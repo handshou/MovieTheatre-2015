@@ -17,10 +17,12 @@ namespace MvSvr {
     public partial class Form1 : Form {
 
         // Attributes
-        private String infoFile = @"movieInfo.dat";
+        private static String moviesFile = @"movieInfo.dat";
+        private static String bkHistFile = @"bkrepo.dat";
         private FileStream fs;
         private IFormatter formatter;
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+        private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
         // Connection Attributes
         private static int port = 9070;
@@ -34,6 +36,7 @@ namespace MvSvr {
 
             InitializeComponent();
             LoadMovies();
+            bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
@@ -47,7 +50,9 @@ namespace MvSvr {
                 try {
                     Socket client = server.Accept();
                     clients.Add(client);
-                    ConnectionHandler handler = new ConnectionHandler(client, this, ref movieInfo, ref clients);
+                    ConnectionHandler handler = 
+                        new ConnectionHandler(client, this, ref movieInfo, 
+                            ref bookingInfo, ref clients);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
 
                 } catch(Exception ex) {
@@ -126,6 +131,47 @@ namespace MvSvr {
 
                 tbDisplay.AppendText(ex.Message + "\r\n");
             }
+        }
+
+        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
+
+            Dictionary<String, Booking>
+                bookingInfoBuilder = new Dictionary<String, Booking>();
+            Dictionary<String, List<Booking>>
+                bookingInfo = new Dictionary<String, List<Booking>>();
+
+            try {
+                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+                    Booking[] b_info = (Booking[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    /// Key             Value
+                    /// UserA + Date    BookingCopy1
+                    /// UserA + Date    BookingCopy2
+                    /// UserB + Date    BookingCopy3
+                    bookingInfoBuilder = b_info.ToDictionary((u) =>
+                        (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
+
+                    foreach (Booking ub in bookingInfoBuilder.Values) {
+                        if (!bookingInfo.ContainsKey(ub.User)) {
+                            bookingInfo.Add(ub.User, new List<Booking>());
+                        }
+                    }
+
+                    foreach (List<Booking> b in bookingInfo.Values) {
+                        foreach (Booking ub in bookingInfoBuilder.Values) {
+                            for (int i = 0; i < b.Count; i++) {
+                                if (ub.User.Equals(b[i].User))
+                                    b.Add(ub);
+                            }
+                        }
+                    }
+                }
+                tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
+            } catch (Exception ex) {
+                tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.Message +"\r\n");
+            }
+            return bookingInfo;
         }
 
         public void DisplayMsg(String msg) {

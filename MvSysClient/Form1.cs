@@ -616,7 +616,7 @@ namespace MvSysClient {
 
             showDict.Add(s.Hall.Seats[index], s);
 
-            SaveToFile(filePath, showDict);
+            SaveToBookingFile(filePath, showDict);
 
             // Sending file
             byte[] buffer = null;
@@ -674,13 +674,19 @@ namespace MvSysClient {
 
         }
 
-        public void SaveToFile(String filePath, Dictionary<Seat, Show> d)
+        public void SaveToBookingFile(String filePath, Dictionary<Seat, Show> d)
         {
 
             IFormatter formatter  = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
-                formatter.Serialize(fs, d.Values.ToArray());
+                Object[] bookingInfo = new Object[d.Count + 2]; // Create array to send
+                bookingInfo[0] = (Show) d.Values.ToArray()[0]; // First item in array, is show
+                bookingInfo[1] = (int) d.Count + 2;
+                for(int i = 0; i < d.Keys.ToArray().Length; i++){
+                    bookingInfo[i+2] = (Seat) d.Keys.ToArray()[i]; // Add all seats for the show
+                }
+                formatter.Serialize(fs, bookingInfo);
                 fs.Close();
             }
         }
