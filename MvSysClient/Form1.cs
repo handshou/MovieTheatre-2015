@@ -60,16 +60,159 @@ namespace MvSysClient {
 
             InitializeComponent();
             this.Text = "Client";
-            //cobDate.Items.Insert(0, "-- Select Value --");
-            //cobTime.Items.Insert(0, "-- Select Time --");
+            
 
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        
+
+        public void runClient()
+        //this method starts a thread
+        //called when the client has connected to the server and logged in with a userID
         {
 
-            if (!string.IsNullOrWhiteSpace(txtUser.Text))
-                //checks if userID textbox is either empty or only has white spaces
+            Control.CheckForIllegalCrossThreadCalls = false;
+
+            userID = txtUser.Text;
+            userInside = true;
+
+            //prevents changes to the user text box
+            txtUser.Enabled = false;
+            btnLogin.Enabled = false;
+            btnLogout.Enabled = true;
+
+            btnBrowse.Enabled = true;
+            btnViewBHistory.Enabled = true;
+
+            cobSearch.Enabled = true;
+            txtSearch.Enabled = true;
+
+
+            rTxtMessages.Clear();
+            rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
+            //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
+
+
+            //loadMovieDetails();
+        }
+
+        /* BUTTON_CLICK EVENT CODES BELOW
+         * ======================================================
+         * Some of these event methods fires a relevant method.
+         * ======================================================
+         */
+
+        private void btnLogin_Click(object sender, EventArgs e) { Login(); }
+        //attempts a connection and logs the user into the server
+
+        private void btnLogout_Click(object sender, EventArgs e) { Logout(); }
+        //logs the user out and severs the connection with the server.
+
+        private void btnBrowse_Click(object sender, EventArgs e) { Browse(); }
+        //request for movies from server
+
+        private void btnSearch_Click(object sender, EventArgs e) { Search(); }
+        //requests for specific movies from the server
+
+        private void btnBook_Click(object sender, EventArgs e) { Book(); }
+        //sends booking information to book for a seat 
+
+        private void btnViewBHistory_Click(object sender, EventArgs e) { ViewHistory(); }
+        //requests to view server's collection of user's booking history
+
+        private void btnSaveBHistory_Click(object sender, EventArgs e) { SaveHistory(); }
+        //saves requested booking history locally
+
+        /* LIST_CHANGED EVENT CODES BELOW
+         * ======================================================
+         * These methods mainly manipulates other controls when a valid value is selected.
+         * ======================================================
+         */
+
+        private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Movie m = null;
+
+            if (listMovies.SelectedItem !=  null)
+            {
+                String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
+                m = movieInfo[index];
+                rTxtMessages.Clear();
+                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
+                showMovieDetails(m);
+            }
+
+        }
+
+        private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSearch.Enabled = true;
+        }
+
+        private void cobDate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            cobTime.Items.Clear();
+
+            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
+            for (int i = 0; i < showtimes.Count; i++)
+            {
+                cobTime.Items.Add(showtimes[i]);
+            }
+
+            cobTime.SelectedIndex = 0;
+
+        }
+
+        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cobSeat.Items.Clear();
+
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            Show s = GetShow(m);
+
+            Hall h = s.Hall;
+
+            foreach (Seat seat in h.AvailableSeats())
+            {
+                cobSeat.Items.Add(seat.Name);
+            }
+
+            cobSeat.SelectedIndex = 0;
+
+            double price = 0;
+            price = s.Price;
+            lblPrice.Text = price.ToString();
+
+            cobSeat.Enabled = true;
+
+        }
+
+        private void cobSeat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnBook.Enabled = true;
+        }
+
+        /* FUNCTION METHODS BELOW
+         * ======================================================
+         * These methods are called when a button is clicked.
+         * They are expected to function according to the method they are called in
+         * ======================================================
+         */
+
+        public void Login()
+        //this method logs the user, with a valid userID, into the server
+        //successful execution of this method results in the user being able to access all other functions.
+        //unsuccessful execution prompts the user to enter a valid userID
+        {
+            Regex regex = new Regex(@"^[0-9]{4}$");
+
+            if (!string.IsNullOrWhiteSpace(txtUser.Text) && regex.IsMatch(txtUser.Text))
+            //checks if userID textbox is either empty or only has white spaces
             {
 
                 IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse
@@ -115,10 +258,11 @@ namespace MvSysClient {
                 txtUser.Text = null;
                 rTxtMessages.AppendText("\nPlease enter a user ID");
             }
-            
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        public void Logout()
+        //this method logs the user out
+        //Disables every control except for Login (which is re-enable)
         {
             byte[] data = new byte[1024];
             data = Encoding.ASCII.GetBytes(FINISH);
@@ -143,103 +287,28 @@ namespace MvSysClient {
             cobTime.Enabled = false;
         }
 
-        public void runClient()
-            //this method starts a thread
-            //called when the client has connected to the server and logged in with a userID
+        public void Browse()
+        //this method requests movies from the server, and then loads it into the controls
+        //Manipulates other controls to add in details of each movie and each show
+        //allows for the booking of seats
         {
-
-            Control.CheckForIllegalCrossThreadCalls = false;
-
-            userID = txtUser.Text;
-            userInside = true;
-
-            //prevents changes to the user text box
-            txtUser.Enabled = false;
-            btnLogin.Enabled = false;
-            btnLogout.Enabled = true;
-
-            btnBrowse.Enabled = true;
-            btnViewBHistory.Enabled = true;
-
-            cobSearch.Enabled = true;
-            txtSearch.Enabled = true;
-
-
-            rTxtMessages.Clear();
-            rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
-            //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
-
-
-            //loadMovieDetails();
-        }
-
-        public void loadSeats()
-            //this method adds the details of a selected show to the form for users to refer to
-        {
-
-            pnSeats.Controls.Clear();
-
-            List<Block> blocks = new List<Block>
-            {
-                new Block { Name = "A", Rows = 5, Seats = 5 },
-            };
-
-            Block block = blocks[0];
-
-            for (int y = 0; y < block.Rows; y++)
-            {
-
-                Label label = new Label();
-                label.Top = y * 20;
-                label.Width = 40;
-                label.Height = 20;
-                label.Text = (y + 1).ToString();
-                this.pnSeats.Controls.Add(label);
-
-                for (int x = 0; x <= block.Seats; x++)
-                {
-
-                    {
-                        CheckBox chkbx = new CheckBox();
-                        chkbx.Left = x * 40;
-                        chkbx.Top = y * 20;
-                        chkbx.Width = 40;
-                        chkbx.Height = 20;
-                        chkbx.Checked = false;
-
-                        this.pnSeats.Controls.Add(chkbx);
-                    }
-
-                }
-            }
-
-        }
-
-        public struct Block
-        {
-            public string Name { get; set; }
-            public int Rows { get; set; }
-            public int Seats { get; set; }
-        }
-
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            //request for movies from server
-
             listMovies.Items.Clear();
 
             IFormatter formatter = new BinaryFormatter();
 
             Thread.Sleep(1000);
 
-            
+
             SendRequest(BROWSE);
 
             //receiving file size
             byte[] data = new byte[1024];
-            try {
+            try
+            {
                 size = socket.Receive(data);
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 rTxtMessages.AppendText("Receiving file size error" + "\r\n");
             }
 
@@ -250,31 +319,38 @@ namespace MvSysClient {
 
             //receiving file
             data = new byte[filesize];
-            try {
+            try
+            {
                 size = socket.Receive(data);
                 rTxtMessages.AppendText("File received" + "\r\n");
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 rTxtMessages.AppendText("Receiving file error" + "\r\n");
             }
 
-            using (fs = new FileStream(infoFile, FileMode.OpenOrCreate, FileAccess.Write)) {
+            using (fs = new FileStream(infoFile, FileMode.OpenOrCreate, FileAccess.Write))
+            {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
                 rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                 fs.Close();
             }
 
-            try {
-                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read)) {
+            try
+            {
+                using (fs = new FileStream(infoFile, FileMode.Open, FileAccess.Read))
+                {
                     Movie[] m_info = (Movie[])formatter.Deserialize(fs);
                     fs.Flush();
                     fs.Close();
                     movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
+                    foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                    {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
-                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director, 
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director,
                             infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
 
                         //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
@@ -282,17 +358,19 @@ namespace MvSysClient {
 
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 rTxtMessages.AppendText(ex.Message);
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        public void Search()
+        //this method requests for a specific movie search in the server
+        //search parameters are acquired from user inputs
+        //Loads up listMovie according to acquired searched movies
+        //Works similar to Browse, adds in details in other controls for each movie and each show
         {
-            //requests for movies from server under a search type and key
-            //Sends request, search type and key
-            //search runs in the server, results sent back
-            //process results and show
 
             listMovies.Items.Clear();
 
@@ -414,179 +492,13 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("\nSearch bar is empty: please input a key word.");
 
             }
-
         }
 
-        private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
+        public void Book()
+        //this method gathers user inputs to request a seat booking in the server
+        //booking information is derived from user inputs in the relevant controls
+        //server will return relevant reply depending if the booking is successful
         {
-            Movie m = null;
-
-            if (listMovies.SelectedItem !=  null)
-            {
-                String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
-                m = movieInfo[index];
-                rTxtMessages.Clear();
-                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
-                showMovieDetails(m);
-            }
-
-        }
-
-        private void showMovieDetails(Movie m)
-        {
-
-            lblShowName.Visible = true;
-            lblShowDirector.Visible = true;
-            lblShowGenre.Visible = true;
-
-            lblMvName.Visible = true;
-            lblMvGenre.Visible = true;
-            lblMvDirector.Visible = true;
-            lblMvDescription.Visible = true;
-
-            lblMvName.Text = m.Title;
-            lblMvGenre.Text = m.Genre;
-
-            lblMvDirector.Text = m.Director;
-            lblMvDescription.Text = m.Description;
-
-            picPoster.Image = FixedSize(m.Poster, 200, 200);
-
-            cobDate.Enabled = true;
-            cobDate.Items.Clear();
-            cobTime.Enabled = true;
-            cobTime.Items.Clear();
-            listTime.Items.Clear();
-            btnBook.Enabled = true;
-
-            List<Show> listShow = m.Shows;
-            List<String> dates = GetDatesByMovie(m);
-
-            foreach (String s in dates) {
-                cobDate.Items.Add(s);
-            }
-
-            cobDate.SelectedIndex = 0;
-            
-        }
-
-        public List<String> GetDatesByMovie(Movie m) {
-            List<Show> shows = m.Shows;
-            List<String> all = new List<String>();
-            foreach(Show s in shows){
-                if(!all.Contains(s.Date))
-                    all.Add(s.Date);
-            }
-            all.Sort();
-            //rTxtMessages.Text = all.Count.ToString();
-            return all;
-        }
-
-
-        private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-
-            cobTime.Items.Clear();
-
-            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
-            for(int i = 0; i < showtimes.Count; i++) {
-                cobTime.Items.Add(showtimes[i]);
-            }
-
-            cobTime.SelectedIndex = 0;
-
-        }
-
-        public List<String> GetShowTimesByDate(Movie m, String date)
-        {
-            List<String> showtimes = new List<String>();
-            try
-            {
-                List<Show> shows = m.Shows;
-                showtimes = new List<String>();
-                for (int i = 0; i < shows.Count; i++)
-                {
-
-                    if (shows[i].Date.Equals(date))
-                    {
-                        showtimes.Add(shows[i].TimeStart);
-                    }
-                    
-                }
-                showtimes.Sort();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return showtimes;
-        }
-
-        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cobSeat.Items.Clear();
-            
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-
-            Show s = GetShow(m);
-
-            Hall h = s.Hall;
-
-            foreach (Seat seat in h.AvailableSeats())
-            {
-                cobSeat.Items.Add(seat.Name);
-            }
-
-            cobSeat.SelectedIndex = 0;
-
-            double price = 0;
-            price = s.Price;
-            lblPrice.Text = price.ToString();
-
-            loadSeats();
-
-            cobSeat.Enabled = true;
-
-        }
-
-        public Movie GetMovie() {
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-            return m;
-        }
-
-        public Show GetShow(Movie m)
-        {
-            int index = cobTime.SelectedIndex;
-            return m.Shows[index];
-        }
-
-        public delegate void DisplayMsgCallback(String msg);
-        public void DisplayMsg(String msg)
-        {
-            if (this.InvokeRequired)
-            {
-                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
-                this.Invoke(d, msg);
-                return;
-            }
-            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                rTxtMessages.AppendText(lines[i] + "\r\n");
-            }
-        }
-
-        private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-             btnSearch.Enabled = true;
-        }
-
-        private void btnBook_Click(object sender, EventArgs e)
-        {
-
             string time = (string)cobSearch.SelectedItem;
             int seatIndex = cobSeat.SelectedIndex;
             string price = lblPrice.Text;
@@ -606,10 +518,10 @@ namespace MvSysClient {
             socket.Send(data);
 
             string filePath = @"bookingInfo.dat";
-            
+
             int index = cobSeat.SelectedIndex;
 
-            Dictionary<Seat, Show> showDict= new Dictionary<Seat, Show>();
+            Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
 
             showDict.Add(s.Hall.Seats[index], s);
 
@@ -668,6 +580,7 @@ namespace MvSysClient {
             {
                 lblBoardMessage.Text = "Your booking has been successful";
                 lblBoardMessage.Font = new Font(lblBoardMessage.Font, FontStyle.Bold);
+                lblBoardMessage.ForeColor = Color.Black;
             }
 
             else
@@ -675,29 +588,13 @@ namespace MvSysClient {
                 lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
                 lblBoardMessage.ForeColor = Color.Red;
             }
-
         }
 
-        public void SaveToBookingFile(String filePath, Dictionary<Seat, Show> d)
+        public void ViewHistory()
+        //this methods requests a user's booking history from the server, and then loads it into the client
+        //enables other controls related to booking-history
         {
-
-            IFormatter formatter  = new BinaryFormatter();
-            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                Object[] bookingInfo = new Object[d.Count + 2]; // Create array to send
-                bookingInfo[0] = (Show) d.Values.ToArray()[0]; // First item in array, is show
-                bookingInfo[1] = (int) d.Count + 2;
-                for(int i = 0; i < d.Keys.ToArray().Length; i++){
-                    bookingInfo[i+2] = (Seat) d.Keys.ToArray()[i]; // Add all seats for the show
-                }
-                formatter.Serialize(fs, bookingInfo);
-                fs.Close();
-            }
-        }
-
-        private void btnViewBHistory_Click(object sender, EventArgs e)
-            //event is fired when user clicks view booking history
-        {
+            bookingInfo = null;
             byte[] data = new byte[1024];
 
             SendRequest(HISTRY);
@@ -734,16 +631,18 @@ namespace MvSysClient {
             {
                 rTxtMessages.AppendText("Error: " + ex.Message);
             }
-
         }
 
-        private void btnSaveBHistory_Click(object sender, EventArgs e)
+        public void SaveHistory()
+        //this methods saves a user's booking information into a text file locally
+        //requires a history to be loaded from the server first
+
         {
-            string bHistory = ValidateString(bookingInfo);
+            string bHistory = bookingInfo;
 
-            bHistory = userID;
+            bHistory = userID + ";lolol";
 
-            if (bHistory != null)
+            if (!string.IsNullOrWhiteSpace(bHistory))
             {
 
                 string fileName = "bookingHistory.txt";
@@ -755,9 +654,17 @@ namespace MvSysClient {
                 string line = null;
 
                 StreamWriter writer = new StreamWriter(fileName);
-                while ((line = reader.ReadLine()) != null)
+
+                using (writer = new StreamWriter(fileName))
                 {
                     writer.WriteLine(bHistory);
+                }
+
+
+                //using (fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    //fs.Write()
+                    //fs.Close();
                 }
 
             }
@@ -766,39 +673,142 @@ namespace MvSysClient {
             {
                 rTxtMessages.AppendText("\nYour booking history is empty.");
             }
-
         }
 
-        private void btnLoadBHistory_Click(object sender, EventArgs e)
-        {
-
-            string bHistory = "";
-
-
-        }
-
-        public string ValidateString(string input)
-        {
-            string inputToValidate = input;
-
-            if (!string.IsNullOrWhiteSpace(inputToValidate))
-            {
-                return inputToValidate;
-            }
-
-            else
-            {
-                return null;
-            }
-
-        }
+        /* MISC METHODS
+         * ======================================================
+         * These methods are called to assist other methods for the sake of code condensation
+         * ======================================================
+         */
 
         public void SendRequest(string request)
+        //this method is called a request is sent to the server as part of the server-client communication protocol
+        //Sends a 'request' message to the server
         {
             byte[] data = new byte[1024];
 
             data = Encoding.ASCII.GetBytes(request); //sends prompt for server to receive a booking
             socket.Send(data);
+        }
+
+        private void showMovieDetails(Movie m)
+        //called when a movie is selected in listMovies.
+        //This method manipulates the controls to contain and show the movie's information.
+        {
+
+            lblShowName.Visible = true;
+            lblShowDirector.Visible = true;
+            lblShowGenre.Visible = true;
+
+            lblMvName.Visible = true;
+            lblMvGenre.Visible = true;
+            lblMvDirector.Visible = true;
+            lblMvDescription.Visible = true;
+
+            lblMvName.Text = m.Title;
+            lblMvGenre.Text = m.Genre;
+
+            lblMvDirector.Text = m.Director;
+            lblMvDescription.Text = m.Description;
+
+            picPoster.Image = FixedSize(m.Poster, 200, 200);
+
+
+            cobDate.Enabled = true;
+            cobDate.Items.Clear();
+            cobTime.Enabled = true;
+            cobTime.Items.Clear();
+            listTime.Items.Clear();
+            btnBook.Enabled = true;
+
+            List<Show> listShow = m.Shows;
+            List<String> dates = GetDatesByMovie(m);
+
+            foreach (String s in dates) {
+                cobDate.Items.Add(s);
+            }
+
+            cobDate.SelectedIndex = 0;
+            
+        }
+
+        public List<String> GetDatesByMovie(Movie m) 
+        //this method is called when the show dates of a movie is required
+        //returns a list of show dates
+        {
+            List<Show> shows = m.Shows;
+            List<String> all = new List<String>();
+            foreach(Show s in shows){
+                if(!all.Contains(s.Date))
+                    all.Add(s.Date);
+            }
+            all.Sort();
+            //rTxtMessages.Text = all.Count.ToString();
+            return all;
+        }
+
+        public List<String> GetShowTimesByDate(Movie m, String date)
+        //this method is called when the show times of a show date is required
+        //returns a list of show times
+        {
+            List<String> showtimes = new List<String>();
+            try
+            {
+                List<Show> shows = m.Shows;
+                showtimes = new List<String>();
+                for (int i = 0; i < shows.Count; i++)
+                {
+
+                    if (shows[i].Date.Equals(date))
+                    {
+                        showtimes.Add(shows[i].TimeStart);
+                    }
+                    
+                }
+                showtimes.Sort();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return showtimes;
+        }
+
+        public Movie GetMovie()
+        //this method is called when a movie object is required
+        //returns a Movie object
+        {
+        
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+            return m;
+        }
+
+        public Show GetShow(Movie m)
+        //this method is called when the Show object of a Movie is required
+        //returns a Show object
+        {
+            int index = cobTime.SelectedIndex;
+            return m.Shows[index];
+        }
+
+        public void SaveToBookingFile(String filePath, Dictionary<Seat, Show> d)
+        //this method is called by the Book method when a booking needs to be verified by the server
+        //serializes and sends the seat information to the server
+        {
+
+            IFormatter formatter  = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                Object[] bookingInfo = new Object[d.Count + 2]; // Create array to send
+                bookingInfo[0] = (Show) d.Values.ToArray()[0]; // First item in array is a Show object
+                bookingInfo[1] = (int) d.Count + 2;
+                for(int i = 0; i < d.Keys.ToArray().Length; i++){
+                    bookingInfo[i+2] = (Seat) d.Keys.ToArray()[i]; // Add all seats for the show
+                }
+                formatter.Serialize(fs, bookingInfo);
+                fs.Close();
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -808,7 +818,10 @@ namespace MvSysClient {
         }
 
         /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
-        public static Image FixedSize(Image imgPhoto, int Width, int Height) {
+        public static Image FixedSize(Image imgPhoto, int Width, int Height)
+        //this method is called to resize an image into a standard size
+        //resizes the image and returns a resized Image object
+        {
 
             int sourceWidth = imgPhoto.Width;
             int sourceHeight = imgPhoto.Height;
@@ -854,13 +867,6 @@ namespace MvSysClient {
             grPhoto.Dispose();
             return bmPhoto;
         }
-
-        private void cobSeat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            btnBook.Enabled = true;
-        }
-
-        
 
     }
 

@@ -59,7 +59,6 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.cobDate = new System.Windows.Forms.ComboBox();
-            this.btnLoadBHistory = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
             // 
@@ -265,10 +264,10 @@
             // 
             // btnSaveBHistory
             // 
-            this.btnSaveBHistory.Location = new System.Drawing.Point(1161, 52);
+            this.btnSaveBHistory.Location = new System.Drawing.Point(1161, 82);
             this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
-            this.btnSaveBHistory.Size = new System.Drawing.Size(138, 49);
+            this.btnSaveBHistory.Size = new System.Drawing.Size(121, 73);
             this.btnSaveBHistory.TabIndex = 26;
             this.btnSaveBHistory.Text = "Save booking history";
             this.btnSaveBHistory.UseVisualStyleBackColor = true;
@@ -277,10 +276,10 @@
             // btnViewBHistory
             // 
             this.btnViewBHistory.Enabled = false;
-            this.btnViewBHistory.Location = new System.Drawing.Point(1161, 2);
+            this.btnViewBHistory.Location = new System.Drawing.Point(1161, 11);
             this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnViewBHistory.Name = "btnViewBHistory";
-            this.btnViewBHistory.Size = new System.Drawing.Size(138, 43);
+            this.btnViewBHistory.Size = new System.Drawing.Size(121, 67);
             this.btnViewBHistory.TabIndex = 27;
             this.btnViewBHistory.Text = "View booking history";
             this.btnViewBHistory.UseVisualStyleBackColor = true;
@@ -422,23 +421,11 @@
             this.cobDate.TabIndex = 47;
             this.cobDate.SelectedIndexChanged += new System.EventHandler(this.cobDate_SelectedIndexChanged);
             // 
-            // btnLoadBHistory
-            // 
-            this.btnLoadBHistory.Location = new System.Drawing.Point(1161, 106);
-            this.btnLoadBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnLoadBHistory.Name = "btnLoadBHistory";
-            this.btnLoadBHistory.Size = new System.Drawing.Size(138, 49);
-            this.btnLoadBHistory.TabIndex = 48;
-            this.btnLoadBHistory.Text = "Load booking history";
-            this.btnLoadBHistory.UseVisualStyleBackColor = true;
-            this.btnLoadBHistory.Click += new System.EventHandler(this.btnLoadBHistory_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1296, 567);
-            this.Controls.Add(this.btnLoadBHistory);
             this.Controls.Add(this.cobDate);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblPrice);
@@ -521,7 +508,6 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.ComboBox cobDate;
-        private System.Windows.Forms.Button btnLoadBHistory;
     }
 }
 

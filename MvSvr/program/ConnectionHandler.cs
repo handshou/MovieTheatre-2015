@@ -284,7 +284,7 @@ namespace MvSvr {
             List<Booking> bookingList = new List<Booking>();
             bookingInfo = LoadBookingFile(bkHistFile);
             bookingInfo.TryGetValue(user, out bookingList);
-
+            
             String info_str = "[" + s.Movie.Title + "] " +
                                     s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : ";
 
@@ -417,7 +417,7 @@ namespace MvSvr {
                 bookingInfoBuilder = new Dictionary<String, Booking>();
             Dictionary<String, List<Booking>>
                 bookingInfo = new Dictionary<String, List<Booking>>();
-            
+
             try {
                 using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
                     Booking[] b_info = (Booking[])formatter.Deserialize(fs);
