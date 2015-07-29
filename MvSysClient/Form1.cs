@@ -602,13 +602,6 @@ namespace MvSysClient {
             socket.Send(data);
 
             string filePath = @"bookingInfo.dat";
-
-            FileInfo f = new FileInfo(filePath);
-            filesize = f.Length;
-            data = new byte[filesize];
-
-            // Sending booking information
-            socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
             
             int index = cobSeat.SelectedIndex;
 
@@ -617,6 +610,13 @@ namespace MvSysClient {
             showDict.Add(s.Hall.Seats[index], s);
 
             SaveToBookingFile(filePath, showDict);
+
+            FileInfo f = new FileInfo(filePath);
+            filesize = f.Length;
+            data = new byte[filesize];
+
+            // Sending booking information
+            socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
 
             // Sending file
             byte[] buffer = null;

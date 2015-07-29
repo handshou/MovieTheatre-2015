@@ -177,6 +177,7 @@ namespace MvSvr {
                 List<Seat> seats = new List<Seat>();
                 
                 /* R */ // Receive booking info
+                /* R */
                 ReceiveFile(bseatsFile);
                 seats = LoadSeatsFile(bseatsFile, out show);
 
