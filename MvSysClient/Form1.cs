@@ -282,169 +282,6 @@ namespace MvSysClient {
             }
         }
 
-        private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Movie m = null;
-
-            if (listMovies.SelectedItem !=  null)
-            {
-                String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
-                m = movieInfo[index];
-                rTxtMessages.Clear();
-                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
-                showMovieDetails(m);
-            }
-
-        }
-
-        private void showMovieDetails(Movie m)
-        {
-
-            lblShowName.Visible = true;
-            lblShowDirector.Visible = true;
-            lblShowGenre.Visible = true;
-
-            lblMvName.Visible = true;
-            lblMvGenre.Visible = true;
-            lblMvDirector.Visible = true;
-            lblMvDescription.Visible = true;
-
-            lblMvName.Text = m.Title;
-            lblMvGenre.Text = m.Genre;
-
-            lblMvDirector.Text = m.Director;
-            lblMvDescription.Text = m.Description;
-
-            picPoster.Image = FixedSize(m.Poster, 200, 200);
-
-            cobDate.Enabled = true;
-            cobDate.Items.Clear();
-            cobTime.Enabled = true;
-            cobTime.Items.Clear();
-            listTime.Items.Clear();
-            cobSeat.Enabled = true;
-
-            List<Show> listShow = m.Shows;
-            List<String> dates = GetDatesByMovie(m);
-
-            foreach (String s in dates) {
-                cobDate.Items.Add(s);
-            }
-
-            cobDate.Items.Insert(0, "-- Select Value --");
-
-            cobDate.SelectedIndex = 0;
-
-            double price = 0;
-            lblPrice.Text = price.ToString();
-            
-        }
-
-        public List<String> GetDatesByMovie(Movie m) {
-            List<Show> shows = m.Shows;
-            List<String> all = new List<String>();
-            foreach(Show s in shows){
-                if(!all.Contains(s.Date))
-                    all.Add(s.Date);
-            }
-            all.Sort();
-            rTxtMessages.Text = all.Count.ToString();
-            return all;
-        }
-
-
-        private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-
-            cobTime.Items.Clear();
-
-            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
-            for(int i = 0; i < showtimes.Count; i++) {
-                cobTime.Items.Add(showtimes[i]);
-            }
-            
-            cobTime.Items.Insert(0, "-- Select Time --");
-
-            cobTime.SelectedIndex = 0;
-        }
-
-        public List<String> GetShowTimesByDate(Movie m, String date)
-        {
-            List<String> showtimes = new List<String>();
-            try
-            {
-                List<Show> shows = m.Shows;
-                showtimes = new List<String>();
-                for (int i = 0; i < shows.Count; i++)
-                {
-
-                    if (shows[i].Date.Equals(date))
-                    {
-                        showtimes.Add(shows[i].TimeStart);
-                    }
-                    
-                }
-                showtimes.Sort();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return showtimes;
-        }
-
-        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cobSeat.Items.Clear();
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-
-            Show s = GetShow(m);
-
-            Hall h = s.Hall;
-
-            foreach (Seat seat in h.AvailableSeats())
-            {
-                cobSeat.Items.Add(seat.Name);
-            }
-
-            loadSeats();
-        }
-
-        public Movie GetMovie() {
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-            return m;
-        }
-
-        public Show GetShow(Movie m)
-        {
-            int index = cobTime.SelectedIndex;
-            return m.Shows[index];
-        }
-
-        public delegate void DisplayMsgCallback(String msg);
-        public void DisplayMsg(String msg)
-        {
-            if (this.InvokeRequired)
-            {
-                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
-                this.Invoke(d, msg);
-                return;
-            }
-            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                rTxtMessages.AppendText(lines[i] + "\r\n");
-            }
-        }
-
-        private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-             btnSearch.Enabled = true;
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             //requests for movies from server under a search type and key
@@ -575,10 +412,172 @@ namespace MvSysClient {
 
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Application.Exit();
-            //kills all bckgrnd thread under this prog
+            Movie m = null;
+
+            if (listMovies.SelectedItem !=  null)
+            {
+                String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
+                m = movieInfo[index];
+                rTxtMessages.Clear();
+                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
+                showMovieDetails(m);
+            }
+
+        }
+
+        private void showMovieDetails(Movie m)
+        {
+
+            lblShowName.Visible = true;
+            lblShowDirector.Visible = true;
+            lblShowGenre.Visible = true;
+
+            lblMvName.Visible = true;
+            lblMvGenre.Visible = true;
+            lblMvDirector.Visible = true;
+            lblMvDescription.Visible = true;
+
+            lblMvName.Text = m.Title;
+            lblMvGenre.Text = m.Genre;
+
+            lblMvDirector.Text = m.Director;
+            lblMvDescription.Text = m.Description;
+
+            picPoster.Image = FixedSize(m.Poster, 200, 200);
+
+            cobDate.Enabled = true;
+            cobDate.Items.Clear();
+            cobTime.Enabled = true;
+            cobTime.Items.Clear();
+            listTime.Items.Clear();
+            btnBook.Enabled = true;
+
+            List<Show> listShow = m.Shows;
+            List<String> dates = GetDatesByMovie(m);
+
+            foreach (String s in dates) {
+                cobDate.Items.Add(s);
+            }
+
+            cobDate.Items.Insert(0, "-- Select Value --");
+
+            cobDate.SelectedIndex = 0;
+            
+        }
+
+        public List<String> GetDatesByMovie(Movie m) {
+            List<Show> shows = m.Shows;
+            List<String> all = new List<String>();
+            foreach(Show s in shows){
+                if(!all.Contains(s.Date))
+                    all.Add(s.Date);
+            }
+            all.Sort();
+            rTxtMessages.Text = all.Count.ToString();
+            return all;
+        }
+
+
+        private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            cobTime.Items.Clear();
+
+            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
+            for(int i = 0; i < showtimes.Count; i++) {
+                cobTime.Items.Add(showtimes[i]);
+            }
+            
+            cobTime.Items.Insert(0, "-- Select Time --");
+
+            cobTime.SelectedIndex = 0;
+
+        }
+
+        public List<String> GetShowTimesByDate(Movie m, String date)
+        {
+            List<String> showtimes = new List<String>();
+            try
+            {
+                List<Show> shows = m.Shows;
+                showtimes = new List<String>();
+                for (int i = 0; i < shows.Count; i++)
+                {
+
+                    if (shows[i].Date.Equals(date))
+                    {
+                        showtimes.Add(shows[i].TimeStart);
+                    }
+                    
+                }
+                showtimes.Sort();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return showtimes;
+        }
+
+        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cobSeat.Items.Clear();
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+
+            Show s = GetShow(m);
+
+            Hall h = s.Hall;
+
+            foreach (Seat seat in h.AvailableSeats())
+            {
+                cobSeat.Items.Add(seat.Name);
+            }
+
+            double price = 0;
+            price = s.Price;
+            lblPrice.Text = price.ToString();
+
+            loadSeats();
+
+            cobSeat.Enabled = true;
+
+        }
+
+        public Movie GetMovie() {
+            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
+            Movie m = movieInfo[movie];
+            return m;
+        }
+
+        public Show GetShow(Movie m)
+        {
+            int index = cobTime.SelectedIndex;
+            return m.Shows[index];
+        }
+
+        public delegate void DisplayMsgCallback(String msg);
+        public void DisplayMsg(String msg)
+        {
+            if (this.InvokeRequired)
+            {
+                DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                rTxtMessages.AppendText(lines[i] + "\r\n");
+            }
+        }
+
+        private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+             btnSearch.Enabled = true;
         }
 
         private void btnBook_Click(object sender, EventArgs e)
@@ -593,7 +592,7 @@ namespace MvSysClient {
             Movie m = movieInfo[movie];
             Show s = GetShow(m);
 
-            line = userID + ";" + m.Title + ";" + time + ";" + seatIndex + ";" + price;
+            line = userID + ";" + ";" + time + ";" + seatIndex + ";" + price;
             //hall or show + index of seat
 
             //sending to server
@@ -602,8 +601,45 @@ namespace MvSysClient {
             data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive a booking
             socket.Send(data);
 
-            data = Encoding.ASCII.GetBytes(line); //sends the booking information
-            socket.Send(data);
+            string filePath = @"bookingInfo.dat";
+
+            FileInfo f = new FileInfo(filePath);
+            filesize = f.Length;
+            data = new byte[filesize];
+
+            // Sending booking information
+            socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
+            
+            int index = cobSeat.SelectedIndex;
+
+            Seat seat = s.Hall.Seats[index];
+
+            Dictionary<String, Seat> seatDict= new Dictionary<String, Seat>();
+
+            seatDict.Add(seat.Name, seat);
+
+            SaveToFile(filePath, seatDict);
+
+            // Sending file
+            byte[] buffer = null;
+            using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                buffer = new byte[fs.Length];
+                fs.Read(buffer, 0, (int)fs.Length);
+                fs.Close();
+            }
+
+            try
+            {
+                socket.Send(buffer);
+                rTxtMessages.AppendText("Files sent"); //
+            }
+            catch (Exception ex)
+            {
+                rTxtMessages.AppendText(ex.Message);
+            }
+
+            ///////
 
             string result = "";
 
@@ -640,6 +676,17 @@ namespace MvSysClient {
 
         }
 
+        public void SaveToFile(String filePath, Dictionary<String, Seat> d)
+        {
+
+            IFormatter formatter  = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                formatter.Serialize(fs, d.Values.ToArray());
+                fs.Close();
+            }
+        }
+
         private void btnViewBHistory_Click(object sender, EventArgs e)
             //event is fired when user clicks view booking history
         {
@@ -671,7 +718,6 @@ namespace MvSysClient {
                     rTxtMessages.AppendText("No booking history found.");
                 }
 
-                
             }
 
             catch (Exception ex)
@@ -686,6 +732,12 @@ namespace MvSysClient {
         private void btnSaveBHistory_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+            //kills all bckgrnd thread under this prog
         }
 
         /// http://stackoverflow.com/questions/1940581/c-sharp-image-resizing-to-different-size-while-preserving-aspect-ratio
@@ -734,6 +786,11 @@ namespace MvSysClient {
 
             grPhoto.Dispose();
             return bmPhoto;
+        }
+
+        private void cobSeat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnBook.Enabled = true;
         }
 
     }
