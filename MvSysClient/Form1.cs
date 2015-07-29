@@ -655,17 +655,19 @@ namespace MvSysClient {
 
                 StreamWriter writer = new StreamWriter(fileName);
 
-                using (writer = new StreamWriter(fileName))
+                if (!File.Exists(fileName))
                 {
-                    writer.WriteLine(bHistory);
+                    File.Create(fileName).Dispose();
+
+                    using (writer = new StreamWriter(fileName))
+                    {
+                        writer.WriteLine(bHistory);
+                    }
+
                 }
 
+                rTxtMessages.AppendText("\nBooking History saved to local file '" + fileName + "'.");
 
-                //using (fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-                {
-                    //fs.Write()
-                    //fs.Close();
-                }
 
             }
 
