@@ -10,10 +10,10 @@ namespace MvSvr {
 
         // Attributes + Get Set
         public String Title { get; set; }
-        public double Runtime { get; set; }
+        //public double Runtime { get; set; }
         public String Description { get; set; }
         public String Director { get; set; }
-        public String Rating { get; set; }
+        //public String Rating { get; set; }
         public String Genre { get; set; }
         public Image Poster { get; set; }
         public List<Show> Shows { get; set; }

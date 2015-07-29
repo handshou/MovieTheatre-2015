@@ -59,8 +59,9 @@ namespace MvSysClient {
         {
 
             InitializeComponent();
-            cobDate.Items.Insert(0, "-- Select Value --");
-            cobTime.Items.Insert(0, "-- Select Time --");
+            this.Text = "Client";
+            //cobDate.Items.Insert(0, "-- Select Value --");
+            //cobTime.Items.Insert(0, "-- Select Time --");
 
         }
 
@@ -477,7 +478,7 @@ namespace MvSysClient {
                     all.Add(s.Date);
             }
             all.Sort();
-            rTxtMessages.Text = all.Count.ToString();
+            //rTxtMessages.Text = all.Count.ToString();
             return all;
         }
 
@@ -525,6 +526,7 @@ namespace MvSysClient {
         private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
         {
             cobSeat.Items.Clear();
+            
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
             Movie m = movieInfo[movie];
 
@@ -536,6 +538,8 @@ namespace MvSysClient {
             {
                 cobSeat.Items.Add(seat.Name);
             }
+
+            cobSeat.SelectedIndex = 0;
 
             double price = 0;
             price = s.Price;
@@ -630,7 +634,7 @@ namespace MvSysClient {
             try
             {
                 socket.Send(buffer);
-                rTxtMessages.AppendText("Files sent"); //
+                // rTxtMessages.AppendText("Files sent"); //
             }
             catch (Exception ex)
             {
@@ -698,8 +702,8 @@ namespace MvSysClient {
 
             SendRequest(HISTRY);
 
-            data = Encoding.ASCII.GetBytes(userID); //sends the user ID
-            socket.Send(data);
+            //data = Encoding.ASCII.GetBytes(userID); //sends the user ID
+            //socket.Send(data);
 
             string history = "";
 

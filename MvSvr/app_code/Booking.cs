@@ -9,7 +9,7 @@ namespace MvSvr {
 
         // Attributes + Get Set
         private static double fee = 1.50;
-        public double Subtotal { get; set; }
+        //public double Subtotal { get; set; }
         public String User { get; set; }
         public Show Show { get; set; }
         public List<Seat> Seats { get; set; }

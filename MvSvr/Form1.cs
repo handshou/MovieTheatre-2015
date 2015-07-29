@@ -17,7 +17,7 @@ namespace MvSvr {
     public partial class Form1 : Form {
 
         // Attributes
-        private static String moviesFile = @"movieInfo.dat";
+        private static String moviesFile = @"movies.dat";
         private static String bkHistFile = @"bkrepo.dat";
         private FileStream fs;
         private IFormatter formatter;
@@ -35,8 +35,10 @@ namespace MvSvr {
         public Form1() {
 
             InitializeComponent();
+            this.Text = "Server";
             LoadMovies();
-            bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
+            //LoadMovieFile(moviesFile);
+            //bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
@@ -89,6 +91,7 @@ namespace MvSvr {
             Movie m = new Movie();
             m.Title = "Batman";
             m.Genre = "Drama";
+            m.Description = "Batman is back!";
             m.Director = "Christopher Nolan";
             m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
@@ -104,14 +107,83 @@ namespace MvSvr {
             m = new Movie();
             m.Title = "Batman Of The Future";
             m.Genre = "Animated";
+            m.Description = "Batman is back, again!";
             m.Director = "Steven Lim";
-            m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            m.Poster = GetImage("poster\\batman_of_the_future.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "1700", "1900", 8.00),
                 new Show(m, "3 July 2015", new Hall(), "2100", "2300", 8.00)
             };
             movieInfo.Add(m.Title, m);
+        }
+
+        //public void WriteToTextFile() {
+            
+        //    String moviePath    = @"movieText.txt";
+        //    String showPath     = @"showText.txt";
+        //    String hallPath     = @"hallText.txt";
+        //    String seatPath     = @"seatText.txt";
+        //    String bookingPath  = @"bookingText.txt";
+
+        //    List<Movie> mlist = movieInfo.Values.ToList<Movie>();
+        //    using (fs = new FileStream(moviePath, FileMode.OpenOrCreate, FileAccess.Write)) {
+        //        Movie m = new Movie(Title, Description, Director, Genre, List<Shows>, PosterURL)
+
+
+
+        //        fs.Flush();
+        //        fs.Close();
+        //    }
+        //    foreach(Show show in showlist)
+        //    List<Show> showlist = mlist
+        //    using (fs = new FileStream(showPath, FileMode.OpenOrCreate, FileAccess.Write)) {
+
+
+        //        fs.Flush();
+        //        fs.Close();
+        //    }
+        //    using (fs = new FileStream(hallPath, FileMode.OpenOrCreate, FileAccess.Write)) {
+
+
+        //        fs.Flush();
+        //        fs.Close();
+        //    }
+        //    using (fs = new FileStream(seatPath, FileMode.OpenOrCreate, FileAccess.Write)) {
+
+
+        //        fs.Flush();
+        //        fs.Close();
+        //    }
+        //    using (fs = new FileStream(bookingPath, FileMode.OpenOrCreate, FileAccess.Write)) {
+
+
+        //        fs.Flush();
+        //        fs.Close();
+        //    }
+        //}
+
+        public Dictionary<String, Movie> LoadMovieFile(String filePath) {
+
+            Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
+            try {
+                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
+                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
+
+                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
+                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description,
+                            infos.Value.Director, infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
+
+                        movieInfoNew.Add(mv.Title, mv);
+                    }
+                }
+            } catch (Exception ex) {
+                tbDisplay.AppendText("Load Movie File Error: \n" + ex.ToString() + "\r\n");
+            }
+            return movieInfoNew;
         }
 
         private void LoadFile(String filePath) {

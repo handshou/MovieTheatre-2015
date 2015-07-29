@@ -9,7 +9,7 @@ namespace MvSvr {
 
         // Attributes + Get Set
         private int capacity_max = 25;
-        public String Name { get; set; }
+        //public String Name { get; set; }
         public List<Seat> Seats { get; set; }
         public int Capacity_Max {
             get { return capacity_max; }
@@ -30,13 +30,13 @@ namespace MvSvr {
             }
         }
 
-        public Hall(String name) {
-            Seats = new List<Seat>();
-            for (int i = 0; i < seatNames.Length; i++) {
-                Seats.Add(new Seat(this, seatNames[i]));
-            }
-            Name = name;
-        }
+        //public Hall(String name) {
+        //    Seats = new List<Seat>();
+        //    for (int i = 0; i < seatNames.Length; i++) {
+        //        Seats.Add(new Seat(this, seatNames[i]));
+        //    }
+        //    Name = name;
+        //}
 
         // Methods
         public bool IsFull() {
