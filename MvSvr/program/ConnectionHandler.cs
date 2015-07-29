@@ -19,8 +19,12 @@ namespace MvSvr {
         private string cmd;
         private string user;
 
-        private String browseFile = @"browse.dat";
-        private String searchFile = @"search.dat";
+        static readonly object _object = new object();
+
+        private static String browseFile = @"browse.dat";
+        private static String searchFile = @"search.dat";
+        private static String bseatsFile = @"bseats.dat";
+        private static String bkHistFile = @"bkrepo.dat";
         private int size = 0;
         private long filesize = 0;
         private static int connections = 0;
@@ -44,14 +48,19 @@ namespace MvSvr {
         private Socket client;
         private List<Socket> clients = new List<Socket>();
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
+        private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, ref Dictionary<String, Movie> movieInfo, ref List<Socket> clients) {
+        public ConnectionHandler(Socket client, Form1 form, 
+            ref Dictionary<String, Movie> movieInfo, 
+            ref Dictionary<String, List<Booking>> bookingInfo, 
+            ref List<Socket> clients) {
 
             this.client = client;
             this.form = form;
             this.movieInfo = movieInfo;
             this.clients = clients;
+            this.bookingInfo = bookingInfo;
         }
 
         // Methods
@@ -162,10 +171,33 @@ namespace MvSvr {
         }
 
         public void Book() {
-            
-            Booking b = new Booking();
-            lock (b) {
+
+            lock (_object) { // get userid title time seatindex price
+                Show show = new Show();
+                List<Seat> seats = new List<Seat>();
                 
+                /* R */ // Receive booking info
+                ReceiveFile(bseatsFile);
+                seats = LoadSeatsFile(bseatsFile, out show);
+
+                // Create booking from seats
+                Booking b = new Booking(user, show, seats); 
+
+                // Turn seat to unavailable
+                foreach(Seat s in seats) {
+                    s.Vacant = false;
+                }
+
+                // Update booking history
+                List<Booking> userBookingHistory = null;
+
+                if(bookingInfo.TryGetValue(user, out userBookingHistory)) {
+                    userBookingHistory.Add(b);
+                    // Save into booking repository
+                    bookingInfo[user] = userBookingHistory;
+                }
+                // Save booking info
+                SaveBookingToFile(bkHistFile);
             }
         }
 
@@ -195,6 +227,15 @@ namespace MvSvr {
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 formatter.Serialize(fs, movieInfo.Values.ToArray());
+                fs.Close();
+            }
+        }
+
+        public void SaveBookingToFile(String filePath) {
+
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, bookingInfo.Values.ToArray());
                 fs.Close();
             }
         }
@@ -282,6 +323,60 @@ namespace MvSvr {
             }
         }
 
+        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
+
+            Dictionary<String, Booking> 
+                bookingInfoBuilder = new Dictionary<String, Booking>();
+            Dictionary<String, List<Booking>>
+                bookingInfo = new Dictionary<String, List<Booking>>();
+            
+            try {
+                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+                    Booking[] b_info = (Booking[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    /// Key             Value
+                    /// UserA + Date    BookingCopy1
+                    /// UserA + Date    BookingCopy2
+                    /// UserB + Date    BookingCopy3
+                    bookingInfoBuilder = b_info.ToDictionary((u) => 
+                        (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
+                    
+                    foreach(Booking ub in bookingInfoBuilder.Values){
+                        if(!bookingInfo.ContainsKey(ub.User)){
+                            bookingInfo.Add(ub.User, new List<Booking>());
+                        }
+                    }
+
+                    foreach(List<Booking> b in bookingInfo.Values){
+                        foreach(Booking ub in bookingInfoBuilder.Values){
+                            for(int i = 0; i < b.Count; i++) {
+                                if(ub.User.Equals(b[i].User))
+                                    b.Add(ub);
+                            }
+                        }
+                    }
+
+                    //String userbuilder = "";
+                    //foreach(var item in myDictionary){
+                    //    foo(item.Key);
+                    //    bar(item.Value);
+                    //}
+
+                    //foreach(KeyValuePair<String, Booking> p in bookingInfoBuilder) {
+                    //    foreach (KeyValuePair<String, Booking> u in bookingInfoBuilder) {
+                    //        userbuilder = u.Value.User;
+                    //        if(!bookingInfo.ContainsKey(userbuilder))
+                    //            bookingInfo.Add(userbuilder, )
+                    //    }
+                    //}
+                }
+            } catch (Exception ex) {
+                form.DisplayMsg(ex.Message);
+            }
+            return bookingInfo;
+        }
+
         public void LoadMovieFile(String filePath) {
 
             try {
@@ -294,6 +389,29 @@ namespace MvSvr {
             } catch (Exception ex) {
                 form.DisplayMsg(ex.Message);
             }
+        }
+
+        public List<Seat> LoadSeatsFile(String filePath, out Show show) {
+
+            List<Seat> output = new List<Seat>();
+            show = new Show();
+            try {
+                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
+                    Object[] obj_info = (Object[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    show = (Show) obj_info[0];
+                    int sz = (int)obj_info[1];
+
+                    // Add seats - potential indexoutofrange exception
+                    for(int i = 0; i < sz; i++) {
+                        output.Add((Seat) obj_info[i + 2]);
+                    }
+                }
+            } catch (Exception ex) {
+                form.DisplayMsg(ex.Message);
+            }
+            return output;
         }
 
         public void DisplayClientMsg(int connections) {
