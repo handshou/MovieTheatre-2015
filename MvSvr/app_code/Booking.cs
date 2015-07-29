@@ -32,5 +32,9 @@ namespace MvSvr {
         public Hall GetHall() {
             return Show.Hall;
         }
+
+        public String ToString() {
+            return User + " " + Show.Date + " " + Seats.ToString() ;
+        }
     }
 }

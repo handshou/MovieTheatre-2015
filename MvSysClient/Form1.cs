@@ -45,6 +45,8 @@ namespace MvSysClient {
         public const String SFOUND = "[SRHF]";
         public const String SEMPTY = "[SRHE]";
         public const String HISTRY = "[HSTY]";
+        public const String SUCCESS = "[BKSS]";
+        public const String FAILURE = "[BKFL]";
 
         public Thread t = null;
 
@@ -57,6 +59,8 @@ namespace MvSysClient {
         {
 
             InitializeComponent();
+            cobDate.Items.Insert(0, "-- Select Value --");
+            cobTime.Items.Insert(0, "-- Select Time --");
 
         }
 
@@ -461,8 +465,6 @@ namespace MvSysClient {
                 cobDate.Items.Add(s);
             }
 
-            cobDate.Items.Insert(0, "-- Select Value --");
-
             cobDate.SelectedIndex = 0;
             
         }
@@ -490,8 +492,6 @@ namespace MvSysClient {
             for(int i = 0; i < showtimes.Count; i++) {
                 cobTime.Items.Add(showtimes[i]);
             }
-            
-            cobTime.Items.Insert(0, "-- Select Time --");
 
             cobTime.SelectedIndex = 0;
 
@@ -652,7 +652,7 @@ namespace MvSysClient {
             {
                 lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
                 lblBoardMessage.ForeColor = Color.Red;
-                result = "Failed";
+                result = FAILURE;
             }
 
             finally
@@ -660,7 +660,7 @@ namespace MvSysClient {
                 lblBoardMessage.Visible = true;
             }
 
-            if (result == "Success")
+            if (result == SUCCESS)
             {
                 lblBoardMessage.Text = "Your booking has been successful";
                 lblBoardMessage.Font = new Font(lblBoardMessage.Font, FontStyle.Bold);
