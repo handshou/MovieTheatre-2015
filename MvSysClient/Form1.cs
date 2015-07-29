@@ -353,24 +353,18 @@ namespace MvSysClient {
         }
 
         public List<String> GetShowTimesByDate(Movie m, String date) {
-            List<String> l = new List<String>();
+            List<String> showtimes = new List<String>();
             try {
                 List<Show> shows = m.Shows;
-                Dictionary<String, String> d = new Dictionary<String, String>();
+                showtimes = new List<String>();
                 for (int i = 0; i < shows.Count; i++) {
-                    d.Add(shows[i].Date, shows[i].TimeStart);
+                    showtimes.Add(shows[i].TimeStart);
                 }
-                foreach (KeyValuePair<String, String> p in d) {
-                    if (p.Key.Equals(date)) {
-                        l.Add(p.Value);
-                    }
-                }
-                l.Sort();
-                rTxtMessages.Text = l.Count.ToString();
+                showtimes.Sort();
             } catch (Exception ex) {
                 rTxtMessages.Text = ex.Message;
             }
-            return l;
+            return showtimes;
         }
 
         private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
@@ -379,7 +373,7 @@ namespace MvSysClient {
 
             cobTime.Items.Clear();
 
-            List<String> showtimes = GetShowTimesByDate(m, cobDate.SelectedValue.ToString());
+            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedValue);
             for(int i = 0; i < showtimes.Count; i++) {
                 cobTime.Items.Add(showtimes[i]);
             }
