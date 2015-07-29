@@ -25,6 +25,7 @@ namespace MvSvr {
         private static String searchFile = @"search.dat";
         private static String bseatsFile = @"bseats.dat";
         private static String bkHistFile = @"bkrepo.dat";
+        private static String moviesFile = @"movies.dat";
         private int size = 0;
         private long filesize = 0;
         private static int connections = 0;
@@ -42,6 +43,8 @@ namespace MvSvr {
         public const String BOOKNG = "[BOOK]";
         public const String FINISH = "[QUIT]";
         public const String HISTRY = "[HSTY]";
+        public const String SUCCESS = "[BKSS]";
+        public const String FAILURE = "[BKFL]";
 
         // Connection Attributes
         private Form1 form;
@@ -79,7 +82,12 @@ namespace MvSvr {
                 user = ReceiveCommand();
                 form.DisplayMsg("Welcome " + user + "!");
 
+                SaveMovieToFile(moviesFile);
+
                 while (true) {
+
+                    LoadMovieFile(moviesFile);
+
                     /* R */
                     // Receive command
                     cmd = ReceiveCommand();
@@ -109,7 +117,7 @@ namespace MvSvr {
 
             } catch (Exception ex) {
 
-                form.DisplayMsg(ex.Message);
+                form.DisplayMsg(ex.ToString());
             }
         }
 
@@ -172,7 +180,9 @@ namespace MvSvr {
 
         public void Book() {
 
-            lock (_object) { // get userid title time seatindex price
+            //lock (_object) { // get userid title time seatindex price
+
+                Boolean bookingSuccess = true;
                 Show show = new Show();
                 List<Seat> seats = new List<Seat>();
                 
@@ -182,24 +192,75 @@ namespace MvSvr {
                 seats = LoadSeatsFile(bseatsFile, out show);
 
                 // Create booking from seats
-                Booking b = new Booking(user, show, seats); 
+                Booking b = new Booking(user, show, seats);
+
+                // Get server movie
+                Movie bookMovie = show.Movie;
+                Movie serverMovie = null;
+                foreach (Movie m in movieInfo.Values) {
+                    if (m.Title.Equals(bookMovie.Title)) {
+                        serverMovie = m;
+                    }
+                }
+
+                // Get server show
+                Show serverShow = null;
+                foreach (Show s in serverMovie.Shows) {
+                    if (s.Date.Equals(show.Date) && s.TimeStart.Equals(show.TimeStart)) {
+                        serverShow = s;
+                    }
+                }
+
+                List<Seat> serverSeats = serverShow.Hall.Seats;
+                form.DisplayMsg("Editing show: " + show.Date + " " + show.TimeStart);
 
                 // Turn seat to unavailable
-                foreach(Seat s in seats) {
-                    s.Vacant = false;
+                foreach(Seat seat in seats) {
+                    foreach (Seat serverSeat in serverSeats) {
+                        if (seat.Name.Equals(serverSeat.Name)) {
+                            if (!seat.Vacant) {
+                                bookingSuccess = false;
+                                form.DisplayMsg(seat.Name + " is not vacant");
+                            }
+                        }
+                    }
                 }
 
-                // Update booking history
-                List<Booking> userBookingHistory = null;
+                if (bookingSuccess) {
 
-                if(bookingInfo.TryGetValue(user, out userBookingHistory)) {
-                    userBookingHistory.Add(b);
-                    // Save into booking repository
-                    bookingInfo[user] = userBookingHistory;
+                    foreach (Seat seat in seats) {
+                        foreach (Seat serverSeat in serverSeats) {
+                            if (seat.Name.Equals(serverSeat.Name)) {
+                                serverSeat.Vacant = false;
+                                form.DisplayMsg(serverSeat.Name + " has been updated to " + 
+                                    serverSeat.Vacant.ToString());
+                            }
+                        }
+                    }
+
+                    SaveMovieToFile(moviesFile);
+
+                    // Update booking history
+                    List<Booking> userBookingHistory = null;
+
+                    if (bookingInfo.TryGetValue(user, out userBookingHistory)) {
+                        userBookingHistory.Add(b);
+                        // Save into booking repository
+                        bookingInfo[user] = userBookingHistory;
+                    }
+                    // Save booking info
+                    SaveBookingToFile(bkHistFile);
+
+                    SendCommand(SUCCESS);
+                    form.DisplayMsg("Booking Complete!");
+
+                } else {
+
+                    SendCommand(FAILURE);
+                    form.DisplayMsg("Booking Failed.");
+
                 }
-                // Save booking info
-                SaveBookingToFile(bkHistFile);
-            }
+            //}
         }
 
         public void Quit() {
@@ -291,7 +352,7 @@ namespace MvSvr {
                 client.Send(buffer);
                 form.DisplayMsg("Files sent"); // (!) Remove when complete
             } catch (Exception ex) {
-                form.DisplayMsg(ex.Message);
+                form.DisplayMsg(ex.ToString());
             }
         }
 
@@ -303,7 +364,7 @@ namespace MvSvr {
             try {
                 size = client.Receive(data);
             } catch (Exception ex) {
-                form.DisplayMsg("Error receiving file (filesize)\n" + ex.Message);
+                form.DisplayMsg("Error receiving file (filesize)\n" + ex.ToString());
             }
             filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
@@ -313,7 +374,7 @@ namespace MvSvr {
                 size = client.Receive(data);
                 form.DisplayMsg("File received"); // (!) Remove when complete
             } catch (Exception ex) {
-                form.DisplayMsg("Error receiving file (file)\n" + ex.Message);
+                form.DisplayMsg("Error receiving file (file)\n" + ex.ToString());
             }
             
             // Will overwrite existing file
@@ -373,7 +434,7 @@ namespace MvSvr {
                     //}
                 }
             } catch (Exception ex) {
-                form.DisplayMsg(ex.Message);
+                form.DisplayMsg(ex.ToString());
             }
             return bookingInfo;
         }
@@ -388,7 +449,7 @@ namespace MvSvr {
                     movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
                 }
             } catch (Exception ex) {
-                form.DisplayMsg(ex.Message);
+                form.DisplayMsg(ex.ToString());
             }
         }
 
@@ -404,13 +465,15 @@ namespace MvSvr {
                     show = (Show) obj_info[0];
                     int sz = (int)obj_info[1];
 
+                    form.DisplayMsg(obj_info.Length.ToString());
+
                     // Add seats - potential indexoutofrange exception
-                    for(int i = 0; i < sz; i++) {
-                        output.Add((Seat) obj_info[i + 2]);
+                    for(int i = 2; i < sz; i++) {
+                        output.Add((Seat) obj_info[i]);
                     }
                 }
             } catch (Exception ex) {
-                form.DisplayMsg(ex.Message);
+                form.DisplayMsg(ex.ToString());
             }
             return output;
         }
