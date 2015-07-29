@@ -44,11 +44,14 @@ namespace MvSysClient {
         public const String FINISH = "[QUIT]";
         public const String SFOUND = "[SRHF]";
         public const String SEMPTY = "[SRHE]";
+        public const String HISTRY = "[HSTY]";
 
         public Thread t = null;
 
         public Boolean userInside = false;
         public String userID = "";
+
+        public String bookingInfo = "";
 
         public Form1()
         {
@@ -224,14 +227,11 @@ namespace MvSysClient {
 
             Thread.Sleep(1000);
 
-            byte[] data = new byte[1024];
-
-            data = Encoding.ASCII.GetBytes(BROWSE);
-
-            socket.Send(data); //this sends the Browse request
+            
+            SendRequest(BROWSE);
 
             //receiving file size
-            data = new byte[1024];
+            byte[] data = new byte[1024];
             try {
                 size = socket.Receive(data);
             } catch (Exception) {
@@ -690,8 +690,7 @@ namespace MvSysClient {
         {
             byte[] data = new byte[1024];
 
-            data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive booking history
-            socket.Send(data);
+            SendRequest(HISTRY);
 
             data = Encoding.ASCII.GetBytes(userID); //sends the user ID
             socket.Send(data);
@@ -709,6 +708,7 @@ namespace MvSysClient {
                 if (!string.IsNullOrWhiteSpace(history))
                 {
                     rTxtMessages.AppendText(history);
+                    bookingInfo = history;
                     btnSaveBHistory.Enabled = true;
                 }
 
@@ -725,13 +725,70 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("Error: " + ex.Message);
             }
 
-            
-
         }
 
         private void btnSaveBHistory_Click(object sender, EventArgs e)
         {
+            string bHistory = ValidateString(bookingInfo);
 
+            bHistory = userID;
+
+            if (bHistory != null)
+            {
+
+                string fileName = "bookingHistory.txt";
+
+                FileInfo fi = new FileInfo(fileName);
+
+                byte[] data = new byte[1024];
+
+                string line = null;
+
+                StreamWriter writer = new StreamWriter(fileName);
+                while ((line = reader.ReadLine()) != null)
+                {
+                    writer.WriteLine(bHistory);
+                }
+
+            }
+
+            else
+            {
+                rTxtMessages.AppendText("\nYour booking history is empty.");
+            }
+
+        }
+
+        private void btnLoadBHistory_Click(object sender, EventArgs e)
+        {
+
+            string bHistory = "";
+
+
+        }
+
+        public string ValidateString(string input)
+        {
+            string inputToValidate = input;
+
+            if (!string.IsNullOrWhiteSpace(inputToValidate))
+            {
+                return inputToValidate;
+            }
+
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public void SendRequest(string request)
+        {
+            byte[] data = new byte[1024];
+
+            data = Encoding.ASCII.GetBytes(request); //sends prompt for server to receive a booking
+            socket.Send(data);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -792,6 +849,8 @@ namespace MvSysClient {
         {
             btnBook.Enabled = true;
         }
+
+        
 
     }
 

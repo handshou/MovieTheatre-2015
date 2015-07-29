@@ -265,7 +265,6 @@
             // 
             // btnSaveBHistory
             // 
-            this.btnSaveBHistory.Enabled = false;
             this.btnSaveBHistory.Location = new System.Drawing.Point(1161, 52);
             this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
@@ -425,14 +424,14 @@
             // 
             // btnLoadBHistory
             // 
-            this.btnLoadBHistory.Enabled = false;
             this.btnLoadBHistory.Location = new System.Drawing.Point(1161, 106);
             this.btnLoadBHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLoadBHistory.Name = "btnLoadBHistory";
             this.btnLoadBHistory.Size = new System.Drawing.Size(138, 49);
             this.btnLoadBHistory.TabIndex = 48;
-            this.btnLoadBHistory.Text = "Save booking history";
+            this.btnLoadBHistory.Text = "Load booking history";
             this.btnLoadBHistory.UseVisualStyleBackColor = true;
+            this.btnLoadBHistory.Click += new System.EventHandler(this.btnLoadBHistory_Click);
             // 
             // Form1
             // 
