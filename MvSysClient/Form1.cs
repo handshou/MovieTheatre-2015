@@ -352,20 +352,6 @@ namespace MvSysClient {
             return all;
         }
 
-        public List<String> GetShowTimesByDate(Movie m, String date) {
-            List<String> showtimes = new List<String>();
-            try {
-                List<Show> shows = m.Shows;
-                showtimes = new List<String>();
-                for (int i = 0; i < shows.Count; i++) {
-                    showtimes.Add(shows[i].TimeStart);
-                }
-                showtimes.Sort();
-            } catch (Exception ex) {
-                rTxtMessages.Text = ex.Message;
-            }
-            return showtimes;
-        }
 
         private void cobDate_SelectedIndexChanged(object sender, EventArgs e) {
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
@@ -373,20 +359,39 @@ namespace MvSysClient {
 
             cobTime.Items.Clear();
 
-            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedValue);
+            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
             for(int i = 0; i < showtimes.Count; i++) {
                 cobTime.Items.Add(showtimes[i]);
             }
-            rTxtMessages.Text = showtimes.Count.ToString();
-            //cobTime.Items.Clear();
-            //string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            //Movie m = movieInfo[movie];
+            
+            cobTime.Items.Insert(0, "-- Select Time --");
 
-            //cobTime.SelectedIndex = 0;
-            //foreach (Show show in m.Shows) {
-            //    cobTime.Items.Add(show.TimeStart);
-            //    listTime.Items.Add(show.TimeStart);
-            //}
+            cobTime.SelectedIndex = 0;
+        }
+
+        public List<String> GetShowTimesByDate(Movie m, String date)
+        {
+            List<String> showtimes = new List<String>();
+            try
+            {
+                List<Show> shows = m.Shows;
+                showtimes = new List<String>();
+                for (int i = 0; i < shows.Count; i++)
+                {
+
+                    if (shows[i].Date.Equals(date))
+                    {
+                        showtimes.Add(shows[i].TimeStart);
+                    }
+                    
+                }
+                showtimes.Sort();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return showtimes;
         }
 
         private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
