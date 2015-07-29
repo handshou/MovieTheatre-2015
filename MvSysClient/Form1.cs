@@ -624,7 +624,7 @@ namespace MvSysClient {
 
             // Sending file
             byte[] buffer = null;
-            using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read))
             {
                 buffer = new byte[fs.Length];
                 fs.Read(buffer, 0, (int)fs.Length);
