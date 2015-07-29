@@ -612,13 +612,11 @@ namespace MvSysClient {
             
             int index = cobSeat.SelectedIndex;
 
-            Seat seat = s.Hall.Seats[index];
+            Dictionary<Seat, Show> showDict= new Dictionary<Seat, Show>();
 
-            Dictionary<String, Seat> seatDict= new Dictionary<String, Seat>();
+            showDict.Add(s.Hall.Seats[index], s);
 
-            seatDict.Add(seat.Name, seat);
-
-            SaveToFile(filePath, seatDict);
+            SaveToFile(filePath, showDict);
 
             // Sending file
             byte[] buffer = null;
@@ -676,7 +674,7 @@ namespace MvSysClient {
 
         }
 
-        public void SaveToFile(String filePath, Dictionary<String, Seat> d)
+        public void SaveToFile(String filePath, Dictionary<Seat, Show> d)
         {
 
             IFormatter formatter  = new BinaryFormatter();
@@ -711,12 +709,14 @@ namespace MvSysClient {
                 if (!string.IsNullOrWhiteSpace(history))
                 {
                     rTxtMessages.AppendText(history);
+                    btnSaveBHistory.Enabled = true;
                 }
 
                 else
                 {
                     rTxtMessages.AppendText("No booking history found.");
                 }
+
 
             }
 
@@ -725,7 +725,7 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("Error: " + ex.Message);
             }
 
-            btnSaveBHistory.Enabled = true;
+            
 
         }
 
