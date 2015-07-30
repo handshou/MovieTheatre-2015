@@ -634,20 +634,6 @@ namespace MvSysClient {
             }
         }
 
-        public String ProcessHistory(String msg) {
-        //this method processes the incoming history string from server
-        //newline is added for every booking history record
-        //returns the new edited string (with newline)
-            String[] pattern = {ENDOFF};
-            String[] processed = msg.Split(pattern, StringSplitOptions.None);
-            String output = "";
-
-            for (int i = 0; i < processed.Length; i++) {
-                output += processed[i] + "\r\n";
-            }
-            return output;
-        }
-
         public void SaveHistory()
         //this methods saves a user's booking information into a text file locally
         //requires a history to be loaded from the server first
@@ -655,34 +641,34 @@ namespace MvSysClient {
         {
             string bHistory = bookingInfo;
 
-            bHistory = userID + ";lolol";
+            bHistory = userID + ";lolololololololololololol";
 
             if (!string.IsNullOrWhiteSpace(bHistory))
             {
 
-                string fileName = "bookingHistory.txt";
-
-                FileInfo fi = new FileInfo(fileName);
-
-                byte[] data = new byte[1024];
-
-                string line = null;
-
-                StreamWriter writer = new StreamWriter(fileName);
-
-                if (!File.Exists(fileName))
+                try
                 {
-                    File.Create(fileName).Dispose();
+                    string fileName = "bookingHistory" + userID + ".txt";
 
-                    using (writer = new StreamWriter(fileName))
+                    FileInfo fi = new FileInfo(fileName);
+
+                    byte[] data = new byte[1024];
+
+                    string line = null;
+
+                    using (StreamWriter writer = new StreamWriter(fileName))
                     {
                         writer.WriteLine(bHistory);
+                        writer.Flush();
+                        rTxtMessages.AppendText("\nBooking History saved to local file '" + fileName + "'.");
+                        writer.Close();
                     }
-
                 }
 
-                rTxtMessages.AppendText("\nBooking History saved to local file '" + fileName + "'.");
-
+                catch (Exception)
+                {
+                    rTxtMessages.AppendText("\nTrouble loading booking history. Please contact tech support.");
+                }
 
             }
 
@@ -807,6 +793,23 @@ namespace MvSysClient {
         {
             int index = cobTime.SelectedIndex;
             return m.Shows[index];
+        }
+
+        public String ProcessHistory(String msg)
+        //this method processes the incoming history string from server
+        //newline is added for every booking history record
+        //returns the edited string (with newline)
+        {
+            
+            String[] pattern = { ENDOFF };
+            String[] processed = msg.Split(pattern, StringSplitOptions.None);
+            String output = "";
+
+            for (int i = 0; i < processed.Length; i++)
+            {
+                output += processed[i] + "\r\n";
+            }
+            return output;
         }
 
         public void SaveToBookingFile(String filePath, Dictionary<Seat, Show> d)
