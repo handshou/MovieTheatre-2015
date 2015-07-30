@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* Windows Appliations Development Assignment
+ * Hansel Chia: s10161147
+ * Jack Chang: s10156590
+ * This section covers the server side GUI and program
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -326,5 +333,6 @@ namespace MvSvr {
         private void btnBroadcast_Click(object sender, EventArgs e) {
 
         }
+
     }
 }

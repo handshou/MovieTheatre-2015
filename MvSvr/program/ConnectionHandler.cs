@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Windows Appliations Development Assignment
+ * Hansel Chia: s10161147
+ * Jack Chang: s10156590
+ * This class covers the ConnectionHandler that handles each thread
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

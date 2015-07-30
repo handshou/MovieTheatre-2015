@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* Windows Appliations Development Assignment
+ * Hansel Chia: s10161147
+ * Jack Chang: s10156590
+ * This class covers the Client side GUI and program
+ * Most of the methods are minimized. Please maximise them to show their contents.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

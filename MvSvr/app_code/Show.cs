@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Windows Appliations Development Assignment
+ * Hansel Chia: s10161147
+ * Jack Chang: s10156590
+ * This class covers the Show object
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
