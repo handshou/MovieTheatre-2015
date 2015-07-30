@@ -222,7 +222,7 @@ namespace MvSvr {
                         if (seat.Name.Equals(serverSeat.Name)) {
                             if (!serverSeat.Vacant) {
                                 bookingSuccess = false;
-                                form.DisplayMsg(seat.Name + " is not vacant");
+                                // form.DisplayMsg(seat.Name + " is not vacant"); // (!) Debug
                             }
                         }
                     }
@@ -234,8 +234,8 @@ namespace MvSvr {
                         foreach (Seat serverSeat in serverSeats) {
                             if (seat.Name.Equals(serverSeat.Name)) {
                                 serverSeat.Vacant = false;
-                                form.DisplayMsg(serverSeat.Name + " has been updated to " + 
-                                    serverSeat.Vacant.ToString());
+                                //form.DisplayMsg(serverSeat.Name + " has been updated to " + // (!) Debug
+                                //    serverSeat.Vacant.ToString());
                             }
                         }
                     }
@@ -253,7 +253,7 @@ namespace MvSvr {
                     
                     // Save into booking repository
                     bookingInfo[user] = userBookingHistory;
-                    form.DisplayMsg(userBookingHistory[0].Show.Movie.Title.ToString()); // (!) Debug
+                    //form.DisplayMsg(userBookingHistory[0].Show.Movie.Title.ToString()); // (!) Debug
                     
                     // Save booking info                   
                     SaveBookingToFile(bkHistFile);
@@ -297,14 +297,15 @@ namespace MvSvr {
                 b = bookingList[i];
                 s = b.Show;
                 seats = b.Seats;
+                seats_str = "";
                 for (int h = 0; h < seats.Count ; h++) {
                     seat = b.Seats[h];
                     seats_str += seat.Name + " ";
                 }
-                info_str += "[" + s.Movie.Title + "] " +
+                info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
                                     s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
                                     "Seats " + seats_str;
-                info_str += "--ENDOFBOOKING--";
+                info_str += "--ENDOFENTRY--";
             }
 
             SendCommand(info_str);
