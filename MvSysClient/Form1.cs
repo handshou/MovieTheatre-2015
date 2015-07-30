@@ -638,7 +638,7 @@ namespace MvSysClient {
         //this method processes the incoming history string from server
         //newline is added for every booking history record
         //returns the new edited string (with newline)
-            String[] pattern = {"--ENDOFENTRY--"};
+            String[] pattern = {ENDOFF};
             String[] processed = msg.Split(pattern, StringSplitOptions.None);
             String output = "";
 

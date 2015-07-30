@@ -41,6 +41,7 @@ namespace MvSvr {
         public const String SFOUND = "[SRHF]";
         public const String SEMPTY = "[SRHE]";
         public const String BOOKNG = "[BOOK]";
+        public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
         public const String HISTRY = "[HSTY]";
         public const String SUCCESS = "[BKSS]";
@@ -305,7 +306,7 @@ namespace MvSvr {
                 info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
                                     s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
                                     "Seats " + seats_str;
-                info_str += "--ENDOFENTRY--";
+                info_str += ENDOFF;
             }
 
             SendCommand(info_str);
