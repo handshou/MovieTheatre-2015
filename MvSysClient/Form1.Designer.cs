@@ -59,7 +59,6 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.cobDate = new System.Windows.Forms.ComboBox();
-            this.btnLoadBHistory = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +66,7 @@
             // 
             this.btnBrowse.Enabled = false;
             this.btnBrowse.Location = new System.Drawing.Point(10, 98);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(92, 64);
             this.btnBrowse.TabIndex = 1;
@@ -79,7 +78,7 @@
             // 
             this.btnSearch.Enabled = false;
             this.btnSearch.Location = new System.Drawing.Point(112, 142);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(110, 28);
             this.btnSearch.TabIndex = 2;
@@ -91,7 +90,7 @@
             // 
             this.btnBook.Enabled = false;
             this.btnBook.Location = new System.Drawing.Point(534, 287);
-            this.btnBook.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBook.Margin = new System.Windows.Forms.Padding(2);
             this.btnBook.Name = "btnBook";
             this.btnBook.Size = new System.Drawing.Size(70, 63);
             this.btnBook.TabIndex = 3;
@@ -103,7 +102,7 @@
             // 
             this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("picPoster.Image")));
             this.picPoster.Location = new System.Drawing.Point(293, 172);
-            this.picPoster.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.picPoster.Margin = new System.Windows.Forms.Padding(2);
             this.picPoster.Name = "picPoster";
             this.picPoster.Size = new System.Drawing.Size(203, 194);
             this.picPoster.TabIndex = 5;
@@ -113,7 +112,7 @@
             // 
             this.listTime.Enabled = false;
             this.listTime.Location = new System.Drawing.Point(650, 163);
-            this.listTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listTime.Margin = new System.Windows.Forms.Padding(2);
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(76, 282);
             this.listTime.TabIndex = 7;
@@ -124,7 +123,7 @@
             this.cobTime.Enabled = false;
             this.cobTime.FormattingEnabled = true;
             this.cobTime.Location = new System.Drawing.Point(518, 207);
-            this.cobTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cobTime.Margin = new System.Windows.Forms.Padding(2);
             this.cobTime.Name = "cobTime";
             this.cobTime.Size = new System.Drawing.Size(104, 21);
             this.cobTime.TabIndex = 8;
@@ -144,7 +143,7 @@
             // 
             this.rTxtMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rTxtMessages.Location = new System.Drawing.Point(230, 10);
-            this.rTxtMessages.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rTxtMessages.Margin = new System.Windows.Forms.Padding(2);
             this.rTxtMessages.Name = "rTxtMessages";
             this.rTxtMessages.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.rTxtMessages.Size = new System.Drawing.Size(626, 117);
@@ -155,7 +154,7 @@
             // 
             this.txtSearch.Enabled = false;
             this.txtSearch.Location = new System.Drawing.Point(112, 121);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(2);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(111, 20);
             this.txtSearch.TabIndex = 14;
@@ -169,7 +168,7 @@
             "Genre",
             "Director"});
             this.cobSearch.Location = new System.Drawing.Point(112, 97);
-            this.cobSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cobSearch.Margin = new System.Windows.Forms.Padding(2);
             this.cobSearch.Name = "cobSearch";
             this.cobSearch.Size = new System.Drawing.Size(80, 21);
             this.cobSearch.TabIndex = 15;
@@ -181,7 +180,7 @@
             this.listMovies.DisplayMember = "string";
             this.listMovies.FormattingEnabled = true;
             this.listMovies.Location = new System.Drawing.Point(9, 198);
-            this.listMovies.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listMovies.Margin = new System.Windows.Forms.Padding(2);
             this.listMovies.Name = "listMovies";
             this.listMovies.Size = new System.Drawing.Size(269, 251);
             this.listMovies.TabIndex = 18;
@@ -273,7 +272,7 @@
             // btnSaveBHistory
             // 
             this.btnSaveBHistory.Location = new System.Drawing.Point(871, 42);
-            this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
             this.btnSaveBHistory.Size = new System.Drawing.Size(104, 40);
             this.btnSaveBHistory.TabIndex = 26;
@@ -285,7 +284,7 @@
             // 
             this.btnViewBHistory.Enabled = false;
             this.btnViewBHistory.Location = new System.Drawing.Point(871, 2);
-            this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnViewBHistory.Name = "btnViewBHistory";
             this.btnViewBHistory.Size = new System.Drawing.Size(104, 35);
             this.btnViewBHistory.TabIndex = 27;
@@ -309,7 +308,7 @@
             this.cobSeat.Enabled = false;
             this.cobSeat.FormattingEnabled = true;
             this.cobSeat.Location = new System.Drawing.Point(540, 256);
-            this.cobSeat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cobSeat.Margin = new System.Windows.Forms.Padding(2);
             this.cobSeat.Name = "cobSeat";
             this.cobSeat.Size = new System.Drawing.Size(54, 21);
             this.cobSeat.TabIndex = 30;
@@ -328,7 +327,7 @@
             // pnSeats
             // 
             this.pnSeats.Location = new System.Drawing.Point(737, 197);
-            this.pnSeats.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnSeats.Margin = new System.Windows.Forms.Padding(2);
             this.pnSeats.Name = "pnSeats";
             this.pnSeats.Size = new System.Drawing.Size(224, 219);
             this.pnSeats.TabIndex = 32;
@@ -356,7 +355,7 @@
             // txtUser
             // 
             this.txtUser.Location = new System.Drawing.Point(60, 19);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(2);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(132, 20);
             this.txtUser.TabIndex = 38;
@@ -374,7 +373,7 @@
             // btnLogin
             // 
             this.btnLogin.Location = new System.Drawing.Point(26, 50);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(76, 32);
             this.btnLogin.TabIndex = 40;
@@ -386,7 +385,7 @@
             // 
             this.btnLogout.Enabled = false;
             this.btnLogout.Location = new System.Drawing.Point(123, 50);
-            this.btnLogout.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(76, 32);
             this.btnLogout.TabIndex = 43;
@@ -431,29 +430,17 @@
             this.cobDate.Enabled = false;
             this.cobDate.FormattingEnabled = true;
             this.cobDate.Location = new System.Drawing.Point(518, 157);
-            this.cobDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cobDate.Margin = new System.Windows.Forms.Padding(2);
             this.cobDate.Name = "cobDate";
             this.cobDate.Size = new System.Drawing.Size(104, 21);
             this.cobDate.TabIndex = 47;
             this.cobDate.SelectedIndexChanged += new System.EventHandler(this.cobDate_SelectedIndexChanged);
-            // 
-            // btnLoadBHistory
-            // 
-            this.btnLoadBHistory.Location = new System.Drawing.Point(871, 86);
-            this.btnLoadBHistory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnLoadBHistory.Name = "btnLoadBHistory";
-            this.btnLoadBHistory.Size = new System.Drawing.Size(104, 40);
-            this.btnLoadBHistory.TabIndex = 48;
-            this.btnLoadBHistory.Text = "Load booking history";
-            this.btnLoadBHistory.UseVisualStyleBackColor = true;
-            this.btnLoadBHistory.Click += new System.EventHandler(this.btnLoadBHistory_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(972, 461);
-            this.Controls.Add(this.btnLoadBHistory);
             this.Controls.Add(this.cobDate);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblPrice);
@@ -490,7 +477,7 @@
             this.Controls.Add(this.btnBrowse);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -537,7 +524,6 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.ComboBox cobDate;
-        private System.Windows.Forms.Button btnLoadBHistory;
     }
 }
 

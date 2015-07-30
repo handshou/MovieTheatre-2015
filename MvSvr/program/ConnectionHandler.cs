@@ -42,6 +42,7 @@ namespace MvSvr {
         public const String SFOUND = "[SRHF]";
         public const String SEMPTY = "[SRHE]";
         public const String BOOKNG = "[BOOK]";
+        public const String ENDOFF = "[ENDO]";
         public const String FINISH = "[QUIT]";
         public const String HISTRY = "[HSTY]";
         public const String SUCCESS = "[BKSS]";
@@ -124,8 +125,10 @@ namespace MvSvr {
 
         public void Browse() {
 
-            SaveToFile(browseFile, movieInfo);
-            SendFile(browseFile);
+            lock (_object) {
+                SaveToFile(browseFile, movieInfo);
+                SendFile(browseFile);
+            }
         }
 
         public void Search() {
@@ -193,7 +196,7 @@ namespace MvSvr {
                 seats = LoadSeatsFile(bseatsFile, out show);
 
                 // Create booking from seats
-                Booking b = new Booking(user, show, seats);
+                Booking bnew = new Booking(user, show, seats);
 
                 // Get server movie
                 Movie bookMovie = show.Movie;
@@ -221,7 +224,7 @@ namespace MvSvr {
                         if (seat.Name.Equals(serverSeat.Name)) {
                             if (!serverSeat.Vacant) {
                                 bookingSuccess = false;
-                                form.DisplayMsg(seat.Name + " is not vacant");
+                                // form.DisplayMsg(seat.Name + " is not vacant"); // (!) Debug
                             }
                         }
                     }
@@ -233,8 +236,8 @@ namespace MvSvr {
                         foreach (Seat serverSeat in serverSeats) {
                             if (seat.Name.Equals(serverSeat.Name)) {
                                 serverSeat.Vacant = false;
-                                form.DisplayMsg(serverSeat.Name + " has been updated to " + 
-                                    serverSeat.Vacant.ToString());
+                                //form.DisplayMsg(serverSeat.Name + " has been updated to " + // (!) Debug
+                                //    serverSeat.Vacant.ToString());
                             }
                         }
                     }
@@ -245,11 +248,14 @@ namespace MvSvr {
                     // Update booking history
                     List<Booking> userBookingHistory = new List<Booking>();
 
-                    if (bookingInfo.TryGetValue(user, out userBookingHistory)) {
-                        userBookingHistory.Add(b);
-                        // Save into booking repository
-                        bookingInfo[user] = userBookingHistory;
+                    if (!bookingInfo.TryGetValue(user, out userBookingHistory)) {
+                        userBookingHistory = new List<Booking>();
                     }
+                    userBookingHistory.Add(bnew);
+                    
+                    // Save into booking repository
+                    bookingInfo[user] = userBookingHistory;
+                    //form.DisplayMsg(userBookingHistory[0].Show.Movie.Title.ToString()); // (!) Debug
                     
                     // Save booking info                   
                     SaveBookingToFile(bkHistFile);
@@ -280,22 +286,28 @@ namespace MvSvr {
 
         public void History() {
 
-            Booking b = new Booking(); Show s = b.Show;
+            Booking b = new Booking(); Show s = new Show();
             List<Seat> seats; Seat seat = new Seat();
             List<Booking> bookingList = new List<Booking>();
-            bookingInfo = LoadBookingFile(bkHistFile);
+            //bookingInfo = LoadBookingFile(bkHistFile);
             bookingInfo.TryGetValue(user, out bookingList);
 
-            String info_str = "[" + s.Movie.Title + "] " +
-                                    s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : ";
+            String info_str = "";
+            String seats_str = "";
 
             for (int i = 0; i < bookingList.Count; i++) {
                 b = bookingList[i];
+                s = b.Show;
                 seats = b.Seats;
+                seats_str = "";
                 for (int h = 0; h < seats.Count ; h++) {
                     seat = b.Seats[h];
-                    info_str += seat + " ";
+                    seats_str += seat.Name + " ";
                 }
+                info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
+                                    s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
+                                    "Seats " + seats_str;
+                info_str += ENDOFF;
             }
 
             SendCommand(info_str);
@@ -327,6 +339,7 @@ namespace MvSvr {
                 formatter.Serialize(fs, bookingInfo.Values.ToArray());
                 fs.Close();
             }
+            form.DisplayMsg("Saved booking database to " + filePath);
         }
 
         public String ReceiveTypeTerms(out String type) {
@@ -418,16 +431,16 @@ namespace MvSvr {
                 bookingInfoBuilder = new Dictionary<String, Booking>();
             Dictionary<String, List<Booking>>
                 bookingInfo = new Dictionary<String, List<Booking>>();
-            
+
             try {
                 using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
                     Booking[] b_info = (Booking[])formatter.Deserialize(fs);
                     fs.Flush();
                     fs.Close();
                     /// Key             Value
-                    /// UserA + Date    BookingCopy1
-                    /// UserA + Date    BookingCopy2
-                    /// UserB + Date    BookingCopy3
+                    /// UserA + Time    BookingCopy1
+                    /// UserA + Time    BookingCopy2
+                    /// UserB + Time    BookingCopy3
                     bookingInfoBuilder = b_info.ToDictionary((u) => 
                         (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
                     
