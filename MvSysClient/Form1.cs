@@ -145,11 +145,13 @@ namespace MvSysClient {
             Movie m = movieInfo[movie];
 
             cobTime.Items.Clear();
+            listTime.Items.Clear();
 
             List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
             for (int i = 0; i < showtimes.Count; i++)
             {
                 cobTime.Items.Add(showtimes[i]);
+                listTime.Items.Add(showtimes[i]);
             }
 
             cobTime.SelectedIndex = 0;
@@ -556,27 +558,27 @@ namespace MvSysClient {
 
             catch (Exception)
             {
-                lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
-                lblBoardMessage.ForeColor = Color.Red;
+                lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                lblBookMessage.ForeColor = Color.Red;
                 result = FAILURE;
             }
 
             finally
             {
-                lblBoardMessage.Visible = true;
+                lblBookMessage.Visible = true;
             }
 
             if (result == SUCCESS)
             {
-                lblBoardMessage.Text = "Your booking has been successful";
-                lblBoardMessage.Font = new Font(lblBoardMessage.Font, FontStyle.Bold);
-                lblBoardMessage.ForeColor = Color.Black;
+                lblBookMessage.Text = "Your booking for " + m.Title + " has been successful";
+                lblBookMessage.Font = new Font(lblBookMessage.Font, FontStyle.Bold);
+                lblBookMessage.ForeColor = Color.Black;
             }
 
             else
             {
-                lblBoardMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
-                lblBoardMessage.ForeColor = Color.Red;
+                lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                lblBookMessage.ForeColor = Color.Red;
             }
         }
 
