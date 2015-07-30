@@ -50,33 +50,26 @@ namespace MvSysClient {
 
         public Thread t = null;
 
-        public Boolean userInside = false;
         public String userID = "";
 
         public String bookingInfo = "";
 
         public Form1()
         {
-
             InitializeComponent();
             this.Text = "Client";
-            
-
         }
 
-        
-
         public void runClient()
-        //this method starts a thread
+        //this method starts a thread and opens up most of the client to the user
         //called when the client has connected to the server and logged in with a userID
         {
 
             Control.CheckForIllegalCrossThreadCalls = false;
 
             userID = txtUser.Text;
-            userInside = true;
-
             //prevents changes to the user text box
+
             txtUser.Enabled = false;
             btnLogin.Enabled = false;
             btnLogout.Enabled = true;
@@ -87,13 +80,10 @@ namespace MvSysClient {
             cobSearch.Enabled = true;
             txtSearch.Enabled = true;
 
-
             rTxtMessages.Clear();
             rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
-            //DisplayMsg("\nYou may find your desired movies either by browsing or searching with a keyword.");
+            rTxtMessages.AppendText("\nYou may find your desired movies either by browsing or searching with search term.");
 
-
-            //loadMovieDetails();
         }
 
         /* BUTTON_CLICK EVENT CODES BELOW
@@ -641,8 +631,6 @@ namespace MvSysClient {
         {
             string bHistory = bookingInfo;
 
-            bHistory = userID + ";lolololololololololololol";
-
             if (!string.IsNullOrWhiteSpace(bHistory))
             {
 
@@ -653,8 +641,6 @@ namespace MvSysClient {
                     FileInfo fi = new FileInfo(fileName);
 
                     byte[] data = new byte[1024];
-
-                    string line = null;
 
                     using (StreamWriter writer = new StreamWriter(fileName))
                     {
