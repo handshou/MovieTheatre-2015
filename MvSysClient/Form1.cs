@@ -255,7 +255,7 @@ namespace MvSysClient {
             else
             {
                 txtUser.Text = null;
-                rTxtMessages.AppendText("\nPlease enter a user ID");
+                rTxtMessages.AppendText("\nPlease enter a valid 4-digit user ID");
             }
         }
 
