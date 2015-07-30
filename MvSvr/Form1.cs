@@ -17,16 +17,17 @@ namespace MvSvr {
     public partial class Form1 : Form {
 
         // Attributes
-        private static String moviesFile = @"movies.dat";
-        private static String bkHistFile = @"bkrepo.dat";
+        private String moviesFile = @"movies.dat";
+        private String browseFile = @"browse.dat";
+        private String bkHistFile = @"bkrepo.dat";
         private FileStream fs;
-        private IFormatter formatter;
+        private IFormatter formatter = new BinaryFormatter();
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
         private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
         // Connection Attributes
         private static int port = 9070;
-        private static IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+        private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
         private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private List<Socket> clients = new List<Socket>();
 
@@ -36,8 +37,8 @@ namespace MvSvr {
 
             InitializeComponent();
             this.Text = "Server";
-            LoadMovies();
-            //LoadMovieFile(moviesFile);
+            //LoadMovies();
+            LoadMovieFile(browseFile);
             //bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
@@ -65,14 +66,6 @@ namespace MvSvr {
                     
                 }
             }
-        }
-
-        private void btnClear_Click(object sender, EventArgs e) {
-            
-        }
-
-        private void btnList_Click(object sender, EventArgs e) {
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
@@ -257,6 +250,34 @@ namespace MvSvr {
             for (int i = 0; i < lines.Length; i++) {
                 tbDisplay.AppendText(lines[i] + "\r\n");
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btnList_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e) {
+
+            //// Create the movie and shows
+            //Movie m = new Movie();
+            //Movie m = new Movie(title, description, director, genre, Array shows, image)
+            //m.Title = "Batman";
+            //m.Genre = "Drama";
+            //m.Description = "Batman is back!";
+            //m.Director = "Christopher Nolan";
+            //m.Poster = GetImage("poster\\the_dark_knight.jpg");
+            //m.Shows = new List<Show> { 
+            //    new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
+            //    new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
+            //    new Show(m, "2 January 2015", new Hall(), "2000", "2200", 8.00),
+            //    new Show(m, "2 January 2015", new Hall(), "0800", "1000", 8.00),
+            //    new Show(m, "3 January 2015", new Hall(), "1600", "1800", 8.00),
+            //    new Show(m, "3 January 2015", new Hall(), "2000", "2200", 8.00),
+            //};
         }
     }
 }

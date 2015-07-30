@@ -609,6 +609,7 @@ namespace MvSysClient {
                 int size = 0;
                 size = socket.Receive(data);
                 history = Encoding.ASCII.GetString(data, 0, size);
+                history = ProcessHistory(history);
                 rTxtMessages.Clear();
                 rTxtMessages.AppendText("Booking History:\n");
 
@@ -631,6 +632,20 @@ namespace MvSysClient {
             {
                 rTxtMessages.AppendText("Error: " + ex.Message);
             }
+        }
+
+        public String ProcessHistory(String msg) {
+        //this method processes the incoming history string from server
+        //newline is added for every booking history record
+        //returns the new edited string (with newline)
+            String[] pattern = {ENDOFF};
+            String[] processed = msg.Split(pattern, StringSplitOptions.None);
+            String output = "";
+
+            for (int i = 0; i < processed.Length; i++) {
+                output += processed[i] + "\r\n";
+            }
+            return output;
         }
 
         public void SaveHistory()
