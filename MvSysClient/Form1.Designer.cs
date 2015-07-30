@@ -47,7 +47,6 @@
             this.lblBoardMessage = new System.Windows.Forms.Label();
             this.cobSeat = new System.Windows.Forms.ComboBox();
             this.lblSeatNo = new System.Windows.Forms.Label();
-            this.pnSeats = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtUser = new System.Windows.Forms.TextBox();
@@ -324,14 +323,6 @@
             this.lblSeatNo.TabIndex = 31;
             this.lblSeatNo.Text = "Seat Number";
             // 
-            // pnSeats
-            // 
-            this.pnSeats.Location = new System.Drawing.Point(737, 197);
-            this.pnSeats.Margin = new System.Windows.Forms.Padding(2);
-            this.pnSeats.Name = "pnSeats";
-            this.pnSeats.Size = new System.Drawing.Size(224, 219);
-            this.pnSeats.TabIndex = 32;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -451,7 +442,6 @@
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.pnSeats);
             this.Controls.Add(this.lblSeatNo);
             this.Controls.Add(this.cobSeat);
             this.Controls.Add(this.lblBoardMessage);
@@ -512,7 +502,6 @@
         private System.Windows.Forms.Label lblBoardMessage;
         private System.Windows.Forms.ComboBox cobSeat;
         private System.Windows.Forms.Label lblSeatNo;
-        private System.Windows.Forms.Panel pnSeats;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtUser;
