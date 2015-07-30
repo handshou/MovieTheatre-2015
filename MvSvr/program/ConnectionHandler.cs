@@ -19,13 +19,14 @@ namespace MvSvr {
         private string cmd;
         private string user;
 
-        static readonly object _object = new object();
+        readonly object _object = new object();
 
-        private static String browseFile = @"browse.dat";
-        private static String searchFile = @"search.dat";
-        private static String bseatsFile = @"bseats.dat";
-        private static String bkHistFile = @"bkrepo.dat";
-        private static String moviesFile = @"movies.dat";
+        private String browseFile = @"browse.dat";
+        private String searchFile = @"search.dat";
+        private String bseatsFile = @"bseats.dat";
+        private String bkHistFile = @"bkrepo.dat";
+        private String moviesFile = @"movies.dat";
+
         private int size = 0;
         private long filesize = 0;
         private static int connections = 0;
@@ -34,7 +35,7 @@ namespace MvSvr {
         private FileInfo f;
         private FileStream fs;
         private NetworkStream ns;
-        private IFormatter formatter;
+        private IFormatter formatter = new BinaryFormatter();
 
         public const String BROWSE = "[BRWS]";
         public const String SEARCH = "[SRCH]";
