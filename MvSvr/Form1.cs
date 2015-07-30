@@ -278,6 +278,26 @@ namespace MvSvr {
             //    new Show(m, "3 January 2015", new Hall(), "1600", "1800", 8.00),
             //    new Show(m, "3 January 2015", new Hall(), "2000", "2200", 8.00),
             //};
+
+            String title    = tbTitle.Text;
+            String desc     = tbDescription.Text;
+            String dir      = tbDirector.Text;
+            String genre    = tbGenre.Text;
+            String imgPath  = tbImage.Text;
+            String timeStart = tbTimeFrom.Text;
+            String timeEnd  = tbTimeTo.Text;
+
+            //Movie m = new Movie(title,)
+
+        }
+
+        private void btnDebugClear_Click(object sender, EventArgs e) {
+
+            tbDisplay.Clear();
+        }
+
+        private void btnBroadcast_Click(object sender, EventArgs e) {
+
         }
     }
 }
