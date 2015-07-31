@@ -128,7 +128,7 @@ namespace MvSvr {
                     }
                 } else {
                     SendCommand(FAILURE);
-                    form.DisplayMsg("Detected attempted login");
+                    form.DisplayMsg("[Server] Detected attempted login");
                 }
 
             } catch (SocketException) {
@@ -567,17 +567,17 @@ namespace MvSvr {
         public void DisplayConnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("[" + user + "] connected\n" + connections + " active connection");
+                form.DisplayMsg("[" + user + "] connected\n[Server] " + connections + " active connection");
             else
-                form.DisplayMsg("[" + user + "] connected\n" + connections + " active connections");
+                form.DisplayMsg("[" + user + "] connected\n[Server] " + connections + " active connections");
         }
 
         public void DisplayDisconnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("[" + user + "] disconnected\n" + connections + " remaining connection");
+                form.DisplayMsg("[" + user + "] disconnected\n[Server] " + connections + " remaining connection");
             else
-                form.DisplayMsg("[" + user + "] disconnected\n" + connections + " remaining connections");
+                form.DisplayMsg("[" + user + "] disconnected\n[Server] " + connections + " remaining connections");
         }
     }
 }
