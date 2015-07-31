@@ -95,12 +95,12 @@ namespace MvSvr {
             m.Director = "Christopher Nolan";
             m.Poster = GetImage("poster\\the_dark_knight.jpg");
             m.Shows = new List<Show> { 
-                new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
-                new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
-                new Show(m, "2 January 2015", new Hall(), "2000", "2200", 8.00),
-                new Show(m, "2 January 2015", new Hall(), "0800", "1000", 8.00),
-                new Show(m, "3 January 2015", new Hall(), "1600", "1800", 10.00),
-                new Show(m, "3 January 2015", new Hall(), "2000", "2200", 12.00),
+                new Show(m, "1 January 2015", new Hall("Hall 1"), "0800", "1000", 8.00),
+                new Show(m, "1 January 2015", new Hall("Hall 2"), "1600", "1800", 8.00),
+                new Show(m, "2 January 2015", new Hall("Hall 3"), "2000", "2200", 8.00),
+                new Show(m, "2 January 2015", new Hall("Hall 4"), "0800", "1000", 8.00),
+                new Show(m, "3 January 2015", new Hall("Hall 5"), "1600", "1800", 10.00),
+                new Show(m, "3 January 2015", new Hall("Hall 6"), "2000", "2200", 12.00),
             };
             movieInfo.Add(m.Title, m);
 
@@ -111,9 +111,9 @@ namespace MvSvr {
             m.Director = "Steven Lim";
             m.Poster = GetImage("poster\\batman_of_the_future.jpg");
             m.Shows = new List<Show> { 
-                new Show(m, "3 July 2015", new Hall(), "0900", "1100", 8.00),
-                new Show(m, "3 July 2015", new Hall(), "1700", "1900", 10.00),
-                new Show(m, "3 July 2015", new Hall(), "2100", "2300", 12.00)
+                new Show(m, "3 July 2015", new Hall("Hall 1"), "0900", "1100", 8.00),
+                new Show(m, "3 July 2015", new Hall("Hall 2"), "1700", "1900", 10.00),
+                new Show(m, "3 July 2015", new Hall("Hall 3"), "2100", "2300", 12.00)
             };
             movieInfo.Add(m.Title, m);
 
@@ -124,9 +124,9 @@ namespace MvSvr {
             m.Director = "Christopher Nolan";
             m.Poster = GetImage("poster\\inception_poster.jpg");
             m.Shows = new List<Show> { 
-                new Show(m, "3 July 2015", new Hall(), "1820", "2020", 12.00),
-                new Show(m, "4 July 2015", new Hall(), "1300", "1500", 12.00),
-                new Show(m, "5 July 2015", new Hall(), "0030", "0230", 10.00)
+                new Show(m, "3 July 2015", new Hall("Hall 1"), "1820", "2020", 12.00),
+                new Show(m, "4 July 2015", new Hall("Hall 2"), "1300", "1500", 12.00),
+                new Show(m, "5 July 2015", new Hall("Hall 3"), "0030", "0230", 10.00)
             };
             movieInfo.Add(m.Title, m);
 
@@ -137,9 +137,9 @@ namespace MvSvr {
             m.Director = "James Cameron";
             m.Poster = GetImage("poster\\terminator2.jpg");
             m.Shows = new List<Show> { 
-                new Show(m, "2 March 2015", new Hall(), "1850", "2050", 12.00),
-                new Show(m, "4 September 2015", new Hall(), "1500", "1700", 12.00),
-                new Show(m, "6 December 2015", new Hall(), "1230", "1430", 12.00)
+                new Show(m, "2 March 2015", new Hall("Hall 1"), "1850", "2050", 12.00),
+                new Show(m, "4 September 2015", new Hall("Hall 2"), "1500", "1700", 12.00),
+                new Show(m, "6 December 2015", new Hall("Hall 3"), "1230", "1430", 12.00)
             };
             movieInfo.Add(m.Title, m);
 

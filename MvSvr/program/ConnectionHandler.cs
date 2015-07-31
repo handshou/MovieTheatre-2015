@@ -97,7 +97,7 @@ namespace MvSvr {
                     /* R */
                     // Receive command
                     cmd = ReceiveCommand();
-                    form.DisplayMsg(cmd); // (!) Remove when complete
+                    form.DisplayMsg(cmd + " : " + user); // (!) Remove when complete
 
                     switch (cmd) {
                         case BROWSE: Browse();
@@ -141,7 +141,7 @@ namespace MvSvr {
 
             String type = "", 
                    terms = "";
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             /* R */ // Receive search type + terms
             terms = ReceiveTypeTerms(out type);
 
@@ -222,9 +222,10 @@ namespace MvSvr {
                 }
 
                 List<Seat> serverSeats = serverShow.Hall.Seats;
-                form.DisplayMsg("Editing show: " + serverShow.Date + " " + serverShow.TimeStart);
+                form.DisplayMsg(serverMovie.Title);
+                form.DisplayMsg("Editing: [" + serverMovie.Title + "] [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
 
-                // Turn seat to unavailable
+                // Turn seat to unavailable : (!) consider using Dictionary collection
                 foreach(Seat seat in seats) {
                     foreach (Seat serverSeat in serverSeats) {
                         if (seat.Name.Equals(serverSeat.Name)) {
@@ -299,21 +300,30 @@ namespace MvSvr {
             bookingInfo.TryGetValue(user, out bookingList);
 
             String info_str = "";
-            String seats_str = "";
 
-            for (int i = 0; i < bookingList.Count; i++) {
-                b = bookingList[i];
-                s = b.Show;
-                seats = b.Seats;
-                seats_str = "";
-                for (int h = 0; h < seats.Count ; h++) {
-                    seat = b.Seats[h];
-                    seats_str += seat.Name + " ";
+            if (bookingList == null) {
+
+                info_str = "There are no booking records found";
+
+            } else {
+
+                // e.g. [7/31/2015 10:40:33 AM]  [The Dark Knight] 1 January 2015 > 0800 - 1000 : Seats A1 
+                String seats_str = "";
+
+                for (int i = 0; i < bookingList.Count; i++) {
+                    b = bookingList[i];
+                    s = b.Show;
+                    seats = b.Seats;
+                    seats_str = "";
+                    for (int h = 0; h < seats.Count; h++) {
+                        seat = b.Seats[h];
+                        seats_str += seat.Name + " ";
+                    }
+                    info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
+                                        s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
+                                        b.Show.Hall.Name + " : Seats " + seats_str;
+                    info_str += ENDOFF;
                 }
-                info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
-                                    s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
-                                    "Seats " + seats_str;
-                info_str += ENDOFF;
             }
 
             SendCommand(info_str);

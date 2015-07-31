@@ -295,7 +295,7 @@ namespace MvSysClient {
 
             IFormatter formatter = new BinaryFormatter();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
 
             SendRequest(BROWSE);
@@ -468,7 +468,7 @@ namespace MvSysClient {
                     }
                     catch (Exception ex)
                     {
-                        rTxtMessages.AppendText("\nError. Please restart the application." + ex.Message);
+                        rTxtMessages.AppendText("\nError. Please restart the application." + ex.ToString());
                     }
                 }
 

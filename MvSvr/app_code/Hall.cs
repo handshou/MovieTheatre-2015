@@ -34,6 +34,7 @@ namespace MvSvr {
             for (int i = 0; i < seatNames.Length; i++) {
                 Seats.Add(new Seat(this, seatNames[i]));
             }
+            Name = "";
         }
 
         public Hall(String name) {
