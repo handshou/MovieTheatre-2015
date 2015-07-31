@@ -45,7 +45,7 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tbMovies = new System.Windows.Forms.TextBox();
-            this.lbClients = new System.Windows.Forms.ListBox();
+            this.libClientsMovies = new System.Windows.Forms.ListBox();
             this.tbTitle = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -53,18 +53,18 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnBroadcast = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.tabPageShows = new System.Windows.Forms.TabPage();
+            this.tbShows = new System.Windows.Forms.TextBox();
+            this.libClientsShows = new System.Windows.Forms.ListBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
-            this.lbClientsPg2 = new System.Windows.Forms.ListBox();
+            this.btnWipe = new System.Windows.Forms.Button();
+            this.libClientsDebug = new System.Windows.Forms.ListBox();
             this.btnDebugClear = new System.Windows.Forms.Button();
             this.tbDisplay = new System.Windows.Forms.TextBox();
-            this.tabPageShows = new System.Windows.Forms.TabPage();
-            this.btnWipe = new System.Windows.Forms.Button();
-            this.tbShows = new System.Windows.Forms.TextBox();
-            this.lbShows = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
-            this.tabPageDebug.SuspendLayout();
             this.tabPageShows.SuspendLayout();
+            this.tabPageDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -100,7 +100,7 @@
             this.tabPageMovies.Controls.Add(this.lblDescription);
             this.tabPageMovies.Controls.Add(this.tbDescription);
             this.tabPageMovies.Controls.Add(this.tbMovies);
-            this.tabPageMovies.Controls.Add(this.lbClients);
+            this.tabPageMovies.Controls.Add(this.libClientsMovies);
             this.tabPageMovies.Controls.Add(this.tbTitle);
             this.tabPageMovies.Controls.Add(this.btnClear);
             this.tabPageMovies.Controls.Add(this.btnAdd);
@@ -110,7 +110,7 @@
             this.tabPageMovies.Controls.Add(this.lblTitle);
             this.tabPageMovies.Location = new System.Drawing.Point(4, 22);
             this.tabPageMovies.Name = "tabPageMovies";
-            this.tabPageMovies.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageMovies.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageMovies.Size = new System.Drawing.Size(444, 486);
             this.tabPageMovies.TabIndex = 0;
             this.tabPageMovies.Text = "Movies";
@@ -274,13 +274,13 @@
             this.tbMovies.Size = new System.Drawing.Size(318, 199);
             this.tbMovies.TabIndex = 23;
             // 
-            // lbClients
+            // libClientsMovies
             // 
-            this.lbClients.FormattingEnabled = true;
-            this.lbClients.Location = new System.Drawing.Point(353, 21);
-            this.lbClients.Name = "lbClients";
-            this.lbClients.Size = new System.Drawing.Size(75, 199);
-            this.lbClients.TabIndex = 24;
+            this.libClientsMovies.FormattingEnabled = true;
+            this.libClientsMovies.Location = new System.Drawing.Point(353, 21);
+            this.libClientsMovies.Name = "libClientsMovies";
+            this.libClientsMovies.Size = new System.Drawing.Size(75, 199);
+            this.libClientsMovies.TabIndex = 24;
             // 
             // tbTitle
             // 
@@ -345,27 +345,67 @@
             this.lblTitle.TabIndex = 20;
             this.lblTitle.Text = "Title";
             // 
+            // tabPageShows
+            // 
+            this.tabPageShows.Controls.Add(this.tbShows);
+            this.tabPageShows.Controls.Add(this.libClientsShows);
+            this.tabPageShows.Location = new System.Drawing.Point(4, 22);
+            this.tabPageShows.Name = "tabPageShows";
+            this.tabPageShows.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageShows.Size = new System.Drawing.Size(444, 486);
+            this.tabPageShows.TabIndex = 2;
+            this.tabPageShows.Text = "Shows";
+            this.tabPageShows.UseVisualStyleBackColor = true;
+            // 
+            // tbShows
+            // 
+            this.tbShows.Location = new System.Drawing.Point(17, 21);
+            this.tbShows.Multiline = true;
+            this.tbShows.Name = "tbShows";
+            this.tbShows.ReadOnly = true;
+            this.tbShows.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbShows.Size = new System.Drawing.Size(318, 199);
+            this.tbShows.TabIndex = 25;
+            // 
+            // libClientsShows
+            // 
+            this.libClientsShows.FormattingEnabled = true;
+            this.libClientsShows.Location = new System.Drawing.Point(353, 21);
+            this.libClientsShows.Name = "libClientsShows";
+            this.libClientsShows.Size = new System.Drawing.Size(75, 199);
+            this.libClientsShows.TabIndex = 26;
+            // 
             // tabPageDebug
             // 
             this.tabPageDebug.Controls.Add(this.btnWipe);
-            this.tabPageDebug.Controls.Add(this.lbClientsPg2);
+            this.tabPageDebug.Controls.Add(this.libClientsDebug);
             this.tabPageDebug.Controls.Add(this.btnDebugClear);
             this.tabPageDebug.Controls.Add(this.tbDisplay);
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
-            this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDebug.Size = new System.Drawing.Size(444, 486);
             this.tabPageDebug.TabIndex = 1;
             this.tabPageDebug.Text = "Debug";
             this.tabPageDebug.UseVisualStyleBackColor = true;
             // 
-            // lbClientsPg2
+            // btnWipe
             // 
-            this.lbClientsPg2.FormattingEnabled = true;
-            this.lbClientsPg2.Location = new System.Drawing.Point(353, 21);
-            this.lbClientsPg2.Name = "lbClientsPg2";
-            this.lbClientsPg2.Size = new System.Drawing.Size(75, 199);
-            this.lbClientsPg2.TabIndex = 17;
+            this.btnWipe.Location = new System.Drawing.Point(353, 446);
+            this.btnWipe.Name = "btnWipe";
+            this.btnWipe.Size = new System.Drawing.Size(75, 23);
+            this.btnWipe.TabIndex = 19;
+            this.btnWipe.Text = "Wipe";
+            this.btnWipe.UseVisualStyleBackColor = true;
+            this.btnWipe.Click += new System.EventHandler(this.btnWipe_Click);
+            // 
+            // libClientsDebug
+            // 
+            this.libClientsDebug.FormattingEnabled = true;
+            this.libClientsDebug.Location = new System.Drawing.Point(353, 21);
+            this.libClientsDebug.Name = "libClientsDebug";
+            this.libClientsDebug.Size = new System.Drawing.Size(75, 199);
+            this.libClientsDebug.TabIndex = 17;
             // 
             // btnDebugClear
             // 
@@ -387,46 +427,6 @@
             this.tbDisplay.Size = new System.Drawing.Size(318, 199);
             this.tbDisplay.TabIndex = 16;
             // 
-            // tabPageShows
-            // 
-            this.tabPageShows.Controls.Add(this.tbShows);
-            this.tabPageShows.Controls.Add(this.lbShows);
-            this.tabPageShows.Location = new System.Drawing.Point(4, 22);
-            this.tabPageShows.Name = "tabPageShows";
-            this.tabPageShows.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageShows.Size = new System.Drawing.Size(444, 486);
-            this.tabPageShows.TabIndex = 2;
-            this.tabPageShows.Text = "Shows";
-            this.tabPageShows.UseVisualStyleBackColor = true;
-            // 
-            // btnWipe
-            // 
-            this.btnWipe.Location = new System.Drawing.Point(353, 446);
-            this.btnWipe.Name = "btnWipe";
-            this.btnWipe.Size = new System.Drawing.Size(75, 23);
-            this.btnWipe.TabIndex = 19;
-            this.btnWipe.Text = "Wipe";
-            this.btnWipe.UseVisualStyleBackColor = true;
-            this.btnWipe.Click += new System.EventHandler(this.btnWipe_Click);
-            // 
-            // tbShows
-            // 
-            this.tbShows.Location = new System.Drawing.Point(17, 21);
-            this.tbShows.Multiline = true;
-            this.tbShows.Name = "tbShows";
-            this.tbShows.ReadOnly = true;
-            this.tbShows.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbShows.Size = new System.Drawing.Size(318, 199);
-            this.tbShows.TabIndex = 25;
-            // 
-            // lbShows
-            // 
-            this.lbShows.FormattingEnabled = true;
-            this.lbShows.Location = new System.Drawing.Point(353, 21);
-            this.lbShows.Name = "lbShows";
-            this.lbShows.Size = new System.Drawing.Size(75, 199);
-            this.lbShows.TabIndex = 26;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -442,10 +442,10 @@
             this.tabControl.ResumeLayout(false);
             this.tabPageMovies.ResumeLayout(false);
             this.tabPageMovies.PerformLayout();
-            this.tabPageDebug.ResumeLayout(false);
-            this.tabPageDebug.PerformLayout();
             this.tabPageShows.ResumeLayout(false);
             this.tabPageShows.PerformLayout();
+            this.tabPageDebug.ResumeLayout(false);
+            this.tabPageDebug.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -457,7 +457,7 @@
         private System.Windows.Forms.TabPage tabPageDebug;
         private System.Windows.Forms.TextBox tbDisplay;
         private System.Windows.Forms.TextBox tbMovies;
-        private System.Windows.Forms.ListBox lbClients;
+        private System.Windows.Forms.ListBox libClientsMovies;
         private System.Windows.Forms.TextBox tbTitle;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnAdd;
@@ -483,12 +483,12 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.TextBox tbPrice;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox lbClientsPg2;
+        private System.Windows.Forms.ListBox libClientsDebug;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.TabPage tabPageShows;
         private System.Windows.Forms.Button btnWipe;
         private System.Windows.Forms.TextBox tbShows;
-        private System.Windows.Forms.ListBox lbShows;
+        private System.Windows.Forms.ListBox libClientsShows;
     }
 }
 

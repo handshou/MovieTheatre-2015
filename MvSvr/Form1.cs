@@ -36,7 +36,7 @@ namespace MvSvr {
         private static int port = 9070;
         private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
         private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private List<Socket> clients = new List<Socket>();
+        private Dictionary<String, Socket> clients = new Dictionary<String, Socket>();
 
         public delegate void DisplayMsgCallback(String msg);
         public delegate void DisplayMsgMoviesCallback(String msg);
@@ -52,6 +52,7 @@ namespace MvSvr {
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
+
         }
 
         public void ConnectClient() {
@@ -61,7 +62,7 @@ namespace MvSvr {
             while(true) {
                 try {
                     Socket client = server.Accept();
-                    clients.Add(client);
+                    //clients.Add(client);
                     ConnectionHandler handler = 
                         new ConnectionHandler(client, this, ref movieInfo, 
                             ref bookingInfo, ref clients);
@@ -365,5 +366,16 @@ namespace MvSvr {
             LoadMovies();
         }
 
+        public void UpdateClientListBox()    
+        {
+            libClientsMovies.Items.Clear();
+            libClientsShows.Items.Clear();
+            libClientsDebug.Items.Clear();
+            foreach(KeyValuePair<String, Socket> client in clients) {
+                libClientsMovies.Items.Add(client.Key);
+                libClientsShows.Items.Add(client.Key);
+                libClientsDebug.Items.Add(client.Key);
+            }
+        } 
     }
 }

@@ -14,6 +14,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 
 /// https://www.youtube.com/watch?v=0VmFdYWdSSU - Serialize Deserialize into Collection
 
@@ -57,15 +58,17 @@ namespace MvSvr {
         // Connection Attributes
         private Form1 form;
         private Socket client;
-        private List<Socket> clients = new List<Socket>();
+        private Dictionary<String, Socket> clients = new Dictionary<String, Socket>();
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
         private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
+
+        private MethodInvoker miv;
 
         // Constructor
         public ConnectionHandler(Socket client, Form1 form, 
             ref Dictionary<String, Movie> movieInfo, 
             ref Dictionary<String, List<Booking>> bookingInfo, 
-            ref List<Socket> clients) {
+            ref Dictionary<String, Socket> clients) {
 
             this.client = client;
             this.form = form;
@@ -77,57 +80,71 @@ namespace MvSvr {
         // Methods
         public void HandleConnection(Object state) {
 
+            miv = new MethodInvoker(form.UpdateClientListBox);
+
             int size = 0;
             try {
                 ns = new NetworkStream(client);
                 connections++;
-                DisplayClientMsg(connections);
 
                 /* R */
                 // Receive user
                 data = new byte[1024];
-
                 user = ReceiveCommand();
-                form.DisplayMsg("Welcome " + user + "!");
+                if (!clients.ContainsKey(user)) {
+                    clients.Add(user, client);
+                    SendCommand(SUCCESS);
 
-                while (true) {
-                    lock(_object) {
-                        //movieInfo = LoadMovieFile(moviesFile);
+                    DisplayConnectMsg(connections);
+                    form.BeginInvoke(miv);
+                    Thread.Sleep(300);
 
-                        /* R */
-                        // Receive command
-                        cmd = ReceiveCommand();
-                        form.DisplayMsg(cmd + " : " + user); // (!) Remove when complete
+                    while (true) {
+                        lock (_object) {
+                            //movieInfo = LoadMovieFile(moviesFile);
 
-                        switch (cmd) {
-                            case BROWSE: Browse();
-                                break;
-                            case SEARCH: Search();
-                                break;
-                            case BOOKNG: Book();
-                                break;
-                            case HISTRY: History();
-                                break;
-                            case FINISH: Quit();
-                                break;
-                            default: form.DisplayMsg("Unknown command received!");
+                            /* R */
+                            // Receive command
+                            cmd = ReceiveCommand();
+                            form.DisplayMsg("[" + user + "] :: " + cmd); // (!) Remove when complete
+
+                            switch (cmd) {
+                                case BROWSE: Browse();
+                                    break;
+                                case SEARCH: Search();
+                                    break;
+                                case BOOKNG: Book();
+                                    break;
+                                case HISTRY: History();
+                                    break;
+                                case FINISH: Quit();
+                                    break;
+                                default: form.DisplayMsg("[" + user + "] :: Unknown command");
+                                    break;
+                            }
+                            if (cmd == FINISH)
                                 break;
                         }
-                        if (cmd == FINISH)
-                            break;
                     }
+                } else {
+                    SendCommand(FAILURE);
+                    form.DisplayMsg("Detected attempted login");
                 }
 
             } catch (SocketException) {
 
-                clients.Remove(client);
+                clients.Remove(user);
                 connections--;
+                form.BeginInvoke(miv);
+                Thread.Sleep(300);
+
                 DisplayDisconnectMsg(connections);
 
             } catch (Exception ex) {
 
                 form.DisplayMsg(ex.ToString());
             }
+            // Consider implementing abort thread
         }
 
         public void Browse() {
@@ -223,8 +240,7 @@ namespace MvSvr {
                 }
 
                 List<Seat> serverSeats = serverShow.Hall.Seats;
-                form.DisplayMsg(serverMovie.Title);
-                form.DisplayMsg("Editing: [" + serverMovie.Title + "] [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
+                form.DisplayMsg("[" + user + "] :: [" + serverMovie.Title + "] [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
 
                 // Turn seat to unavailable : (!) consider using Dictionary collection
                 foreach(Seat seat in seats) {
@@ -269,12 +285,12 @@ namespace MvSvr {
                     SaveBookingToFile(bkHistFile);
 
                     SendCommand(SUCCESS);
-                    form.DisplayMsg("Booking Complete!");
+                    form.DisplayMsg("[" + user + "] :: [Booking] success");
 
                 } else {
 
                     SendCommand(FAILURE);
-                    form.DisplayMsg("Booking Failed.");
+                    form.DisplayMsg("[" + user + "] :: [Booking] failed");
 
                 }
             //}
@@ -287,9 +303,10 @@ namespace MvSvr {
             if (client != null)
                 client.Close();
 
-            clients.Remove(client);
+            clients.Remove(user);
             connections--;
-            form.DisplayMsg("Client disconnected: " + connections + " active connections");
+            form.BeginInvoke(miv);
+            DisplayDisconnectMsg(connections);
         }
 
         public void History() {
@@ -303,14 +320,16 @@ namespace MvSvr {
             String info_str = "";
 
             if (bookingList == null) {
+            // No History
 
                 info_str = "There are no booking records found";
 
             } else {
+            // Fetch History
 
+                // Building String..
                 // e.g. [7/31/2015 10:40:33 AM]  [The Dark Knight] 1 January 2015 > 0800 - 1000 : Seats A1 
                 String seats_str = "";
-
                 for (int i = 0; i < bookingList.Count; i++) {
                     b = bookingList[i];
                     s = b.Show;
@@ -346,7 +365,7 @@ namespace MvSvr {
                 formatter.Serialize(fs, movieInfo.Values.ToArray());
                 fs.Close();
             }
-            form.DisplayMsg("Saved movies database to " + filePath);
+            //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
         public void SaveBookingToFile(String filePath) {
@@ -356,7 +375,7 @@ namespace MvSvr {
                 formatter.Serialize(fs, bookingInfo.Values.ToArray());
                 fs.Close();
             }
-            form.DisplayMsg("Saved booking database to " + filePath);
+            //form.DisplayMsg("Saved booking database to " + filePath); (!)
         }
 
         public String ReceiveTypeTerms(out String type) {
@@ -407,7 +426,7 @@ namespace MvSvr {
 
             try {
                 client.Send(buffer);
-                form.DisplayMsg("File Sent"); // (!) Remove when complete
+                form.DisplayMsg("[" + user + "] :: File sent"); // (!) Remove when complete
             } catch (Exception ex) {
                 form.DisplayMsg(ex.ToString());
             }
@@ -429,7 +448,7 @@ namespace MvSvr {
             data = new byte[filesize];
             try {
                 size = client.Receive(data);
-                form.DisplayMsg("File received"); // (!) Remove when complete
+                form.DisplayMsg("[" + user + "] :: File received"); // (!) Remove when complete
             } catch (Exception ex) {
                 form.DisplayMsg("Error receiving file (file)\n" + ex.ToString());
             }
@@ -545,20 +564,20 @@ namespace MvSvr {
             return output;
         }
 
-        public void DisplayClientMsg(int connections) {
+        public void DisplayConnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("New client accepted: " + connections + " active connection");
+                form.DisplayMsg("[" + user + "] connected\n" + connections + " active connection");
             else
-                form.DisplayMsg("New client accepted: " + connections + " active connections");
+                form.DisplayMsg("[" + user + "] connected\n" + connections + " active connections");
         }
 
         public void DisplayDisconnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("Client disconnected: " + connections + " active connection");
+                form.DisplayMsg("[" + user + "] disconnected\n" + connections + " remaining connection");
             else
-                form.DisplayMsg("Client disconnected: " + connections + " active connections");
+                form.DisplayMsg("[" + user + "] disconnected\n" + connections + " remaining connections");
         }
     }
 }
