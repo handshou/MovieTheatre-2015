@@ -340,7 +340,7 @@ namespace MvSvr {
                     }
                     info_str += "[" + s.Movie.Title + "]" + "\n" +
                                 "[" + s.Date + "] " + s.TimeStart + " - " + s.TimeEnd + " : " +
-                                        b.Show.Hall.Name + "\n === Seats === " + "(" + b.BookingTime + ")\n" +
+                                        b.Show.Hall.Name + "\n === Seats === " + "(Generated @ " + b.BookingTime + ")\n" +
                                         seats_str + "\n";
                     info_str += ENDOFF;
                 }

@@ -73,8 +73,6 @@ namespace MvSysClient {
         //called when the client has connected to the server and logged in with a userID
         {
 
-            Control.CheckForIllegalCrossThreadCalls = false;
-
             userID = txtUser.Text;
             //prevents changes to the user text box
 
@@ -174,7 +172,7 @@ namespace MvSysClient {
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
             Movie m = movieInfo[movie];
 
-            Show s = GetShow(m);
+            Show s = GetShow();
 
             Hall h = s.Hall;
 
@@ -255,9 +253,11 @@ namespace MvSysClient {
                 size = socket.Receive(data);
                 authenticated = Encoding.ASCII.GetString(data).Trim('\0');                
                 if (authenticated == SUCCESS) {
-                    t = new Thread(runClient);
-                    t.Start();
+
+                    runClient();
+
                 } else {
+
                     rTxtMessages.AppendText("\nUser ID already logged in. Please choose another user ID.");
                 }
             }
@@ -356,7 +356,9 @@ namespace MvSysClient {
                     fs.Flush();
                     fs.Close();
                     movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo)
+                    SortedDictionary<String, Movie> sortedMovieInfo = new SortedDictionary<String, Movie>(movieInfo);
+
+                    foreach (KeyValuePair<String, Movie> infos in sortedMovieInfo)
                     {
                         rTxtMessages.AppendText(infos.Value.Title + "\r\n");
                         rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
@@ -518,7 +520,7 @@ namespace MvSysClient {
 
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
             Movie m = movieInfo[movie];
-            Show s = GetShow(m);
+            Show s = GetShow();
 
             line = userID + ";" + ";" + time + ";" + seatIndex + ";" + price;
             //hall or show + index of seat
@@ -532,7 +534,7 @@ namespace MvSysClient {
             string filePath = @"bookingInfo.dat";
 
             int index = cobSeat.SelectedIndex;
-            s = GetShow(m);
+            s = GetShow();
 
             Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
 
@@ -795,19 +797,24 @@ namespace MvSysClient {
             return m;
         }
 
-        public Show GetShow(Movie m)
+        public Show GetShow()
         //this method is called when the Show object of a Movie is required
         //returns a Show object
         {
-            int index = cobDate.SelectedIndex;
-            return m.Shows[index];
-        }
+            Movie m = GetMovie();
+            //cobDate.SelectedIndex;
+            //cobDate.SelectedItem();
+            //cobDate.SelectedText();
+            //cobDate.SelectedValue();
 
-        public Show GetShowTime(Movie m)
-            //this method is called when the Show object of a Movie is required
-            //returns a Show object
-{
-            int index = cobTime.SelectedIndex;
+
+
+
+
+
+
+
+            int index = cobDate.SelectedIndex;
             return m.Shows[index];
         }
 
