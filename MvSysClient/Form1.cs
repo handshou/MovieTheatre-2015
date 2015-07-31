@@ -44,6 +44,7 @@ namespace MvSysClient {
         private int size = 0;
         private string infoFile = @"infomo.dat";
         private string srchFile = @"search.dat";
+        private string filePath = @"bookingInfo.dat";
         private long filesize = 0;
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
@@ -74,7 +75,6 @@ namespace MvSysClient {
                                             chkD1, chkD2, chkD3, chkD4, chkD5,
                                             chkE1, chkE2, chkE3, chkE4, chkE5 };
 
-            btnBook.Click += new EventHandler(UpdateCinemaSeats);
             btnBrowse.Click += new EventHandler(UpdateCinemaSeats);
             btnSearch.Click += new EventHandler(UpdateCinemaSeats);
 
@@ -562,94 +562,87 @@ namespace MvSysClient {
         //booking information is derived from user inputs in the relevant controls
         //server will return relevant reply depending if the booking is successful
         {
-            string time = (string)cobSearch.SelectedItem;
-            int seatIndex = cobSeat.SelectedIndex;
-            string price = lblPrice.Text;
-            string line = "";
-
-            Movie m = GetMovie();
             Show s = GetShow();
+            List<Seat> seatList = s.Hall.Seats;
+            
+            
 
-            line = userID + ";" + ";" + time + ";" + seatIndex + ";" + price;
-            //hall or show + index of seat
-
-            //sending to server
-            byte[] data = new byte[1024];
-
-            data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive a booking
-            socket.Send(data);
-
-            string filePath = @"bookingInfo.dat";
-
-            int index = cobSeat.SelectedIndex;
-            s = GetShow();
+            
 
             Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
+            // showDict.Add(s.Hall.Seats[index], s);
+            // SaveToBookingFile(filePath, showDict);
 
-            showDict.Add(s.Hall.Seats[index], s);
-
-            SaveToBookingFile(filePath, showDict);
-
-            FileInfo f = new FileInfo(filePath);
-            filesize = f.Length;
-            data = new byte[filesize];
-
-            // Sending booking information
-            socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
-
-            // Sending file
-            byte[] buffer = null;
-            using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                buffer = new byte[fs.Length];
-                fs.Read(buffer, 0, (int)fs.Length);
-                fs.Close();
+            for (int i = 0; i < seatList.Count; i++) {
+                //if (!seatList[i].Vacant) {
+                //    _checkBoxes[i].CheckState = CheckState.Indeterminate;
+                //    _checkBoxes[i].Enabled = false;
+                //}
+                //if (seatList[i].Vacant) {
+                //    _checkBoxes[i].CheckState = CheckState.Unchecked;
+                //    _checkBoxes[i].Enabled = true;
+                //}
+                if (_checkBoxes[i].CheckState == CheckState.Checked) {
+                    showDict.Add(s.Hall.Seats[i], s);
+                    rTxtMessages.Text += s.Hall.Seats[i].Name + "\n"; // (!) debug
+                }
             }
 
-            try
-            {
-                socket.Send(buffer);
-                // rTxtMessages.AppendText("Files sent"); //
-            }
-            catch (Exception ex)
-            {
-                rTxtMessages.AppendText(ex.Message);
-            }
+            if (showDict.Count > 0) {
+                SaveToBookingFile(filePath, showDict);
 
-            ///////
+                //sending to server
+                byte[] data = new byte[1024];
+                data = Encoding.ASCII.GetBytes(BOOKNG); //sends prompt for server to receive a booking
+                socket.Send(data);
 
-            string result = "";
+                FileInfo f = new FileInfo(filePath);
+                filesize = f.Length;
+                data = new byte[filesize];
+                // Sending booking information
+                socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
 
-            try
-            {
-                int size = 0;
-                size = socket.Receive(data);
-                result = Encoding.ASCII.GetString(data, 0, size);
-            }
+                // Sending file
+                byte[] buffer = null;
+                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+                    buffer = new byte[fs.Length];
+                    fs.Read(buffer, 0, (int)fs.Length);
+                    fs.Close();
+                }
 
-            catch (Exception)
-            {
-                lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
-                lblBookMessage.ForeColor = Color.Red;
-                result = FAILURE;
-            }
+                try {
+                    socket.Send(buffer);
+                    // rTxtMessages.AppendText("Files sent"); //
+                } catch (Exception ex) {
+                    rTxtMessages.AppendText(ex.Message);
+                }
 
-            finally
-            {
-                lblBookMessage.Visible = true;
-            }
+                ///////
 
-            if (result == SUCCESS)
-            {
-                lblBookMessage.Text = "Your booking for " + m.Title + " has been successful";
-                lblBookMessage.Font = new Font(lblBookMessage.Font, FontStyle.Bold);
-                lblBookMessage.ForeColor = Color.Black;
-            }
+                string result = "";
 
-            else
-            {
-                lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
-                lblBookMessage.ForeColor = Color.Red;
+                try {
+                    int size = 0;
+                    size = socket.Receive(data);
+                    result = Encoding.ASCII.GetString(data, 0, size);
+                } catch (Exception) {
+                    lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                    lblBookMessage.ForeColor = Color.Red;
+                    result = FAILURE;
+                } finally {
+                    lblBookMessage.Visible = true;
+                }
+
+                if (result == SUCCESS) {
+                    lblBookMessage.Text = "Your booking for " + s.Movie.Title + " has been successful";
+                    lblBookMessage.Font = new Font(lblBookMessage.Font, FontStyle.Bold);
+                    lblBookMessage.ForeColor = Color.Black;
+                } else {
+                    lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                    lblBookMessage.ForeColor = Color.Red;
+                }
+            } else {
+                MessageBox.Show("Please select a seat before proceeding");
             }
         }
 
@@ -894,13 +887,13 @@ namespace MvSysClient {
             IFormatter formatter  = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
-                Object[] bookingInfo = new Object[d.Count + 2]; // Create array to send
-                bookingInfo[0] = (Show) d.Values.ToArray()[0]; // First item in array is a Show object
-                bookingInfo[1] = (int) d.Count + 2;
+                Object[] bookingObj = new Object[d.Count + 2]; // Create array to send
+                bookingObj[0] = (Show) d.Values.ToArray()[0]; // First item in array is a Show object
+                bookingObj[1] = (int) d.Count + 2;
                 for(int i = 0; i < d.Keys.ToArray().Length; i++){
-                    bookingInfo[i+2] = (Seat) d.Keys.ToArray()[i]; // Add all seats for the show
+                    bookingObj[i+2] = (Seat) d.Keys.ToArray()[i]; // Add all seats for the show
                 }
-                formatter.Serialize(fs, bookingInfo);
+                formatter.Serialize(fs, bookingObj);
                 fs.Close();
             }
         }

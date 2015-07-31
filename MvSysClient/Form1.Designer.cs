@@ -222,34 +222,34 @@
             // lblShowName
             // 
             this.lblShowName.AutoSize = true;
-            this.lblShowName.Location = new System.Drawing.Point(355, 467);
+            this.lblShowName.Location = new System.Drawing.Point(358, 466);
             this.lblShowName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowName.Name = "lblShowName";
-            this.lblShowName.Size = new System.Drawing.Size(70, 13);
+            this.lblShowName.Size = new System.Drawing.Size(67, 13);
             this.lblShowName.TabIndex = 19;
-            this.lblShowName.Text = "Movie Name:";
+            this.lblShowName.Text = "Movie Name";
             this.lblShowName.Visible = false;
             // 
             // lblShowGenre
             // 
             this.lblShowGenre.AutoSize = true;
-            this.lblShowGenre.Location = new System.Drawing.Point(355, 513);
+            this.lblShowGenre.Location = new System.Drawing.Point(358, 513);
             this.lblShowGenre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowGenre.Name = "lblShowGenre";
-            this.lblShowGenre.Size = new System.Drawing.Size(39, 13);
+            this.lblShowGenre.Size = new System.Drawing.Size(36, 13);
             this.lblShowGenre.TabIndex = 20;
-            this.lblShowGenre.Text = "Genre:";
+            this.lblShowGenre.Text = "Genre";
             this.lblShowGenre.Visible = false;
             // 
             // lblShowDirector
             // 
             this.lblShowDirector.AutoSize = true;
-            this.lblShowDirector.Location = new System.Drawing.Point(355, 560);
+            this.lblShowDirector.Location = new System.Drawing.Point(358, 559);
             this.lblShowDirector.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowDirector.Name = "lblShowDirector";
-            this.lblShowDirector.Size = new System.Drawing.Size(47, 13);
+            this.lblShowDirector.Size = new System.Drawing.Size(44, 13);
             this.lblShowDirector.TabIndex = 21;
-            this.lblShowDirector.Text = "Director:";
+            this.lblShowDirector.Text = "Director";
             this.lblShowDirector.Visible = false;
             // 
             // lblMvName
@@ -441,7 +441,7 @@
             this.chkA1.AutoSize = true;
             this.chkA1.Checked = true;
             this.chkA1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA1.Location = new System.Drawing.Point(408, 669);
+            this.chkA1.Location = new System.Drawing.Point(408, 674);
             this.chkA1.Name = "chkA1";
             this.chkA1.Size = new System.Drawing.Size(15, 14);
             this.chkA1.TabIndex = 52;
@@ -453,7 +453,7 @@
             this.chkA2.AutoSize = true;
             this.chkA2.Checked = true;
             this.chkA2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA2.Location = new System.Drawing.Point(429, 669);
+            this.chkA2.Location = new System.Drawing.Point(429, 674);
             this.chkA2.Name = "chkA2";
             this.chkA2.Size = new System.Drawing.Size(15, 14);
             this.chkA2.TabIndex = 53;
@@ -465,7 +465,7 @@
             this.chkA3.AutoSize = true;
             this.chkA3.Checked = true;
             this.chkA3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA3.Location = new System.Drawing.Point(451, 669);
+            this.chkA3.Location = new System.Drawing.Point(451, 674);
             this.chkA3.Name = "chkA3";
             this.chkA3.Size = new System.Drawing.Size(15, 14);
             this.chkA3.TabIndex = 54;
@@ -477,7 +477,7 @@
             this.chkA4.AutoSize = true;
             this.chkA4.Checked = true;
             this.chkA4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA4.Location = new System.Drawing.Point(472, 669);
+            this.chkA4.Location = new System.Drawing.Point(472, 674);
             this.chkA4.Name = "chkA4";
             this.chkA4.Size = new System.Drawing.Size(15, 14);
             this.chkA4.TabIndex = 55;
@@ -489,7 +489,7 @@
             this.chkA5.AutoSize = true;
             this.chkA5.Checked = true;
             this.chkA5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA5.Location = new System.Drawing.Point(493, 669);
+            this.chkA5.Location = new System.Drawing.Point(493, 674);
             this.chkA5.Name = "chkA5";
             this.chkA5.Size = new System.Drawing.Size(15, 14);
             this.chkA5.TabIndex = 56;
@@ -501,7 +501,7 @@
             this.chkB5.AutoSize = true;
             this.chkB5.Checked = true;
             this.chkB5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB5.Location = new System.Drawing.Point(493, 689);
+            this.chkB5.Location = new System.Drawing.Point(493, 694);
             this.chkB5.Name = "chkB5";
             this.chkB5.Size = new System.Drawing.Size(15, 14);
             this.chkB5.TabIndex = 61;
@@ -513,7 +513,7 @@
             this.chkB4.AutoSize = true;
             this.chkB4.Checked = true;
             this.chkB4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB4.Location = new System.Drawing.Point(472, 689);
+            this.chkB4.Location = new System.Drawing.Point(472, 694);
             this.chkB4.Name = "chkB4";
             this.chkB4.Size = new System.Drawing.Size(15, 14);
             this.chkB4.TabIndex = 60;
@@ -525,7 +525,7 @@
             this.chkB3.AutoSize = true;
             this.chkB3.Checked = true;
             this.chkB3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB3.Location = new System.Drawing.Point(451, 689);
+            this.chkB3.Location = new System.Drawing.Point(451, 694);
             this.chkB3.Name = "chkB3";
             this.chkB3.Size = new System.Drawing.Size(15, 14);
             this.chkB3.TabIndex = 59;
@@ -537,7 +537,7 @@
             this.chkB2.AutoSize = true;
             this.chkB2.Checked = true;
             this.chkB2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB2.Location = new System.Drawing.Point(429, 689);
+            this.chkB2.Location = new System.Drawing.Point(429, 694);
             this.chkB2.Name = "chkB2";
             this.chkB2.Size = new System.Drawing.Size(15, 14);
             this.chkB2.TabIndex = 58;
@@ -549,7 +549,7 @@
             this.chkB1.AutoSize = true;
             this.chkB1.Checked = true;
             this.chkB1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB1.Location = new System.Drawing.Point(408, 689);
+            this.chkB1.Location = new System.Drawing.Point(408, 694);
             this.chkB1.Name = "chkB1";
             this.chkB1.Size = new System.Drawing.Size(15, 14);
             this.chkB1.TabIndex = 57;
@@ -561,7 +561,7 @@
             this.chkC5.AutoSize = true;
             this.chkC5.Checked = true;
             this.chkC5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC5.Location = new System.Drawing.Point(493, 709);
+            this.chkC5.Location = new System.Drawing.Point(493, 714);
             this.chkC5.Name = "chkC5";
             this.chkC5.Size = new System.Drawing.Size(15, 14);
             this.chkC5.TabIndex = 66;
@@ -573,7 +573,7 @@
             this.chkC4.AutoSize = true;
             this.chkC4.Checked = true;
             this.chkC4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC4.Location = new System.Drawing.Point(472, 709);
+            this.chkC4.Location = new System.Drawing.Point(472, 714);
             this.chkC4.Name = "chkC4";
             this.chkC4.Size = new System.Drawing.Size(15, 14);
             this.chkC4.TabIndex = 65;
@@ -585,7 +585,7 @@
             this.chkC3.AutoSize = true;
             this.chkC3.Checked = true;
             this.chkC3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC3.Location = new System.Drawing.Point(451, 709);
+            this.chkC3.Location = new System.Drawing.Point(451, 714);
             this.chkC3.Name = "chkC3";
             this.chkC3.Size = new System.Drawing.Size(15, 14);
             this.chkC3.TabIndex = 64;
@@ -597,7 +597,7 @@
             this.chkC2.AutoSize = true;
             this.chkC2.Checked = true;
             this.chkC2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC2.Location = new System.Drawing.Point(429, 709);
+            this.chkC2.Location = new System.Drawing.Point(429, 714);
             this.chkC2.Name = "chkC2";
             this.chkC2.Size = new System.Drawing.Size(15, 14);
             this.chkC2.TabIndex = 63;
@@ -609,7 +609,7 @@
             this.chkC1.AutoSize = true;
             this.chkC1.Checked = true;
             this.chkC1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC1.Location = new System.Drawing.Point(408, 709);
+            this.chkC1.Location = new System.Drawing.Point(408, 714);
             this.chkC1.Name = "chkC1";
             this.chkC1.Size = new System.Drawing.Size(15, 14);
             this.chkC1.TabIndex = 62;
@@ -621,7 +621,7 @@
             this.chkD5.AutoSize = true;
             this.chkD5.Checked = true;
             this.chkD5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD5.Location = new System.Drawing.Point(493, 729);
+            this.chkD5.Location = new System.Drawing.Point(493, 734);
             this.chkD5.Name = "chkD5";
             this.chkD5.Size = new System.Drawing.Size(15, 14);
             this.chkD5.TabIndex = 71;
@@ -633,7 +633,7 @@
             this.chkD4.AutoSize = true;
             this.chkD4.Checked = true;
             this.chkD4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD4.Location = new System.Drawing.Point(472, 729);
+            this.chkD4.Location = new System.Drawing.Point(472, 734);
             this.chkD4.Name = "chkD4";
             this.chkD4.Size = new System.Drawing.Size(15, 14);
             this.chkD4.TabIndex = 70;
@@ -645,7 +645,7 @@
             this.chkD3.AutoSize = true;
             this.chkD3.Checked = true;
             this.chkD3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD3.Location = new System.Drawing.Point(451, 729);
+            this.chkD3.Location = new System.Drawing.Point(451, 734);
             this.chkD3.Name = "chkD3";
             this.chkD3.Size = new System.Drawing.Size(15, 14);
             this.chkD3.TabIndex = 69;
@@ -657,7 +657,7 @@
             this.chkD2.AutoSize = true;
             this.chkD2.Checked = true;
             this.chkD2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD2.Location = new System.Drawing.Point(429, 729);
+            this.chkD2.Location = new System.Drawing.Point(429, 734);
             this.chkD2.Name = "chkD2";
             this.chkD2.Size = new System.Drawing.Size(15, 14);
             this.chkD2.TabIndex = 68;
@@ -669,7 +669,7 @@
             this.chkD1.AutoSize = true;
             this.chkD1.Checked = true;
             this.chkD1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD1.Location = new System.Drawing.Point(408, 729);
+            this.chkD1.Location = new System.Drawing.Point(408, 734);
             this.chkD1.Name = "chkD1";
             this.chkD1.Size = new System.Drawing.Size(15, 14);
             this.chkD1.TabIndex = 67;
@@ -681,7 +681,7 @@
             this.chkE5.AutoSize = true;
             this.chkE5.Checked = true;
             this.chkE5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE5.Location = new System.Drawing.Point(493, 749);
+            this.chkE5.Location = new System.Drawing.Point(493, 754);
             this.chkE5.Name = "chkE5";
             this.chkE5.Size = new System.Drawing.Size(15, 14);
             this.chkE5.TabIndex = 76;
@@ -693,7 +693,7 @@
             this.chkE4.AutoSize = true;
             this.chkE4.Checked = true;
             this.chkE4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE4.Location = new System.Drawing.Point(472, 749);
+            this.chkE4.Location = new System.Drawing.Point(472, 754);
             this.chkE4.Name = "chkE4";
             this.chkE4.Size = new System.Drawing.Size(15, 14);
             this.chkE4.TabIndex = 75;
@@ -705,7 +705,7 @@
             this.chkE3.AutoSize = true;
             this.chkE3.Checked = true;
             this.chkE3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE3.Location = new System.Drawing.Point(451, 749);
+            this.chkE3.Location = new System.Drawing.Point(451, 754);
             this.chkE3.Name = "chkE3";
             this.chkE3.Size = new System.Drawing.Size(15, 14);
             this.chkE3.TabIndex = 74;
@@ -717,7 +717,7 @@
             this.chkE2.AutoSize = true;
             this.chkE2.Checked = true;
             this.chkE2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE2.Location = new System.Drawing.Point(429, 749);
+            this.chkE2.Location = new System.Drawing.Point(429, 754);
             this.chkE2.Name = "chkE2";
             this.chkE2.Size = new System.Drawing.Size(15, 14);
             this.chkE2.TabIndex = 73;
@@ -729,7 +729,7 @@
             this.chkE1.AutoSize = true;
             this.chkE1.Checked = true;
             this.chkE1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE1.Location = new System.Drawing.Point(408, 749);
+            this.chkE1.Location = new System.Drawing.Point(408, 754);
             this.chkE1.Name = "chkE1";
             this.chkE1.Size = new System.Drawing.Size(15, 14);
             this.chkE1.TabIndex = 72;
@@ -739,7 +739,7 @@
             // lblScreen
             // 
             this.lblScreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblScreen.Location = new System.Drawing.Point(408, 615);
+            this.lblScreen.Location = new System.Drawing.Point(408, 613);
             this.lblScreen.Name = "lblScreen";
             this.lblScreen.Size = new System.Drawing.Size(100, 38);
             this.lblScreen.TabIndex = 77;
