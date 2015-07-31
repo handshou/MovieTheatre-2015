@@ -13,7 +13,7 @@ namespace MvSvr {
 
     [Serializable()]
 
-    public class Movie : IComparer<Show> {
+    public class Movie {
 
         // Attributes + Get Set
         public String Title { get; set; }
@@ -49,7 +49,7 @@ namespace MvSvr {
             this.Poster = Poster;
         }
 
-        // Methods
+        // Methods - (!) OrderBy not working as intended!
         public List<Show> FindShows(int index) {
             // returns all shows that fall on given date by index
             List<Show> shows = new List<Show>();
@@ -59,7 +59,8 @@ namespace MvSvr {
                     shows.Add(Shows[i]);
                 }
             }
-            shows.OrderBy(x => x.TimeStart);
+            // show => show.TimeStart
+            shows.OrderBy(x => x.TimeStart, new SemiNumericComparer());
 
             return shows;
         }
@@ -71,7 +72,7 @@ namespace MvSvr {
                     shows.Add(Shows[i]);
                 }
             }
-            shows.OrderBy(x => x.TimeStart);
+            shows.OrderBy(x => x.TimeStart, new SemiNumericComparer());
 
             return shows;
         }

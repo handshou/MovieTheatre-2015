@@ -66,8 +66,8 @@ namespace MvSvr {
                     Socket client = server.Accept();
                     //clients.Add(client);
                     ConnectionHandler handler = 
-                        new ConnectionHandler(client, this, ref movieInfo, 
-                            ref bookingInfo, ref clients, ref clientsNumber);
+                        new ConnectionHandler(client, this, movieInfo, 
+                            bookingInfo, clients, clientsNumber);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
 
                 } catch(Exception ex) {
@@ -104,8 +104,8 @@ namespace MvSvr {
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall("Hall 1"), "0800", "1000", 8.00),
                 new Show(m, "1 January 2015", new Hall("Hall 2"), "1600", "1800", 8.00),
-                new Show(m, "2 January 2015", new Hall("Hall 3"), "2000", "2200", 8.00),
-                new Show(m, "2 January 2015", new Hall("Hall 4"), "0800", "1000", 8.00),
+                new Show(m, "2 January 2015", new Hall("Hall 3"), "0800", "1000", 8.00),
+                new Show(m, "2 January 2015", new Hall("Hall 4"), "1600", "2200", 8.00),
                 new Show(m, "3 January 2015", new Hall("Hall 5"), "1600", "1800", 10.00),
                 new Show(m, "3 January 2015", new Hall("Hall 6"), "2000", "2200", 12.00),
             };
@@ -152,51 +152,6 @@ namespace MvSvr {
             movieInfo.Add(m.Title, m);
 
         }
-
-        //public void WriteToTextFile() {
-            
-        //    String moviePath    = @"movieText.txt";
-        //    String showPath     = @"showText.txt";
-        //    String hallPath     = @"hallText.txt";
-        //    String seatPath     = @"seatText.txt";
-        //    String bookingPath  = @"bookingText.txt";
-
-        //    List<Movie> mlist = movieInfo.Values.ToList<Movie>();
-        //    using (fs = new FileStream(moviePath, FileMode.OpenOrCreate, FileAccess.Write)) {
-        //        Movie m = new Movie(Title, Description, Director, Genre, List<Shows>, PosterURL)
-
-
-
-        //        fs.Flush();
-        //        fs.Close();
-        //    }
-        //    foreach(Show show in showlist)
-        //    List<Show> showlist = mlist
-        //    using (fs = new FileStream(showPath, FileMode.OpenOrCreate, FileAccess.Write)) {
-
-
-        //        fs.Flush();
-        //        fs.Close();
-        //    }
-        //    using (fs = new FileStream(hallPath, FileMode.OpenOrCreate, FileAccess.Write)) {
-
-
-        //        fs.Flush();
-        //        fs.Close();
-        //    }
-        //    using (fs = new FileStream(seatPath, FileMode.OpenOrCreate, FileAccess.Write)) {
-
-
-        //        fs.Flush();
-        //        fs.Close();
-        //    }
-        //    using (fs = new FileStream(bookingPath, FileMode.OpenOrCreate, FileAccess.Write)) {
-
-
-        //        fs.Flush();
-        //        fs.Close();
-        //    }
-        //}
 
         public Dictionary<String, Movie> LoadMovieFile(String filePath) {
 
@@ -331,9 +286,9 @@ namespace MvSvr {
         }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-
+            
             //// Create the movie and shows
-           String title, desc, dir, genre, imgPath;
+            String title, desc, dir, genre, imgPath;
 
             title    = tbTitle.Text;
             desc     = tbDescription.Text;

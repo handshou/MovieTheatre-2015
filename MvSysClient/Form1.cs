@@ -84,6 +84,9 @@ namespace MvSysClient {
             cobSearch.Enabled = true;
             txtSearch.Enabled = true;
 
+            listMovies.Enabled = true;
+            lblBookMessage.ResetText();
+
             rTxtMessages.Clear();
             rTxtMessages.AppendText("Welcome to the Movie Booking System\n");
             rTxtMessages.AppendText("\nYou may find your desired movies by browsing or searching\n");
@@ -292,8 +295,9 @@ namespace MvSysClient {
             cobSeat.Enabled = false;
             cobDate.Enabled = false;
             cobTime.Enabled = false;
+            listMovies.Enabled = false;
 
-            listMovies.Items.Clear();
+            lblBookMessage.ResetText();
         }
 
         public void Browse()
@@ -323,15 +327,15 @@ namespace MvSysClient {
 
             filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
-            rTxtMessages.Clear();
-            rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+            //rTxtMessages.Clear();
+            //rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
 
             //receiving file
             data = new byte[filesize];
             try
             {
                 size = socket.Receive(data);
-                rTxtMessages.AppendText("File received" + "\r\n");
+                //rTxtMessages.AppendText("File received" + "\r\n");
             }
             catch (Exception)
             {
@@ -342,7 +346,7 @@ namespace MvSysClient {
             {
                 fs.Write(data, 0, Convert.ToInt32(filesize));
                 fs.Flush();
-                rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
+                //rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                 fs.Close();
             }
 
@@ -358,8 +362,8 @@ namespace MvSysClient {
 
                     foreach (KeyValuePair<String, Movie> infos in sortedMovieInfo)
                     {
-                        rTxtMessages.AppendText(infos.Value.Title + "\r\n");
-                        rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+                        //rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                        //rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
                         Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director,
                             infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
@@ -516,8 +520,7 @@ namespace MvSysClient {
             string price = lblPrice.Text;
             string line = "";
 
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
+            Movie m = GetMovie();
             Show s = GetShow();
 
             line = userID + ";" + ";" + time + ";" + seatIndex + ";" + price;
@@ -619,6 +622,7 @@ namespace MvSysClient {
 
             try
             {
+                data = new byte[8192];
                 int size = 0;
                 size = socket.Receive(data);
                 history = Encoding.ASCII.GetString(data, 0, size);
@@ -789,7 +793,6 @@ namespace MvSysClient {
         //this method is called when a movie object is required
         //returns a Movie object
         {
-        
             string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
             Movie m = movieInfo[movie];
             return m;
@@ -801,18 +804,21 @@ namespace MvSysClient {
         {
             Movie m = GetMovie();
 
-            List<Show> showList = m.Shows;
-            foreach (Show sh in showList) {
-                if (!sh.Date.Equals(cobDate.SelectedItem)) {
-                    showList.Remove(sh);
-                }
-                if (!sh.TimeStart.Equals(cobTime.SelectedItem)) {
-                // Ensure that it is not the same show
-                    showList.Remove(sh);
-                }
-            }
-            //int index = cobDate.SelectedIndex;
-            return showList[0];
+            Show s = m.FindShows(cobDate.SelectedIndex)[cobTime.SelectedIndex];
+
+            return s;
+            //List<Show> showList = m.Shows;
+            //foreach (Show sh in showList) {
+            //    if (!sh.Date.Equals(cobDate.SelectedItem)) {
+            //        showList.Remove(sh);
+            //    }
+            //    if (!sh.TimeStart.Equals(cobTime.SelectedItem)) {
+            //    // Ensure that it is not the same show
+            //        showList.Remove(sh);
+            //    }
+            //}
+            ////int index = cobDate.SelectedIndex;
+            //return showList[0];
         }
 
 
