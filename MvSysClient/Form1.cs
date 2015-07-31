@@ -356,6 +356,7 @@ namespace MvSysClient {
                         listMovies.Items.Add(mv.Title);
 
                     }
+                    listMovies.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
