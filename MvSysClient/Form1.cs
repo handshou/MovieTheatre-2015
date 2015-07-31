@@ -58,6 +58,7 @@ namespace MvSysClient {
         public Thread t = null;
 
         public String userID = "";
+        public String authenticated = "";
 
         public String bookingInfo = "";
 
@@ -209,6 +210,7 @@ namespace MvSysClient {
         //unsuccessful execution prompts the user to enter a valid userID
         {
             Regex regex = new Regex(@"^[0-9]{4}$");
+            byte[] data = new byte[1024];
 
             if (!string.IsNullOrWhiteSpace(txtUser.Text) && regex.IsMatch(txtUser.Text))
             //checks if userID textbox is either empty or only has white spaces
@@ -227,7 +229,7 @@ namespace MvSysClient {
 
                     rTxtMessages.Text += "\nConnection established.";
                     rTxtMessages.Text += "\nConnected to server with IP Address of" +
-                        "127.0.0.1 and port 9070";
+                        " 127.0.0.1 and port 9070";
 
                     stream = new NetworkStream(socket);
                     writer = new StreamWriter(stream);
@@ -236,10 +238,9 @@ namespace MvSysClient {
                     userID = txtUser.Text;
 
                     // sends user data to server
-                    byte[] data = new byte[1024];
+                    data = new byte[1024];
                     data = Encoding.ASCII.GetBytes(userID);
                     socket.Send(data);
-
                 }
                 catch (SocketException ex)
                 {
@@ -248,8 +249,16 @@ namespace MvSysClient {
                     return;
                 }
 
-                t = new Thread(runClient);
-                t.Start();
+                // check if login is successful
+                data = new byte[1024];
+                size = socket.Receive(data);
+                authenticated = Encoding.ASCII.GetString(data).Trim('\0');                
+                if (authenticated == SUCCESS) {
+                    t = new Thread(runClient);
+                    t.Start();
+                } else {
+                    rTxtMessages.AppendText("\nUser ID already logged in. Please choose another user ID.");
+                }
             }
 
             else
@@ -284,6 +293,8 @@ namespace MvSysClient {
             cobSeat.Enabled = false;
             cobDate.Enabled = false;
             cobTime.Enabled = false;
+
+            listMovies.Items.Clear();
         }
 
         public void Browse()
