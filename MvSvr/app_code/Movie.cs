@@ -82,7 +82,7 @@ namespace MvSvr {
                 if (!showdates.Contains(s.Date))
                     showdates.Add(s.Date);
             }
-            showdates.Sort();
+            // showdates.Sort();
 
             return showdates;
         }
@@ -93,7 +93,19 @@ namespace MvSvr {
                 if (Shows[i].Date.Equals(date))
                     showtimes.Add(Shows[i].TimeStart);
             }
-            showtimes.Sort();
+            // showtimes.Sort();
+
+            return showtimes;
+        }
+        public List<String> FindShowTimes(int index) {
+            // returns all shows that fall on given date by index
+            List<String> showtimes = new List<String>();
+            foreach (Show s in FindShows(index)) {
+                if (!showtimes.Contains(s.TimeStart)) {
+                    showtimes.Add(s.TimeStart);
+                }
+            }
+            // showtimes.Sort();
 
             return showtimes;
         }

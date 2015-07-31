@@ -27,16 +27,19 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
 namespace MvSysClient {
+
     public partial class Form1 : Form 
     {
 
-        public static Socket socket = new Socket(AddressFamily.InterNetwork,
+        public Socket socket = new Socket(AddressFamily.InterNetwork,
                           SocketType.Stream, ProtocolType.Tcp);
 
         public FileStream fs;
         public NetworkStream stream;
         public StreamReader reader;
         public StreamWriter writer;
+
+        private CheckBox[] _checkBoxes;
 
         private int size = 0;
         private string infoFile = @"infomo.dat";
@@ -64,6 +67,45 @@ namespace MvSysClient {
         {
             InitializeComponent();
             this.Text = "Client";
+
+            _checkBoxes = new CheckBox[] {  chkA1, chkA2, chkA3, chkA4, chkA5,
+                                            chkB1, chkB2, chkB3, chkB4, chkB5,
+                                            chkC1, chkC2, chkC3, chkC4, chkC5,
+                                            chkD1, chkD2, chkD3, chkD4, chkD5,
+                                            chkE1, chkE2, chkE3, chkE4, chkE5 };
+
+            btnBook.Click += new EventHandler(UpdateCinemaSeats);
+            btnBrowse.Click += new EventHandler(UpdateCinemaSeats);
+            btnSearch.Click += new EventHandler(UpdateCinemaSeats);
+
+            listMovies.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
+
+            cobDate.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
+            cobTime.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
+            cobSeat.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
+        }
+        
+        private void UpdateCinemaSeats(object sender, EventArgs e) {
+
+            //string message = string.Empty;
+            //for (int i = 0; i < _checkBoxes.Length; i++) {
+            //    if (_checkBoxes[i].Checked && _checkBoxes[i].Enabled) {
+            //        // message += string.Format("boxes[{0}] is clicked\n", i);
+            //    }
+            //}
+
+            List<Seat> seatList = GetShow().Hall.Seats;
+            for (int i = 0; i < seatList.Count; i++) {
+                if (!seatList[i].Vacant) {
+                    _checkBoxes[i].CheckState = CheckState.Indeterminate;
+                    _checkBoxes[i].Enabled = false;
+                }
+                if (seatList[i].Vacant) {
+                    _checkBoxes[i].CheckState = CheckState.Unchecked;
+                    _checkBoxes[i].Enabled = true;
+                }
+            }
+            // MessageBox.Show(message);
         }
 
         public void runClient()
@@ -128,10 +170,9 @@ namespace MvSysClient {
 
         private void listMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Movie m = null;
-
-            if (listMovies.SelectedItem !=  null)
+            if (listMovies.SelectedItem !=  null && listMovies.Items.Count != 0)
             {
+                Movie m = GetMovie();
                 String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
                 m = movieInfo[index];
                 //rTxtMessages.Clear();
@@ -149,13 +190,13 @@ namespace MvSysClient {
 
         private void cobDate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
+            Movie m = GetMovie();
 
             cobTime.Items.Clear();
             listTime.Items.Clear();
 
-            List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
+            // List<String> showtimes = GetShowTimesByDate(m, (String)cobDate.SelectedItem);
+            List<String> showtimes = m.FindShowTimes(cobDate.SelectedIndex);
             for (int i = 0; i < showtimes.Count; i++)
             {
                 cobTime.Items.Add(showtimes[i]);
@@ -163,33 +204,39 @@ namespace MvSysClient {
             }
 
             cobTime.SelectedIndex = 0;
+            LoadSeats();
 
         }
 
-        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void LoadSeats() {
+
             cobSeat.Items.Clear();
-
-            string movie = (string)listMovies.GetItemText(listMovies.SelectedItem);
-            Movie m = movieInfo[movie];
-
-            Show s = GetShow();
-
-            Hall h = s.Hall;
-
-            foreach (Seat seat in h.AvailableSeats())
-            {
+            foreach (Seat seat in GetShow().Hall.AvailableSeats()) {
                 cobSeat.Items.Add(seat.Name);
             }
+            if (cobSeat.Items != null && cobSeat.Items.Count != 0) {
+                cobSeat.SelectedIndex = 0;
+            }
+        }
 
-            cobSeat.SelectedIndex = 0;
+        //private int SeatsToIndex(String seatName) {
+
+        //    int i = char.ToLower(Convert.ToChar(seatName.Substring(0, 1)));
+        //    List<Seat> test = new List<Seat>();
+        //    test.
+
+        //    return 0;
+        //}
+
+        private void cobTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadSeats();
 
             double price = 0;
-            price = s.Price;
-            lblPrice.Text = price.ToString();
+            price = GetShow().Price;
+            lblPrice.Text = String.Format("Price ${0:0.00}", price);
 
             cobSeat.Enabled = true;
-
         }
 
         private void cobSeat_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,7 +256,7 @@ namespace MvSysClient {
         //successful execution of this method results in the user being able to access all other functions.
         //unsuccessful execution prompts the user to enter a valid userID
         {
-            Regex regex = new Regex(@"^[0-9]{4}$");
+            Regex regex = new Regex(@"^[0-9A-Za-z]{4}$");
             byte[] data = new byte[1024];
 
             if (!string.IsNullOrWhiteSpace(txtUser.Text) && regex.IsMatch(txtUser.Text))
