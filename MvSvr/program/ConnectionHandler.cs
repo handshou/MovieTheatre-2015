@@ -91,30 +91,31 @@ namespace MvSvr {
                 form.DisplayMsg("Welcome " + user + "!");
 
                 while (true) {
+                    lock(_object) {
+                        //movieInfo = LoadMovieFile(moviesFile);
 
-                    //movieInfo = LoadMovieFile(moviesFile);
+                        /* R */
+                        // Receive command
+                        cmd = ReceiveCommand();
+                        form.DisplayMsg(cmd + " : " + user); // (!) Remove when complete
 
-                    /* R */
-                    // Receive command
-                    cmd = ReceiveCommand();
-                    form.DisplayMsg(cmd + " : " + user); // (!) Remove when complete
-
-                    switch (cmd) {
-                        case BROWSE: Browse();
-                            break;
-                        case SEARCH: Search();
-                            break;
-                        case BOOKNG: Book();
-                            break;
-                        case HISTRY: History();
-                            break;
-                        case FINISH: Quit();
-                            break;
-                        default: form.DisplayMsg("Unknown command received!");
+                        switch (cmd) {
+                            case BROWSE: Browse();
+                                break;
+                            case SEARCH: Search();
+                                break;
+                            case BOOKNG: Book();
+                                break;
+                            case HISTRY: History();
+                                break;
+                            case FINISH: Quit();
+                                break;
+                            default: form.DisplayMsg("Unknown command received!");
+                                break;
+                        }
+                        if (cmd == FINISH)
                             break;
                     }
-                    if (cmd == FINISH)
-                        break;
                 }
 
             } catch (SocketException) {
@@ -131,10 +132,10 @@ namespace MvSvr {
 
         public void Browse() {
 
-            lock (_object) {
+            //lock (_object) {
                 SaveToFile(browseFile, movieInfo);
                 SendFile(browseFile);
-            }
+            //}
         }
 
         public void Search() {
@@ -190,7 +191,7 @@ namespace MvSvr {
 
         public void Book() {
 
-            lock (_object) { // get userid title time seatindex price
+            //lock (_object) { // get userid title time seatindex price
 
                 Boolean bookingSuccess = true;
                 Show show = new Show();
@@ -276,7 +277,7 @@ namespace MvSvr {
                     form.DisplayMsg("Booking Failed.");
 
                 }
-            }
+            //}
         }
 
         public void Quit() {
@@ -406,7 +407,7 @@ namespace MvSvr {
 
             try {
                 client.Send(buffer);
-                form.DisplayMsg("Files sent"); // (!) Remove when complete
+                form.DisplayMsg("File Sent"); // (!) Remove when complete
             } catch (Exception ex) {
                 form.DisplayMsg(ex.ToString());
             }

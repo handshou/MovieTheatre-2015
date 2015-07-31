@@ -30,6 +30,15 @@ namespace MvSvr {
         // Constructors
         public Movie() { }
         public Movie(String Title, String Description, String Director, 
+            String Genre) {
+            this.Title = Title;
+            this.Description = Description;
+            this.Director = Director;
+            this.Genre = Genre;
+            this.Shows = new List<Show>();
+            this.Poster = Image.FromFile("poster\\no_image_available.png");
+        }
+        public Movie(String Title, String Description, String Director, 
             String Genre, List<Show> Shows, Image Poster) {
             this.Title = Title;
             this.Description = Description;

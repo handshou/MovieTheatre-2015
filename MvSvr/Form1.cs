@@ -39,6 +39,8 @@ namespace MvSvr {
         private List<Socket> clients = new List<Socket>();
 
         public delegate void DisplayMsgCallback(String msg);
+        public delegate void DisplayMsgMoviesCallback(String msg);
+        public delegate void DisplayMsgShowsCallback(String msg);
 
         public Form1() {
 
@@ -87,6 +89,8 @@ namespace MvSvr {
         }
 
         public void LoadMovies() {
+
+            movieInfo = new Dictionary<String, Movie>();
 
             Movie m = new Movie();
             m.Title = "The Dark Knight";
@@ -141,6 +145,7 @@ namespace MvSvr {
                 new Show(m, "4 September 2015", new Hall("Hall 2"), "1500", "1700", 12.00),
                 new Show(m, "6 December 2015", new Hall("Hall 3"), "1230", "1430", 12.00)
             };
+
             movieInfo.Add(m.Title, m);
 
         }
@@ -228,7 +233,7 @@ namespace MvSvr {
                 }
             } catch (Exception ex) {
 
-                tbDisplay.AppendText(ex.Message + "\r\n");
+                tbDisplay.AppendText(ex.ToString() + "\r\n");
             }
         }
 
@@ -268,7 +273,7 @@ namespace MvSvr {
                 }
                 tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
             } catch (Exception ex) {
-                tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.Message +"\r\n");
+                tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
             }
             return bookingInfo;
         }
@@ -286,6 +291,34 @@ namespace MvSvr {
             }
         }
 
+        // (!) Consider removing if client trigger events should not activate Movies textbox display
+        public void DisplayMsgMovies(String msg) {
+
+            if (this.InvokeRequired) {
+                DisplayMsgMoviesCallback d = new DisplayMsgMoviesCallback(DisplayMsgMovies);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++) {
+                tbMovies.AppendText(lines[i] + "\r\n");
+            }
+        }
+
+        // (!) Consider removing if client trigger events should not activate Shows textbox display
+        public void DisplayMsgShows(String msg) {
+
+            if (this.InvokeRequired) {
+                DisplayMsgShowsCallback d = new DisplayMsgShowsCallback(DisplayMsgShows);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++) {
+                tbShows.AppendText(lines[i] + "\r\n");
+            }
+        }
+
         private void btnClear_Click(object sender, EventArgs e) {
 
         }
@@ -297,31 +330,22 @@ namespace MvSvr {
         private void btnAdd_Click(object sender, EventArgs e) {
 
             //// Create the movie and shows
-            //Movie m = new Movie();
-            //Movie m = new Movie(title, description, director, genre, Array shows, image)
-            //m.Title = "Batman";
-            //m.Genre = "Drama";
-            //m.Description = "Batman is back!";
-            //m.Director = "Christopher Nolan";
-            //m.Poster = GetImage("poster\\the_dark_knight.jpg");
-            //m.Shows = new List<Show> { 
-            //    new Show(m, "1 January 2015", new Hall(), "0800", "1000", 8.00),
-            //    new Show(m, "1 January 2015", new Hall(), "1600", "1800", 8.00),
-            //    new Show(m, "2 January 2015", new Hall(), "2000", "2200", 8.00),
-            //    new Show(m, "2 January 2015", new Hall(), "0800", "1000", 8.00),
-            //    new Show(m, "3 January 2015", new Hall(), "1600", "1800", 8.00),
-            //    new Show(m, "3 January 2015", new Hall(), "2000", "2200", 8.00),
-            //};
+           String title, desc, dir, genre, imgPath;
 
-            String title    = tbTitle.Text;
-            String desc     = tbDescription.Text;
-            String dir      = tbDirector.Text;
-            String genre    = tbGenre.Text;
-            String imgPath  = tbImage.Text;
-            String timeStart = tbTimeFrom.Text;
-            String timeEnd  = tbTimeTo.Text;
+            title    = tbTitle.Text;
+            desc     = tbDescription.Text;
+            dir      = tbDirector.Text;
+            genre    = tbGenre.Text;
+            if(tbImage.Text.Trim().Length != 0) // No image
+                imgPath  = tbImage.Text;
 
-            //Movie m = new Movie(title,)
+            Movie m = new Movie(title, desc, dir, genre);
+            movieInfo.Add(m.Title, m);
+
+            DisplayMsgMovies("New Movie: " + m.Title + " added");
+            DisplayMsgShows("New Movie: " + m.Title + " added");
+
+            tabControl.SelectedTab = tabPageShows;
 
         }
 
@@ -332,6 +356,13 @@ namespace MvSvr {
 
         private void btnBroadcast_Click(object sender, EventArgs e) {
 
+        }
+
+        private void btnWipe_Click(object sender, EventArgs e) {
+
+            // Wipes all saved movies and alterations made 
+            // by server administrator and loads repository defaults
+            LoadMovies();
         }
 
     }
