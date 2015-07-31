@@ -424,7 +424,7 @@
             this.tbDisplay.Name = "tbDisplay";
             this.tbDisplay.ReadOnly = true;
             this.tbDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDisplay.Size = new System.Drawing.Size(318, 199);
+            this.tbDisplay.Size = new System.Drawing.Size(318, 445);
             this.tbDisplay.TabIndex = 16;
             // 
             // Form1

@@ -463,8 +463,8 @@ namespace MvSysClient {
                             movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
                             foreach (KeyValuePair<String, Movie> infos in movieInfo)
                             {
-                                rTxtMessages.AppendText(infos.Value.Title + "\r\n");
-                                rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
+                                //rTxtMessages.AppendText(infos.Value.Title + "\r\n");
+                                //rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
                                 Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director,
                             infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);

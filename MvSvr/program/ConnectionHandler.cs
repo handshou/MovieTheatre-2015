@@ -81,7 +81,6 @@ namespace MvSvr {
         public void HandleConnection(Object state) {
 
             miv = new MethodInvoker(form.UpdateClientListBox);
-
             int size = 0;
             try {
                 ns = new NetworkStream(client);
@@ -94,7 +93,6 @@ namespace MvSvr {
                 if (!clients.ContainsKey(user)) {
                     clients.Add(user, client);
                     SendCommand(SUCCESS);
-
                     DisplayConnectMsg(connections);
                     form.BeginInvoke(miv);
                     Thread.Sleep(300);
@@ -106,7 +104,7 @@ namespace MvSvr {
                             /* R */
                             // Receive command
                             cmd = ReceiveCommand();
-                            form.DisplayMsg("[" + user + "] :: " + cmd); // (!) Remove when complete
+                            form.DisplayMsg("\n[" + user + "] :: " + cmd); // (!) Remove when complete
 
                             switch (cmd) {
                                 case BROWSE: Browse();
@@ -285,12 +283,12 @@ namespace MvSvr {
                     SaveBookingToFile(bkHistFile);
 
                     SendCommand(SUCCESS);
-                    form.DisplayMsg("[" + user + "] :: [Booking] success");
+                    form.DisplayMsg("[" + user + "] :: Booking success");
 
                 } else {
 
                     SendCommand(FAILURE);
-                    form.DisplayMsg("[" + user + "] :: [Booking] failed");
+                    form.DisplayMsg("[" + user + "] :: Booking failed");
 
                 }
             //}
@@ -567,17 +565,17 @@ namespace MvSvr {
         public void DisplayConnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("[" + user + "] connected\n[Server] " + connections + " active connection");
+                form.DisplayMsg("\n[" + user + "] connected\n[Server] " + connections + " active connection");
             else
-                form.DisplayMsg("[" + user + "] connected\n[Server] " + connections + " active connections");
+                form.DisplayMsg("\n[" + user + "] connected\n[Server] " + connections + " active connections");
         }
 
         public void DisplayDisconnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("[" + user + "] disconnected\n[Server] " + connections + " remaining connection");
+                form.DisplayMsg("\n[" + user + "] disconnected\n[Server] " + connections + " remaining connection");
             else
-                form.DisplayMsg("[" + user + "] disconnected\n[Server] " + connections + " remaining connections");
+                form.DisplayMsg("\n[" + user + "] disconnected\n[Server] " + connections + " remaining connections");
         }
     }
 }

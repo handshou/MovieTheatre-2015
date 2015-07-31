@@ -57,6 +57,7 @@ namespace MvSvr {
 
         public void ConnectClient() {
 
+            DisplayMsg("Server initiated..");
             server.Bind(endpoint);
             server.Listen(10);
             while(true) {
@@ -71,8 +72,8 @@ namespace MvSvr {
                 } catch(Exception ex) {
 
                     // Error output
-                    tbDisplay.AppendText("Connection failed on port " + port + "\r\n");
-                    tbDisplay.AppendText(ex.ToString());
+                    DisplayMsg("Connection failed on port " + port + "\r\n");
+                    DisplayMsg(ex.ToString());
                     
                 }
             }
@@ -363,7 +364,13 @@ namespace MvSvr {
 
             // Wipes all saved movies and alterations made 
             // by server administrator and loads repository defaults
-            LoadMovies();
+            if (MessageBox.Show("Wipe and restore to default?", "Movies Repository",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                LoadMovies();
+                DisplayMsgMovies("[Server] Movies Repository wiped to default");
+                DisplayMsgShows("[Server] Movies Repository wiped to default");
+                DisplayMsg("[Server] Movies Repository wiped to default");
+            }
         }
 
         public void UpdateClientListBox()    
