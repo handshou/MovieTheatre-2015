@@ -55,8 +55,6 @@ namespace MvSysClient {
         public const String SUCCESS = "[BKSS]";
         public const String FAILURE = "[BKFL]";
 
-        public Thread t = null;
-
         public String userID = "";
         public String authenticated = "";
 
@@ -69,7 +67,7 @@ namespace MvSysClient {
         }
 
         public void runClient()
-        //this method starts a thread and opens up most of the client to the user
+        //this method opens up most of the client to the user
         //called when the client has connected to the server and logged in with a userID
         {
 
@@ -276,8 +274,8 @@ namespace MvSysClient {
             byte[] data = new byte[1024];
             data = Encoding.ASCII.GetBytes(FINISH);
             socket.Send(data);
-            t.Abort();
-            //socket.Close();
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Close();
             rTxtMessages.Text = "You have logged out.";
             userID = "";
             txtUser.Clear();
@@ -799,24 +797,24 @@ namespace MvSysClient {
 
         public Show GetShow()
         //this method is called when the Show object of a Movie is required
-        //returns a Show object
+        //returns a Show object !!!!!!!!!! flawed method here, fixing in progress !!!!!!!
         {
             Movie m = GetMovie();
-            //cobDate.SelectedIndex;
-            //cobDate.SelectedItem();
-            //cobDate.SelectedText();
-            //cobDate.SelectedValue();
 
-
-
-
-
-
-
-
-            int index = cobDate.SelectedIndex;
-            return m.Shows[index];
+            List<Show> showList = m.Shows;
+            foreach (Show sh in showList) {
+                if (!sh.Date.Equals(cobDate.SelectedItem)) {
+                    showList.Remove(sh);
+                }
+                if (!sh.TimeStart.Equals(cobTime.SelectedItem)) {
+                // Ensure that it is not the same show
+                    showList.Remove(sh);
+                }
+            }
+            //int index = cobDate.SelectedIndex;
+            return showList[0];
         }
+
 
         public String ProcessHistory(String msg)
         //this method processes the incoming history string from server

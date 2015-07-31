@@ -37,6 +37,7 @@ namespace MvSvr {
         private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
         private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private Dictionary<String, Socket> clients = new Dictionary<String, Socket>();
+        private Dictionary<String, String> clientsNumber = new Dictionary<String, String>();
 
         public delegate void DisplayMsgCallback(String msg);
         public delegate void DisplayMsgMoviesCallback(String msg);
@@ -66,7 +67,7 @@ namespace MvSvr {
                     //clients.Add(client);
                     ConnectionHandler handler = 
                         new ConnectionHandler(client, this, ref movieInfo, 
-                            ref bookingInfo, ref clients);
+                            ref bookingInfo, ref clients, ref clientsNumber);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
 
                 } catch(Exception ex) {
@@ -378,11 +379,15 @@ namespace MvSvr {
             libClientsMovies.Items.Clear();
             libClientsShows.Items.Clear();
             libClientsDebug.Items.Clear();
-            foreach(KeyValuePair<String, Socket> client in clients) {
-                libClientsMovies.Items.Add(client.Key);
-                libClientsShows.Items.Add(client.Key);
-                libClientsDebug.Items.Add(client.Key);
+            foreach(KeyValuePair<String, String> client in new SortedDictionary<String, String>(clientsNumber)) {
+                
+                libClientsMovies.Items.Add(client.Value);
+                libClientsShows.Items.Add(client.Value);
+                libClientsDebug.Items.Add(client.Value);
             }
+            libClientsMovies.Sorted = true;
+            libClientsShows.Sorted = true;
+            libClientsDebug.Sorted = true;
         } 
     }
 }

@@ -47,5 +47,16 @@ namespace MvSvr {
             this.Shows = Shows;
             this.Poster = Poster;
         }
+
+        // Methods
+        //public List<Show> FindMovies(String date) {
+        //// returns all shows that fall on given date
+
+        //}
+
+        //public List<Show> FindMovies(String date, String timeStart) {
+        //// returns all shows that fall on given date and time
+
+        //}
     }
 }

@@ -36,7 +36,9 @@ namespace MvSvr {
 
         private int size = 0;
         private long filesize = 0;
+        private String clientID = "";
         private static int connections = 0;
+        private static int count = 1;
         private byte[] data = new byte[1024];
 
         private FileInfo f;
@@ -59,6 +61,7 @@ namespace MvSvr {
         private Form1 form;
         private Socket client;
         private Dictionary<String, Socket> clients = new Dictionary<String, Socket>();
+        private Dictionary<String, String> clientsNumber = new Dictionary<String, String>();
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
         private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
@@ -68,12 +71,14 @@ namespace MvSvr {
         public ConnectionHandler(Socket client, Form1 form, 
             ref Dictionary<String, Movie> movieInfo, 
             ref Dictionary<String, List<Booking>> bookingInfo, 
-            ref Dictionary<String, Socket> clients) {
+            ref Dictionary<String, Socket> clients,
+            ref Dictionary<String, String> clientsNumber) {
 
             this.client = client;
             this.form = form;
             this.movieInfo = movieInfo;
             this.clients = clients;
+            this.clientsNumber = clientsNumber;
             this.bookingInfo = bookingInfo;
         }
 
@@ -91,7 +96,10 @@ namespace MvSvr {
                 data = new byte[1024];
                 user = ReceiveCommand();
                 if (!clients.ContainsKey(user)) {
+                    clientID = String.Format("C{0:D2} : {1}", count, user);
                     clients.Add(user, client);
+                    clientsNumber.Add(user, clientID);
+                    count++;
                     SendCommand(SUCCESS);
                     DisplayConnectMsg(connections);
                     form.BeginInvoke(miv);
@@ -132,6 +140,7 @@ namespace MvSvr {
             } catch (SocketException) {
 
                 clients.Remove(user);
+                clientsNumber.Remove(user);
                 connections--;
                 form.BeginInvoke(miv);
                 Thread.Sleep(300);
@@ -303,6 +312,7 @@ namespace MvSvr {
                 client.Close();
 
             clients.Remove(user);
+            clientsNumber.Remove(user);
             connections--;
             form.BeginInvoke(miv);
             DisplayDisconnectMsg(connections);
