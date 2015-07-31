@@ -111,7 +111,7 @@ namespace MvSvr {
                                     break;
                                 case SEARCH: Search();
                                     break;
-                                case BOOKNG: Book();
+                                case BOOKNG: Booking();
                                     break;
                                 case HISTRY: History();
                                     break;
@@ -204,7 +204,7 @@ namespace MvSvr {
             return d;
         }
 
-        public void Book() {
+        public void Booking() {
 
             //lock (_object) { // get userid title time seatindex price
 
@@ -238,7 +238,8 @@ namespace MvSvr {
                 }
 
                 List<Seat> serverSeats = serverShow.Hall.Seats;
-                form.DisplayMsg("[" + user + "] :: [" + serverMovie.Title + "] [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
+                form.DisplayMsg("[" + user + "] :: [" + serverMovie.Title + "]\n" +
+                                "[" + user + "] :: [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
 
                 // Turn seat to unavailable : (!) consider using Dictionary collection
                 foreach(Seat seat in seats) {
@@ -337,9 +338,10 @@ namespace MvSvr {
                         seat = b.Seats[h];
                         seats_str += seat.Name + " ";
                     }
-                    info_str += "[" + b.BookingTime + "] " + " [" + s.Movie.Title + "] " +
-                                        s.Date + " > " + s.TimeStart + " - " + s.TimeEnd + " : " +
-                                        b.Show.Hall.Name + " : Seats " + seats_str;
+                    info_str += "[" + s.Movie.Title + "]" + "\n" +
+                                "[" + s.Date + "] " + s.TimeStart + " - " + s.TimeEnd + " : " +
+                                        b.Show.Hall.Name + "\n === Seats === " + "(" + b.BookingTime + ")\n" +
+                                        seats_str + "\n";
                     info_str += ENDOFF;
                 }
             }
@@ -565,17 +567,17 @@ namespace MvSvr {
         public void DisplayConnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("\n[" + user + "] connected\n[Server] " + connections + " active connection");
+                form.DisplayMsg("\n[Server] " + connections + " active connection (+" + user +")");
             else
-                form.DisplayMsg("\n[" + user + "] connected\n[Server] " + connections + " active connections");
+                form.DisplayMsg("\n[Server] " + connections + " active connections (+" + user + ")");
         }
 
         public void DisplayDisconnectMsg(int connections) {
 
             if (connections == 1)
-                form.DisplayMsg("\n[" + user + "] disconnected\n[Server] " + connections + " remaining connection");
+                form.DisplayMsg("\n[Server] " + connections + " remaining connection (-" + user + ")");
             else
-                form.DisplayMsg("\n[" + user + "] disconnected\n[Server] " + connections + " remaining connections");
+                form.DisplayMsg("\n[Server] " + connections + " remaining connections (-" + user + ")");
         }
     }
 }

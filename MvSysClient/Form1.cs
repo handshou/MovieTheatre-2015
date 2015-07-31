@@ -89,8 +89,8 @@ namespace MvSysClient {
             txtSearch.Enabled = true;
 
             rTxtMessages.Clear();
-            rTxtMessages.AppendText("=============================\nWelcome to the Movie Booking System.");
-            rTxtMessages.AppendText("\nYou may find your desired movies either by browsing or searching with search term.");
+            rTxtMessages.AppendText("Welcome to the Movie Booking System\n");
+            rTxtMessages.AppendText("\nYou may find your desired movies by browsing or searching\n");
 
         }
 
@@ -135,11 +135,12 @@ namespace MvSysClient {
             {
                 String index = (string)listMovies.GetItemText(listMovies.SelectedItem);
                 m = movieInfo[index];
-                rTxtMessages.Clear();
-                rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
+                //rTxtMessages.Clear();
+                //rTxtMessages.AppendText("\nMovie " + m.Title + " selected.");
                 showMovieDetails(m);
             }
 
+            lblBookMessage.ResetText();
         }
 
         private void cobSearch_SelectedIndexChanged(object sender, EventArgs e)
@@ -391,7 +392,7 @@ namespace MvSysClient {
             if (!string.IsNullOrWhiteSpace(txtSearch.Text))
             {
 
-                rTxtMessages.AppendText(searchType + searchKey);
+                //rTxtMessages.AppendText(searchType + searchKey);
 
                 IFormatter formatter = new BinaryFormatter();
 
@@ -426,15 +427,15 @@ namespace MvSysClient {
 
                     filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
 
-                    rTxtMessages.Clear();
-                    rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
+                    //rTxtMessages.Clear();
+                    //rTxtMessages.AppendText(filesize + " (filesize) " + size + " (size)\r\n");
 
                     // receiving file
                     data = new byte[filesize];
                     try
                     {
                         size = socket.Receive(data);
-                        rTxtMessages.AppendText("File received" + "\r\n");
+                        //rTxtMessages.AppendText("File received" + "\r\n");
                     }
                     catch (Exception)
                     {
@@ -449,7 +450,7 @@ namespace MvSysClient {
                     {
                         fs.Write(data, 0, Convert.ToInt32(filesize));
                         fs.Flush();
-                        rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
+                        //rTxtMessages.AppendText("File written" + "\r\n" + fs.Length + " bytes\r\n");
                         fs.Close();
                     }
 
@@ -467,7 +468,7 @@ namespace MvSysClient {
                                 //rTxtMessages.AppendText(infos.Value.Genre + "\r\n");
 
                                 Movie mv = new Movie(infos.Value.Title, infos.Value.Description, infos.Value.Director,
-                            infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
+                                infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
 
                                 //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
                                 listMovies.Items.Add(mv.Title);
@@ -531,6 +532,7 @@ namespace MvSysClient {
             string filePath = @"bookingInfo.dat";
 
             int index = cobSeat.SelectedIndex;
+            s = GetShow(m);
 
             Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
 
@@ -622,7 +624,6 @@ namespace MvSysClient {
                 history = Encoding.ASCII.GetString(data, 0, size);
                 history = ProcessHistory(history);
                 rTxtMessages.Clear();
-                rTxtMessages.AppendText("Booking History:\n");
 
                 if (!string.IsNullOrWhiteSpace(history))
                 {
@@ -798,6 +799,14 @@ namespace MvSysClient {
         //this method is called when the Show object of a Movie is required
         //returns a Show object
         {
+            int index = cobDate.SelectedIndex;
+            return m.Shows[index];
+        }
+
+        public Show GetShowTime(Movie m)
+            //this method is called when the Show object of a Movie is required
+            //returns a Show object
+{
             int index = cobTime.SelectedIndex;
             return m.Shows[index];
         }
