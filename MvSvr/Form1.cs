@@ -104,8 +104,8 @@ namespace MvSvr {
             m.Shows = new List<Show> { 
                 new Show(m, "1 January 2015", new Hall("Theatre 1"), "0800", "1000", 8.00),
                 new Show(m, "1 January 2015", new Hall("Theatre 2"), "1600", "1800", 8.00),
-                new Show(m, "2 January 2015", new Hall("Theatre 3"), "1600", "1800", 8.00),
-                new Show(m, "2 January 2015", new Hall("Theatre 4"), "0800", "1000", 8.00),
+                new Show(m, "2 January 2015", new Hall("Theatre 3"), "0800", "1000", 8.00),
+                new Show(m, "2 January 2015", new Hall("Theatre 4"), "1600", "1800", 8.00),
                 new Show(m, "3 January 2015", new Hall("Theatre 5"), "1600", "1800", 10.00),
                 new Show(m, "3 January 2015", new Hall("Theatre 6"), "2000", "2200", 12.00),
             };

@@ -140,10 +140,10 @@
             // 
             this.btnBook.Enabled = false;
             this.btnBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBook.Location = new System.Drawing.Point(454, 717);
+            this.btnBook.Location = new System.Drawing.Point(358, 717);
             this.btnBook.Margin = new System.Windows.Forms.Padding(2);
             this.btnBook.Name = "btnBook";
-            this.btnBook.Size = new System.Drawing.Size(104, 64);
+            this.btnBook.Size = new System.Drawing.Size(200, 64);
             this.btnBook.TabIndex = 3;
             this.btnBook.Text = "Book";
             this.btnBook.UseVisualStyleBackColor = true;
@@ -314,7 +314,7 @@
             // 
             // lblBookMessage
             // 
-            this.lblBookMessage.Location = new System.Drawing.Point(580, 715);
+            this.lblBookMessage.Location = new System.Drawing.Point(14, 2);
             this.lblBookMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookMessage.Name = "lblBookMessage";
             this.lblBookMessage.Size = new System.Drawing.Size(169, 68);
@@ -324,7 +324,7 @@
             // 
             // btnSaveBHistory
             // 
-            this.btnSaveBHistory.Location = new System.Drawing.Point(357, 760);
+            this.btnSaveBHistory.Location = new System.Drawing.Point(742, 760);
             this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
             this.btnSaveBHistory.Size = new System.Drawing.Size(78, 21);
@@ -336,7 +336,7 @@
             // btnViewBHistory
             // 
             this.btnViewBHistory.Enabled = false;
-            this.btnViewBHistory.Location = new System.Drawing.Point(357, 735);
+            this.btnViewBHistory.Location = new System.Drawing.Point(742, 735);
             this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnViewBHistory.Name = "btnViewBHistory";
             this.btnViewBHistory.Size = new System.Drawing.Size(78, 21);
@@ -425,7 +425,7 @@
             // 
             this.lblPrice.AutoSize = true;
             this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(161, 676);
+            this.lblPrice.Location = new System.Drawing.Point(576, 737);
             this.lblPrice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(0, 26);
@@ -455,7 +455,7 @@
             // lblBookingHistory
             // 
             this.lblBookingHistory.AutoSize = true;
-            this.lblBookingHistory.Location = new System.Drawing.Point(354, 717);
+            this.lblBookingHistory.Location = new System.Drawing.Point(739, 717);
             this.lblBookingHistory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookingHistory.Name = "lblBookingHistory";
             this.lblBookingHistory.Size = new System.Drawing.Size(81, 13);

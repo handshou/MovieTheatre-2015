@@ -353,10 +353,9 @@ namespace MvSvr {
                         seat = b.Seats[h];
                         seats_str += seat.Name + " ";
                     }
-                    info_str += "[" + s.Movie.Title + "]" + " : " + String.Format("$ {0:0.00}", b.CalculateBaseCost(false)) + "\n" +
-                                "[" + s.Date + "] " + s.TimeStart + " - " + s.TimeEnd + " : " +
-                                        b.Show.Hall.Name + "\n === Seats === " + "(Generated @ " + b.BookingTime + ")\n" +
-                                        seats_str + "\n";
+                    info_str += "[" + s.Movie.Title + " : " + String.Format("${0:0.00}", b.CalculateBaseCost(false)) + "] (Generated @ " + b.BookingTime + ")\n" +
+                                "[" + s.Date + "] " + s.TimeStart + " - " + s.TimeEnd + "\n" +
+                                "[" + b.Show.Hall.Name + "] " + seats_str;
                     info_str += ENDOFF;
                 }
             }

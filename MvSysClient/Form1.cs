@@ -669,7 +669,8 @@ namespace MvSysClient {
                     size = socket.Receive(data); /* R */
                     result = Encoding.ASCII.GetString(data, 0, size);
                 } catch (Exception) {
-                    lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
+                    MessageBox.Show("Please refresh the movie listing!");
+                    //lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
                     lblBookMessage.ForeColor = Color.Red;
                     result = FAILURE;
                 } finally {
@@ -677,7 +678,8 @@ namespace MvSysClient {
                 }
 
                 if (result == SUCCESS) {
-                    lblBookMessage.Text = "Your booking for " + s.Movie.Title + " has been successful";
+                    MessageBox.Show("Your booking has been successful!");
+                    //lblBookMessage.Text = "Your booking for " + s.Movie.Title + " has been successful";
                     lblBookMessage.Font = new Font(lblBookMessage.Font, FontStyle.Bold);
                     lblBookMessage.ForeColor = Color.Black;
 
@@ -700,8 +702,8 @@ namespace MvSysClient {
                     }
 
                 } else {
-                    lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
-                    lblBookMessage.ForeColor = Color.Red;
+                    MessageBox.Show("Please refresh the movie listing!");
+                    //lblBookMessage.ForeColor = Color.Red;
                 }
             } else {
                 lblBorder.BackColor = Color.LightGray;
