@@ -564,10 +564,6 @@ namespace MvSysClient {
         {
             Show s = GetShow();
             List<Seat> seatList = s.Hall.Seats;
-            
-            
-
-            
 
             Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
             // showDict.Add(s.Hall.Seats[index], s);
@@ -623,7 +619,7 @@ namespace MvSysClient {
 
                 try {
                     int size = 0;
-                    size = socket.Receive(data);
+                    size = socket.Receive(data); /* R */
                     result = Encoding.ASCII.GetString(data, 0, size);
                 } catch (Exception) {
                     lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
@@ -642,7 +638,7 @@ namespace MvSysClient {
                     lblBookMessage.ForeColor = Color.Red;
                 }
             } else {
-                MessageBox.Show("Please select a seat before proceeding");
+                MessageBox.Show("Please select a seat");
             }
         }
 
