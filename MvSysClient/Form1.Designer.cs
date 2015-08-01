@@ -426,13 +426,13 @@
             // 
             // lblPrice
             // 
-            this.lblPrice.AutoSize = true;
             this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(24, 39);
+            this.lblPrice.Location = new System.Drawing.Point(24, 34);
             this.lblPrice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(0, 26);
+            this.lblPrice.Size = new System.Drawing.Size(117, 26);
             this.lblPrice.TabIndex = 45;
+            this.lblPrice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblDate
             // 
@@ -1120,7 +1120,6 @@
             this.grpBoxTheatre.ResumeLayout(false);
             this.grpBoxTheatre.PerformLayout();
             this.grpBoxPrice.ResumeLayout(false);
-            this.grpBoxPrice.PerformLayout();
             this.grpBoxBookingHistory.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

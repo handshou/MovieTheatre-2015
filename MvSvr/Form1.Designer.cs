@@ -27,15 +27,6 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMovies = new System.Windows.Forms.TabPage();
             this.btnConfirm = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblPrice = new System.Windows.Forms.Label();
-            this.tbPrice = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lblTimeTo = new System.Windows.Forms.Label();
-            this.tbTimeTo = new System.Windows.Forms.TextBox();
-            this.tbTimeFrom = new System.Windows.Forms.TextBox();
-            this.lblTimeFrom = new System.Windows.Forms.Label();
             this.lblImage = new System.Windows.Forms.Label();
             this.tbImage = new System.Windows.Forms.TextBox();
             this.tbGenre = new System.Windows.Forms.TextBox();
@@ -61,6 +52,15 @@
             this.libClientsDebug = new System.Windows.Forms.ListBox();
             this.btnDebugClear = new System.Windows.Forms.Button();
             this.tbDisplay = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblPrice = new System.Windows.Forms.Label();
+            this.tbPrice = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lblTimeTo = new System.Windows.Forms.Label();
+            this.tbTimeTo = new System.Windows.Forms.TextBox();
+            this.tbTimeFrom = new System.Windows.Forms.TextBox();
+            this.lblTimeFrom = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
             this.tabPageShows.SuspendLayout();
@@ -76,21 +76,12 @@
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(452, 512);
+            this.tabControl.Size = new System.Drawing.Size(452, 473);
             this.tabControl.TabIndex = 15;
             // 
             // tabPageMovies
             // 
             this.tabPageMovies.Controls.Add(this.btnConfirm);
-            this.tabPageMovies.Controls.Add(this.label2);
-            this.tabPageMovies.Controls.Add(this.lblPrice);
-            this.tabPageMovies.Controls.Add(this.tbPrice);
-            this.tabPageMovies.Controls.Add(this.label1);
-            this.tabPageMovies.Controls.Add(this.textBox1);
-            this.tabPageMovies.Controls.Add(this.lblTimeTo);
-            this.tabPageMovies.Controls.Add(this.tbTimeTo);
-            this.tabPageMovies.Controls.Add(this.tbTimeFrom);
-            this.tabPageMovies.Controls.Add(this.lblTimeFrom);
             this.tabPageMovies.Controls.Add(this.lblImage);
             this.tabPageMovies.Controls.Add(this.tbImage);
             this.tabPageMovies.Controls.Add(this.tbGenre);
@@ -111,92 +102,19 @@
             this.tabPageMovies.Location = new System.Drawing.Point(4, 22);
             this.tabPageMovies.Name = "tabPageMovies";
             this.tabPageMovies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMovies.Size = new System.Drawing.Size(444, 486);
+            this.tabPageMovies.Size = new System.Drawing.Size(444, 447);
             this.tabPageMovies.TabIndex = 0;
             this.tabPageMovies.Text = "Movies";
             this.tabPageMovies.UseVisualStyleBackColor = true;
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(353, 417);
+            this.btnConfirm.Location = new System.Drawing.Point(353, 357);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(75, 23);
             this.btnConfirm.TabIndex = 15;
             this.btnConfirm.Text = "Confirm";
             this.btnConfirm.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(85, 452);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 40;
-            this.label2.Text = "$";
-            // 
-            // lblPrice
-            // 
-            this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(26, 452);
-            this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(31, 13);
-            this.lblPrice.TabIndex = 39;
-            this.lblPrice.Text = "Price";
-            // 
-            // tbPrice
-            // 
-            this.tbPrice.Location = new System.Drawing.Point(104, 449);
-            this.tbPrice.Name = "tbPrice";
-            this.tbPrice.Size = new System.Drawing.Size(209, 20);
-            this.tbPrice.TabIndex = 9;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 400);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "Date";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(104, 397);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(209, 20);
-            this.textBox1.TabIndex = 6;
-            // 
-            // lblTimeTo
-            // 
-            this.lblTimeTo.AutoSize = true;
-            this.lblTimeTo.Location = new System.Drawing.Point(195, 426);
-            this.lblTimeTo.Name = "lblTimeTo";
-            this.lblTimeTo.Size = new System.Drawing.Size(20, 13);
-            this.lblTimeTo.TabIndex = 35;
-            this.lblTimeTo.Text = "To";
-            // 
-            // tbTimeTo
-            // 
-            this.tbTimeTo.Location = new System.Drawing.Point(255, 423);
-            this.tbTimeTo.Name = "tbTimeTo";
-            this.tbTimeTo.Size = new System.Drawing.Size(58, 20);
-            this.tbTimeTo.TabIndex = 8;
-            // 
-            // tbTimeFrom
-            // 
-            this.tbTimeFrom.Location = new System.Drawing.Point(104, 423);
-            this.tbTimeFrom.Name = "tbTimeFrom";
-            this.tbTimeFrom.Size = new System.Drawing.Size(58, 20);
-            this.tbTimeFrom.TabIndex = 7;
-            // 
-            // lblTimeFrom
-            // 
-            this.lblTimeFrom.AutoSize = true;
-            this.lblTimeFrom.Location = new System.Drawing.Point(26, 426);
-            this.lblTimeFrom.Name = "lblTimeFrom";
-            this.lblTimeFrom.Size = new System.Drawing.Size(30, 13);
-            this.lblTimeFrom.TabIndex = 32;
-            this.lblTimeFrom.Text = "Time";
             // 
             // lblImage
             // 
@@ -301,7 +219,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(353, 388);
+            this.btnAdd.Location = new System.Drawing.Point(353, 328);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 13;
@@ -329,7 +247,7 @@
             // 
             // btnBroadcast
             // 
-            this.btnBroadcast.Location = new System.Drawing.Point(353, 446);
+            this.btnBroadcast.Location = new System.Drawing.Point(353, 405);
             this.btnBroadcast.Name = "btnBroadcast";
             this.btnBroadcast.Size = new System.Drawing.Size(75, 23);
             this.btnBroadcast.TabIndex = 15;
@@ -348,12 +266,21 @@
             // 
             // tabPageShows
             // 
+            this.tabPageShows.Controls.Add(this.label2);
+            this.tabPageShows.Controls.Add(this.lblPrice);
+            this.tabPageShows.Controls.Add(this.tbPrice);
+            this.tabPageShows.Controls.Add(this.label1);
+            this.tabPageShows.Controls.Add(this.textBox1);
+            this.tabPageShows.Controls.Add(this.lblTimeTo);
+            this.tabPageShows.Controls.Add(this.tbTimeTo);
+            this.tabPageShows.Controls.Add(this.tbTimeFrom);
+            this.tabPageShows.Controls.Add(this.lblTimeFrom);
             this.tabPageShows.Controls.Add(this.tbShows);
             this.tabPageShows.Controls.Add(this.libClientsShows);
             this.tabPageShows.Location = new System.Drawing.Point(4, 22);
             this.tabPageShows.Name = "tabPageShows";
             this.tabPageShows.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageShows.Size = new System.Drawing.Size(444, 486);
+            this.tabPageShows.Size = new System.Drawing.Size(444, 450);
             this.tabPageShows.TabIndex = 2;
             this.tabPageShows.Text = "Shows";
             this.tabPageShows.UseVisualStyleBackColor = true;
@@ -385,14 +312,14 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(444, 486);
+            this.tabPageDebug.Size = new System.Drawing.Size(444, 450);
             this.tabPageDebug.TabIndex = 1;
             this.tabPageDebug.Text = "Debug";
             this.tabPageDebug.UseVisualStyleBackColor = true;
             // 
             // btnWipe
             // 
-            this.btnWipe.Location = new System.Drawing.Point(353, 446);
+            this.btnWipe.Location = new System.Drawing.Point(353, 405);
             this.btnWipe.Name = "btnWipe";
             this.btnWipe.Size = new System.Drawing.Size(75, 23);
             this.btnWipe.TabIndex = 19;
@@ -425,14 +352,87 @@
             this.tbDisplay.Name = "tbDisplay";
             this.tbDisplay.ReadOnly = true;
             this.tbDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDisplay.Size = new System.Drawing.Size(318, 445);
+            this.tbDisplay.Size = new System.Drawing.Size(318, 405);
             this.tbDisplay.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(85, 296);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "$";
+            // 
+            // lblPrice
+            // 
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Location = new System.Drawing.Point(26, 296);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(31, 13);
+            this.lblPrice.TabIndex = 48;
+            this.lblPrice.Text = "Price";
+            // 
+            // tbPrice
+            // 
+            this.tbPrice.Location = new System.Drawing.Point(104, 293);
+            this.tbPrice.Name = "tbPrice";
+            this.tbPrice.Size = new System.Drawing.Size(209, 20);
+            this.tbPrice.TabIndex = 44;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 244);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Date";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(104, 241);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(209, 20);
+            this.textBox1.TabIndex = 41;
+            // 
+            // lblTimeTo
+            // 
+            this.lblTimeTo.AutoSize = true;
+            this.lblTimeTo.Location = new System.Drawing.Point(195, 270);
+            this.lblTimeTo.Name = "lblTimeTo";
+            this.lblTimeTo.Size = new System.Drawing.Size(20, 13);
+            this.lblTimeTo.TabIndex = 46;
+            this.lblTimeTo.Text = "To";
+            // 
+            // tbTimeTo
+            // 
+            this.tbTimeTo.Location = new System.Drawing.Point(255, 267);
+            this.tbTimeTo.Name = "tbTimeTo";
+            this.tbTimeTo.Size = new System.Drawing.Size(58, 20);
+            this.tbTimeTo.TabIndex = 43;
+            // 
+            // tbTimeFrom
+            // 
+            this.tbTimeFrom.Location = new System.Drawing.Point(104, 267);
+            this.tbTimeFrom.Name = "tbTimeFrom";
+            this.tbTimeFrom.Size = new System.Drawing.Size(58, 20);
+            this.tbTimeFrom.TabIndex = 42;
+            // 
+            // lblTimeFrom
+            // 
+            this.lblTimeFrom.AutoSize = true;
+            this.lblTimeFrom.Location = new System.Drawing.Point(26, 270);
+            this.lblTimeFrom.Name = "lblTimeFrom";
+            this.lblTimeFrom.Size = new System.Drawing.Size(30, 13);
+            this.lblTimeFrom.TabIndex = 45;
+            this.lblTimeFrom.Text = "Time";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 536);
+            this.ClientSize = new System.Drawing.Size(476, 497);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -475,21 +475,21 @@
         private System.Windows.Forms.TextBox tbImage;
         private System.Windows.Forms.TextBox tbGenre;
         private System.Windows.Forms.Label lblGenre;
-        private System.Windows.Forms.TextBox tbTimeFrom;
-        private System.Windows.Forms.Label lblTimeFrom;
-        private System.Windows.Forms.Label lblTimeTo;
-        private System.Windows.Forms.TextBox tbTimeTo;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label lblPrice;
-        private System.Windows.Forms.TextBox tbPrice;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox libClientsDebug;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.TabPage tabPageShows;
         private System.Windows.Forms.Button btnWipe;
         private System.Windows.Forms.TextBox tbShows;
         private System.Windows.Forms.ListBox libClientsShows;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblPrice;
+        private System.Windows.Forms.TextBox tbPrice;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lblTimeTo;
+        private System.Windows.Forms.TextBox tbTimeTo;
+        private System.Windows.Forms.TextBox tbTimeFrom;
+        private System.Windows.Forms.Label lblTimeFrom;
     }
 }
 

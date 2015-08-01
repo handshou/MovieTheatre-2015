@@ -47,8 +47,8 @@ namespace MvSvr {
 
             InitializeComponent();
             this.Text = "Server";
-            LoadMovies();
-            //LoadMovieFile(browseFile);
+            //LoadMovies();
+            LoadMovieFile(moviesFile);
             //bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;

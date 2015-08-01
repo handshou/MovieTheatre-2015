@@ -39,7 +39,7 @@ namespace MvSysClient {
         public StreamReader reader;
         public StreamWriter writer;
 
-        private CheckBox[] _checkBoxes;
+        private CheckBox[] checkBoxes;
         private String lastClicked = "";
         private String lastSearchedKey = "";
         private String lastSearchedType = "";
@@ -73,7 +73,8 @@ namespace MvSysClient {
             InitializeComponent();
             this.Text = "Client";
 
-            _checkBoxes = new CheckBox[] {  chkA1, chkA2, chkA3, chkA4, chkA5,
+            /// http://stackoverflow.com/questions/3563231/checkbox-array-in-c-sharp
+            checkBoxes = new CheckBox[] {  chkA1, chkA2, chkA3, chkA4, chkA5,
                                             chkB1, chkB2, chkB3, chkB4, chkB5,
                                             chkC1, chkC2, chkC3, chkC4, chkC5,
                                             chkD1, chkD2, chkD3, chkD4, chkD5,
@@ -88,7 +89,7 @@ namespace MvSysClient {
             cobTime.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
             cobSeat.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats); // control no longer in use, code left for keepsake/revert
 
-            foreach (var checkBox in _checkBoxes)
+            foreach (var checkBox in checkBoxes)
                 checkBox.CheckedChanged += new EventHandler(UpdateCinemaPrice);
         }
 
@@ -96,8 +97,8 @@ namespace MvSysClient {
 
             int count = 0;
             List<Seat> seatList = new List<Seat>();
-            for (int i = 0; i < _checkBoxes.Length; i++) {
-                if(_checkBoxes[i].CheckState == CheckState.Checked) {
+            for (int i = 0; i < checkBoxes.Length; i++) {
+                if(checkBoxes[i].CheckState == CheckState.Checked) {
                     seatList.Add(GetShow().Hall.Seats[i]);
                     count++;
                 }
@@ -118,8 +119,8 @@ namespace MvSysClient {
         private void UpdateCinemaSeats(object sender, EventArgs e) {
 
             //string message = string.Empty;
-            //for (int i = 0; i < _checkBoxes.Length; i++) {
-            //    if (_checkBoxes[i].Checked && _checkBoxes[i].Enabled) {
+            //for (int i = 0; i < checkBoxes.Length; i++) {
+            //    if (checkBoxes[i].Checked && checkBoxes[i].Enabled) {
             //        // message += string.Format("boxes[{0}] is clicked\n", i);
             //    }
             //}
@@ -127,12 +128,12 @@ namespace MvSysClient {
             List<Seat> seatList = GetShow().Hall.Seats;
             for (int i = 0; i < seatList.Count; i++) {
                 if (!seatList[i].Vacant) {
-                    _checkBoxes[i].CheckState = CheckState.Indeterminate;
-                    _checkBoxes[i].Enabled = false;
+                    checkBoxes[i].CheckState = CheckState.Indeterminate;
+                    checkBoxes[i].Enabled = false;
                 }
                 if (seatList[i].Vacant) {
-                    _checkBoxes[i].CheckState = CheckState.Unchecked;
-                    _checkBoxes[i].Enabled = true;
+                    checkBoxes[i].CheckState = CheckState.Unchecked;
+                    checkBoxes[i].Enabled = true;
                 }
             }
 
@@ -618,14 +619,14 @@ namespace MvSysClient {
 
             for (int i = 0; i < seatList.Count; i++) {
                 //if (!seatList[i].Vacant) {
-                //    _checkBoxes[i].CheckState = CheckState.Indeterminate;
-                //    _checkBoxes[i].Enabled = false;
+                //    checkBoxes[i].CheckState = CheckState.Indeterminate;
+                //    checkBoxes[i].Enabled = false;
                 //}
                 //if (seatList[i].Vacant) {
-                //    _checkBoxes[i].CheckState = CheckState.Unchecked;
-                //    _checkBoxes[i].Enabled = true;
+                //    checkBoxes[i].CheckState = CheckState.Unchecked;
+                //    checkBoxes[i].Enabled = true;
                 //}
-                if (_checkBoxes[i].CheckState == CheckState.Checked) {
+                if (checkBoxes[i].CheckState == CheckState.Checked) {
                     showDict.Add(s.Hall.Seats[i], s);
                     // rTxtMessages.Text += s.Hall.Seats[i].Name + "\n"; // (!) debug
                 }
@@ -685,17 +686,17 @@ namespace MvSysClient {
 
                     for (int i = 0; i < seatList.Count; i++) {
                         //if (!seatList[i].Vacant) {
-                        //    _checkBoxes[i].CheckState = CheckState.Indeterminate;
-                        //    _checkBoxes[i].Enabled = false;
+                        //    checkBoxes[i].CheckState = CheckState.Indeterminate;
+                        //    checkBoxes[i].Enabled = false;
                         //}
                         //if (seatList[i].Vacant) {
-                        //    _checkBoxes[i].CheckState = CheckState.Unchecked;
-                        //    _checkBoxes[i].Enabled = true;
+                        //    checkBoxes[i].CheckState = CheckState.Unchecked;
+                        //    checkBoxes[i].Enabled = true;
                         //}
-                        if (_checkBoxes[i].CheckState == CheckState.Checked) {
-                            if (_checkBoxes[i].CheckState == CheckState.Checked) {
-                                _checkBoxes[i].CheckState = CheckState.Indeterminate;
-                                _checkBoxes[i].Enabled = false;
+                        if (checkBoxes[i].CheckState == CheckState.Checked) {
+                            if (checkBoxes[i].CheckState == CheckState.Checked) {
+                                checkBoxes[i].CheckState = CheckState.Indeterminate;
+                                checkBoxes[i].Enabled = false;
                                 GetShow().Hall.Seats[i].Vacant = false;
                             }
                         }
@@ -1024,6 +1025,21 @@ namespace MvSysClient {
             rTxtMessages.Clear();
         }
 
-    }
+        /// http://aviadezra.blogspot.sg/2008/07/code-sample-net-sockets-multiple.html
 
+        public delegate void BroadcastMsgCallback(String msg);
+
+        public void BroadcastMsg(String msg) {
+
+            if (this.InvokeRequired) {
+                BroadcastMsgCallback d = new BroadcastMsgCallback(BroadcastMsg);
+                this.Invoke(d, msg);
+                return;
+            }
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++) {
+                rTxtMessages.AppendText(lines[i] + "\r\n");
+            }
+        }
+    }
 }
