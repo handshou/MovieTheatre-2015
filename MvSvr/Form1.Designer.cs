@@ -131,6 +131,7 @@
             this.tbImage.Name = "tbImage";
             this.tbImage.Size = new System.Drawing.Size(209, 20);
             this.tbImage.TabIndex = 5;
+            this.tbImage.Text = "optional";
             // 
             // tbGenre
             // 
@@ -312,7 +313,7 @@
             this.tabPageDebug.Location = new System.Drawing.Point(4, 22);
             this.tabPageDebug.Name = "tabPageDebug";
             this.tabPageDebug.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDebug.Size = new System.Drawing.Size(444, 450);
+            this.tabPageDebug.Size = new System.Drawing.Size(444, 447);
             this.tabPageDebug.TabIndex = 1;
             this.tabPageDebug.Text = "Debug";
             this.tabPageDebug.UseVisualStyleBackColor = true;
@@ -323,7 +324,7 @@
             this.btnWipe.Name = "btnWipe";
             this.btnWipe.Size = new System.Drawing.Size(75, 23);
             this.btnWipe.TabIndex = 19;
-            this.btnWipe.Text = "Wipe";
+            this.btnWipe.Text = "Restore";
             this.btnWipe.UseVisualStyleBackColor = true;
             this.btnWipe.Click += new System.EventHandler(this.btnWipe_Click);
             // 

@@ -82,7 +82,18 @@ namespace MvSvr {
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
 
+            SaveMovieToFile(moviesFile);
             Application.Exit();
+        }
+
+        public void SaveMovieToFile(String filePath) {
+
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, movieInfo.Values.ToArray());
+                fs.Close();
+            }
+            //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
         public Image GetImage(String imgPath) {
@@ -320,7 +331,7 @@ namespace MvSvr {
 
             // Wipes all saved movies and alterations made 
             // by server administrator and loads repository defaults
-            if (MessageBox.Show("Wipe and restore to default?", "Movies Repository",
+            if (MessageBox.Show("Restore to default?", "Movies Repository",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
                 LoadMovies();
                 DisplayMsgMovies("[Server] Movies Repository wiped to default");
