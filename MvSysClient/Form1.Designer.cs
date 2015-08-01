@@ -84,6 +84,28 @@
             this.chkA2 = new System.Windows.Forms.CheckBox();
             this.chkA1 = new System.Windows.Forms.CheckBox();
             this.lblBorder = new System.Windows.Forms.Label();
+            this.lblRowA = new System.Windows.Forms.Label();
+            this.lblRowB = new System.Windows.Forms.Label();
+            this.lblRowC = new System.Windows.Forms.Label();
+            this.lblRowD = new System.Windows.Forms.Label();
+            this.lblRowE = new System.Windows.Forms.Label();
+            this.lblRowE_right = new System.Windows.Forms.Label();
+            this.lblRowD_right = new System.Windows.Forms.Label();
+            this.lblRowC_right = new System.Windows.Forms.Label();
+            this.lblRowB_right = new System.Windows.Forms.Label();
+            this.lblRowA_right = new System.Windows.Forms.Label();
+            this.lblColumn_01 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.lblTheatreName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.grpBoxTheatre.SuspendLayout();
             this.SuspendLayout();
@@ -442,6 +464,27 @@
             // 
             // grpBoxTheatre
             // 
+            this.grpBoxTheatre.Controls.Add(this.lblTheatreName);
+            this.grpBoxTheatre.Controls.Add(this.label6);
+            this.grpBoxTheatre.Controls.Add(this.label7);
+            this.grpBoxTheatre.Controls.Add(this.label8);
+            this.grpBoxTheatre.Controls.Add(this.label9);
+            this.grpBoxTheatre.Controls.Add(this.label10);
+            this.grpBoxTheatre.Controls.Add(this.label4);
+            this.grpBoxTheatre.Controls.Add(this.label3);
+            this.grpBoxTheatre.Controls.Add(this.label2);
+            this.grpBoxTheatre.Controls.Add(this.label1);
+            this.grpBoxTheatre.Controls.Add(this.lblColumn_01);
+            this.grpBoxTheatre.Controls.Add(this.lblRowE_right);
+            this.grpBoxTheatre.Controls.Add(this.lblRowD_right);
+            this.grpBoxTheatre.Controls.Add(this.lblRowC_right);
+            this.grpBoxTheatre.Controls.Add(this.lblRowB_right);
+            this.grpBoxTheatre.Controls.Add(this.lblRowA_right);
+            this.grpBoxTheatre.Controls.Add(this.lblRowE);
+            this.grpBoxTheatre.Controls.Add(this.lblRowD);
+            this.grpBoxTheatre.Controls.Add(this.lblRowC);
+            this.grpBoxTheatre.Controls.Add(this.lblRowB);
+            this.grpBoxTheatre.Controls.Add(this.lblRowA);
             this.grpBoxTheatre.Controls.Add(this.lblScreen);
             this.grpBoxTheatre.Controls.Add(this.chkE5);
             this.grpBoxTheatre.Controls.Add(this.chkE4);
@@ -472,7 +515,7 @@
             this.grpBoxTheatre.Location = new System.Drawing.Point(565, 457);
             this.grpBoxTheatre.Margin = new System.Windows.Forms.Padding(0);
             this.grpBoxTheatre.Name = "grpBoxTheatre";
-            this.grpBoxTheatre.Size = new System.Drawing.Size(271, 207);
+            this.grpBoxTheatre.Size = new System.Drawing.Size(271, 235);
             this.grpBoxTheatre.TabIndex = 79;
             this.grpBoxTheatre.TabStop = false;
             this.grpBoxTheatre.Visible = false;
@@ -795,11 +838,213 @@
             this.lblBorder.Size = new System.Drawing.Size(239, 194);
             this.lblBorder.TabIndex = 105;
             // 
+            // lblRowA
+            // 
+            this.lblRowA.AutoSize = true;
+            this.lblRowA.Location = new System.Drawing.Point(31, 80);
+            this.lblRowA.Name = "lblRowA";
+            this.lblRowA.Size = new System.Drawing.Size(14, 13);
+            this.lblRowA.TabIndex = 80;
+            this.lblRowA.Text = "A";
+            // 
+            // lblRowB
+            // 
+            this.lblRowB.AutoSize = true;
+            this.lblRowB.Location = new System.Drawing.Point(31, 100);
+            this.lblRowB.Name = "lblRowB";
+            this.lblRowB.Size = new System.Drawing.Size(14, 13);
+            this.lblRowB.TabIndex = 106;
+            this.lblRowB.Text = "B";
+            // 
+            // lblRowC
+            // 
+            this.lblRowC.AutoSize = true;
+            this.lblRowC.Location = new System.Drawing.Point(31, 120);
+            this.lblRowC.Name = "lblRowC";
+            this.lblRowC.Size = new System.Drawing.Size(14, 13);
+            this.lblRowC.TabIndex = 107;
+            this.lblRowC.Text = "C";
+            // 
+            // lblRowD
+            // 
+            this.lblRowD.AutoSize = true;
+            this.lblRowD.Location = new System.Drawing.Point(31, 140);
+            this.lblRowD.Name = "lblRowD";
+            this.lblRowD.Size = new System.Drawing.Size(15, 13);
+            this.lblRowD.TabIndex = 108;
+            this.lblRowD.Text = "D";
+            // 
+            // lblRowE
+            // 
+            this.lblRowE.AutoSize = true;
+            this.lblRowE.Location = new System.Drawing.Point(31, 160);
+            this.lblRowE.Name = "lblRowE";
+            this.lblRowE.Size = new System.Drawing.Size(14, 13);
+            this.lblRowE.TabIndex = 109;
+            this.lblRowE.Text = "E";
+            // 
+            // lblRowE_right
+            // 
+            this.lblRowE_right.AutoSize = true;
+            this.lblRowE_right.Location = new System.Drawing.Point(225, 160);
+            this.lblRowE_right.Name = "lblRowE_right";
+            this.lblRowE_right.Size = new System.Drawing.Size(14, 13);
+            this.lblRowE_right.TabIndex = 114;
+            this.lblRowE_right.Text = "E";
+            // 
+            // lblRowD_right
+            // 
+            this.lblRowD_right.AutoSize = true;
+            this.lblRowD_right.Location = new System.Drawing.Point(225, 140);
+            this.lblRowD_right.Name = "lblRowD_right";
+            this.lblRowD_right.Size = new System.Drawing.Size(15, 13);
+            this.lblRowD_right.TabIndex = 113;
+            this.lblRowD_right.Text = "D";
+            // 
+            // lblRowC_right
+            // 
+            this.lblRowC_right.AutoSize = true;
+            this.lblRowC_right.Location = new System.Drawing.Point(225, 120);
+            this.lblRowC_right.Name = "lblRowC_right";
+            this.lblRowC_right.Size = new System.Drawing.Size(14, 13);
+            this.lblRowC_right.TabIndex = 112;
+            this.lblRowC_right.Text = "C";
+            // 
+            // lblRowB_right
+            // 
+            this.lblRowB_right.AutoSize = true;
+            this.lblRowB_right.Location = new System.Drawing.Point(225, 100);
+            this.lblRowB_right.Name = "lblRowB_right";
+            this.lblRowB_right.Size = new System.Drawing.Size(14, 13);
+            this.lblRowB_right.TabIndex = 111;
+            this.lblRowB_right.Text = "B";
+            // 
+            // lblRowA_right
+            // 
+            this.lblRowA_right.AutoSize = true;
+            this.lblRowA_right.Location = new System.Drawing.Point(225, 80);
+            this.lblRowA_right.Name = "lblRowA_right";
+            this.lblRowA_right.Size = new System.Drawing.Size(14, 13);
+            this.lblRowA_right.TabIndex = 110;
+            this.lblRowA_right.Text = "A";
+            // 
+            // lblColumn_01
+            // 
+            this.lblColumn_01.AutoSize = true;
+            this.lblColumn_01.Location = new System.Drawing.Point(63, 178);
+            this.lblColumn_01.Name = "lblColumn_01";
+            this.lblColumn_01.Size = new System.Drawing.Size(13, 13);
+            this.lblColumn_01.TabIndex = 115;
+            this.lblColumn_01.Text = "1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(106, 178);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 116;
+            this.label1.Text = "2";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(128, 178);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 117;
+            this.label2.Text = "3";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(149, 178);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 118;
+            this.label3.Text = "4";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(191, 178);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(13, 13);
+            this.label4.TabIndex = 119;
+            this.label4.Text = "5";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(190, 63);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 13);
+            this.label6.TabIndex = 124;
+            this.label6.Text = "5";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(148, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 123;
+            this.label7.Text = "4";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(127, 63);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 13);
+            this.label8.TabIndex = 122;
+            this.label8.Text = "3";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(105, 63);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(13, 13);
+            this.label9.TabIndex = 121;
+            this.label9.Text = "2";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(62, 63);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(13, 13);
+            this.label10.TabIndex = 120;
+            this.label10.Text = "1";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(17, 73);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 80;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // lblTheatreName
+            // 
+            this.lblTheatreName.AutoSize = true;
+            this.lblTheatreName.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTheatreName.Location = new System.Drawing.Point(106, 211);
+            this.lblTheatreName.Name = "lblTheatreName";
+            this.lblTheatreName.Size = new System.Drawing.Size(77, 13);
+            this.lblTheatreName.TabIndex = 125;
+            this.lblTheatreName.Text = "Theatre Name";
+            this.lblTheatreName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 792);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.grpBoxTheatre);
             this.Controls.Add(this.lblBookingHistory);
             this.Controls.Add(this.cobDate);
@@ -908,6 +1153,28 @@
         private System.Windows.Forms.CheckBox chkA2;
         private System.Windows.Forms.CheckBox chkA1;
         private System.Windows.Forms.Label lblBorder;
+        private System.Windows.Forms.Label lblRowE_right;
+        private System.Windows.Forms.Label lblRowD_right;
+        private System.Windows.Forms.Label lblRowC_right;
+        private System.Windows.Forms.Label lblRowB_right;
+        private System.Windows.Forms.Label lblRowA_right;
+        private System.Windows.Forms.Label lblRowE;
+        private System.Windows.Forms.Label lblRowD;
+        private System.Windows.Forms.Label lblRowC;
+        private System.Windows.Forms.Label lblRowB;
+        private System.Windows.Forms.Label lblRowA;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblColumn_01;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label lblTheatreName;
     }
 }
 

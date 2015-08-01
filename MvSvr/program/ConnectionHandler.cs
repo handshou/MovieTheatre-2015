@@ -336,7 +336,7 @@ namespace MvSvr {
             if (bookingList == null) {
             // No History
 
-                info_str = "There were no booking records found";
+                info_str = "You have no booking records. Please make a booking!";
 
             } else {
             // Fetch History
@@ -353,7 +353,7 @@ namespace MvSvr {
                         seat = b.Seats[h];
                         seats_str += seat.Name + " ";
                     }
-                    info_str += "[" + s.Movie.Title + "]" + "\n" +
+                    info_str += "[" + s.Movie.Title + "]" + " : " + String.Format("$ {0:0.00}", b.CalculateBaseCost(false)) + "\n" +
                                 "[" + s.Date + "] " + s.TimeStart + " - " + s.TimeEnd + " : " +
                                         b.Show.Hall.Name + "\n === Seats === " + "(Generated @ " + b.BookingTime + ")\n" +
                                         seats_str + "\n";

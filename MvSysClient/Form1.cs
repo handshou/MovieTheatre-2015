@@ -244,6 +244,7 @@ namespace MvSysClient {
 
             cobTime.SelectedIndex = 0;
             LoadSeats();
+            lblTheatreName.Text = GetShow().Hall.Name;
 
         }
 
@@ -1017,6 +1018,10 @@ namespace MvSysClient {
 
             grPhoto.Dispose();
             return bmPhoto;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e) {
+            rTxtMessages.Clear();
         }
 
     }
