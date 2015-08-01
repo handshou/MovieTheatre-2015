@@ -273,6 +273,7 @@
             this.tbMovies.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbMovies.Size = new System.Drawing.Size(318, 199);
             this.tbMovies.TabIndex = 23;
+            this.tbMovies.TabStop = false;
             // 
             // libClientsMovies
             // 

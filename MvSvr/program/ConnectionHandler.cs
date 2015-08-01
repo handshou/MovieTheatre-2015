@@ -94,7 +94,7 @@ namespace MvSvr {
                 /* R */
                 // Receive user
                 data = new byte[1024];
-                user = ReceiveCommand();
+                user = ReceiveCommand().ToLower();
                 if (!clients.ContainsKey(user)) {
                     clientID = String.Format("C{0:D2} : {1}", count, user);
                     clients.Add(user, client);
@@ -247,8 +247,13 @@ namespace MvSvr {
                 }
 
                 List<Seat> serverSeats = serverShow.Hall.Seats;
+                String seat_str = " [ ";
+                foreach(Seat s in seats) {
+                    seat_str += "" + s.Name + " ";
+                }
+                seat_str += "]";
                 form.DisplayMsg("[" + user + "] :: [" + serverMovie.Title + "]\n" +
-                                "[" + user + "] :: [" + serverShow.Date + "] [" + serverShow.TimeStart + "]");
+                                "[" + user + "] :: [" + serverShow.Date + "] [" + serverShow.TimeStart + "]" + seat_str);
 
                 // Turn seat to unavailable : (!) consider using Dictionary collection
                 foreach(Seat seat in seats) {
@@ -331,7 +336,7 @@ namespace MvSvr {
             if (bookingList == null) {
             // No History
 
-                info_str = "There are no booking records found";
+                info_str = "There were no booking records found";
 
             } else {
             // Fetch History
@@ -356,7 +361,7 @@ namespace MvSvr {
                 }
             }
 
-            SendCommand(info_str);
+            SendString(info_str);
         }
 
         public void SaveToFile(String filePath, Dictionary<String, Movie> d) {
@@ -414,6 +419,13 @@ namespace MvSvr {
 
             data = new byte[1024];
             data = Encoding.ASCII.GetBytes(cmd);
+            size = client.Send(data);
+        }
+
+        public void SendString(String str) {
+
+            data = new byte[8192];
+            data = Encoding.ASCII.GetBytes(str);
             size = client.Send(data);
         }
 
