@@ -115,6 +115,7 @@ namespace MvSysClient {
             
             Booking b = new Booking(userID, GetShow(), seatList);
 
+            lblPrice.Visible = true;
             lblPrice.Text = String.Format("Price ${0:0.00}", b.CalculateBaseCost(false));
 
             // MessageBox.Show(message);
@@ -164,6 +165,8 @@ namespace MvSysClient {
 
             listMovies.Enabled = true;
             lblBookMessage.ResetText();
+
+            grpBoxTheatre.Visible = true;
 
             rTxtMessages.Clear();
             rTxtMessages.AppendText("Welcome to the Movie Booking System\n");
@@ -270,6 +273,7 @@ namespace MvSysClient {
 
             double price = 0;
             price = GetShow().Price;
+            lblPrice.Visible = true;
             lblPrice.Text = String.Format("Price ${0:0.00}", price);
 
             cobSeat.Enabled = true;
@@ -379,6 +383,8 @@ namespace MvSysClient {
             cobDate.Enabled = false;
             cobTime.Enabled = false;
             listMovies.Enabled = false;
+            grpBoxTheatre.Visible = false;
+            lblPrice.Visible = false;
 
             lblBookMessage.ResetText();
         }

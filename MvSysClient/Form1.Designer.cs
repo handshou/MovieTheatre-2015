@@ -56,34 +56,36 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.cobDate = new System.Windows.Forms.ComboBox();
             this.lblBookingHistory = new System.Windows.Forms.Label();
-            this.chkA1 = new System.Windows.Forms.CheckBox();
-            this.chkA2 = new System.Windows.Forms.CheckBox();
-            this.chkA3 = new System.Windows.Forms.CheckBox();
-            this.chkA4 = new System.Windows.Forms.CheckBox();
-            this.chkA5 = new System.Windows.Forms.CheckBox();
-            this.chkB5 = new System.Windows.Forms.CheckBox();
-            this.chkB4 = new System.Windows.Forms.CheckBox();
-            this.chkB3 = new System.Windows.Forms.CheckBox();
-            this.chkB2 = new System.Windows.Forms.CheckBox();
-            this.chkB1 = new System.Windows.Forms.CheckBox();
-            this.chkC5 = new System.Windows.Forms.CheckBox();
-            this.chkC4 = new System.Windows.Forms.CheckBox();
-            this.chkC3 = new System.Windows.Forms.CheckBox();
-            this.chkC2 = new System.Windows.Forms.CheckBox();
-            this.chkC1 = new System.Windows.Forms.CheckBox();
-            this.chkD5 = new System.Windows.Forms.CheckBox();
-            this.chkD4 = new System.Windows.Forms.CheckBox();
-            this.chkD3 = new System.Windows.Forms.CheckBox();
-            this.chkD2 = new System.Windows.Forms.CheckBox();
-            this.chkD1 = new System.Windows.Forms.CheckBox();
+            this.grpBoxTheatre = new System.Windows.Forms.GroupBox();
+            this.lblScreen = new System.Windows.Forms.Label();
             this.chkE5 = new System.Windows.Forms.CheckBox();
             this.chkE4 = new System.Windows.Forms.CheckBox();
             this.chkE3 = new System.Windows.Forms.CheckBox();
             this.chkE2 = new System.Windows.Forms.CheckBox();
             this.chkE1 = new System.Windows.Forms.CheckBox();
-            this.lblScreen = new System.Windows.Forms.Label();
+            this.chkD5 = new System.Windows.Forms.CheckBox();
+            this.chkD4 = new System.Windows.Forms.CheckBox();
+            this.chkD3 = new System.Windows.Forms.CheckBox();
+            this.chkD2 = new System.Windows.Forms.CheckBox();
+            this.chkD1 = new System.Windows.Forms.CheckBox();
+            this.chkC5 = new System.Windows.Forms.CheckBox();
+            this.chkC4 = new System.Windows.Forms.CheckBox();
+            this.chkC3 = new System.Windows.Forms.CheckBox();
+            this.chkC2 = new System.Windows.Forms.CheckBox();
+            this.chkC1 = new System.Windows.Forms.CheckBox();
+            this.chkB5 = new System.Windows.Forms.CheckBox();
+            this.chkB4 = new System.Windows.Forms.CheckBox();
+            this.chkB3 = new System.Windows.Forms.CheckBox();
+            this.chkB2 = new System.Windows.Forms.CheckBox();
+            this.chkB1 = new System.Windows.Forms.CheckBox();
+            this.chkA5 = new System.Windows.Forms.CheckBox();
+            this.chkA4 = new System.Windows.Forms.CheckBox();
+            this.chkA3 = new System.Windows.Forms.CheckBox();
+            this.chkA2 = new System.Windows.Forms.CheckBox();
+            this.chkA1 = new System.Windows.Forms.CheckBox();
             this.lblBorder = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
+            this.grpBoxTheatre.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -438,255 +440,62 @@
             this.lblBookingHistory.TabIndex = 51;
             this.lblBookingHistory.Text = "Booking History";
             // 
-            // chkA1
+            // grpBoxTheatre
             // 
-            this.chkA1.AutoSize = true;
-            this.chkA1.Checked = true;
-            this.chkA1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA1.Location = new System.Drawing.Point(627, 551);
-            this.chkA1.Name = "chkA1";
-            this.chkA1.Size = new System.Drawing.Size(15, 14);
-            this.chkA1.TabIndex = 52;
-            this.chkA1.TabStop = false;
-            this.chkA1.UseVisualStyleBackColor = true;
+            this.grpBoxTheatre.Controls.Add(this.lblScreen);
+            this.grpBoxTheatre.Controls.Add(this.chkE5);
+            this.grpBoxTheatre.Controls.Add(this.chkE4);
+            this.grpBoxTheatre.Controls.Add(this.chkE3);
+            this.grpBoxTheatre.Controls.Add(this.chkE2);
+            this.grpBoxTheatre.Controls.Add(this.chkE1);
+            this.grpBoxTheatre.Controls.Add(this.chkD5);
+            this.grpBoxTheatre.Controls.Add(this.chkD4);
+            this.grpBoxTheatre.Controls.Add(this.chkD3);
+            this.grpBoxTheatre.Controls.Add(this.chkD2);
+            this.grpBoxTheatre.Controls.Add(this.chkD1);
+            this.grpBoxTheatre.Controls.Add(this.chkC5);
+            this.grpBoxTheatre.Controls.Add(this.chkC4);
+            this.grpBoxTheatre.Controls.Add(this.chkC3);
+            this.grpBoxTheatre.Controls.Add(this.chkC2);
+            this.grpBoxTheatre.Controls.Add(this.chkC1);
+            this.grpBoxTheatre.Controls.Add(this.chkB5);
+            this.grpBoxTheatre.Controls.Add(this.chkB4);
+            this.grpBoxTheatre.Controls.Add(this.chkB3);
+            this.grpBoxTheatre.Controls.Add(this.chkB2);
+            this.grpBoxTheatre.Controls.Add(this.chkB1);
+            this.grpBoxTheatre.Controls.Add(this.chkA5);
+            this.grpBoxTheatre.Controls.Add(this.chkA4);
+            this.grpBoxTheatre.Controls.Add(this.chkA3);
+            this.grpBoxTheatre.Controls.Add(this.chkA2);
+            this.grpBoxTheatre.Controls.Add(this.chkA1);
+            this.grpBoxTheatre.Controls.Add(this.lblBorder);
+            this.grpBoxTheatre.Location = new System.Drawing.Point(565, 457);
+            this.grpBoxTheatre.Margin = new System.Windows.Forms.Padding(0);
+            this.grpBoxTheatre.Name = "grpBoxTheatre";
+            this.grpBoxTheatre.Size = new System.Drawing.Size(271, 207);
+            this.grpBoxTheatre.TabIndex = 79;
+            this.grpBoxTheatre.TabStop = false;
+            this.grpBoxTheatre.Visible = false;
             // 
-            // chkA2
+            // lblScreen
             // 
-            this.chkA2.AutoSize = true;
-            this.chkA2.Checked = true;
-            this.chkA2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA2.Location = new System.Drawing.Point(670, 551);
-            this.chkA2.Name = "chkA2";
-            this.chkA2.Size = new System.Drawing.Size(15, 14);
-            this.chkA2.TabIndex = 53;
-            this.chkA2.TabStop = false;
-            this.chkA2.UseVisualStyleBackColor = true;
-            // 
-            // chkA3
-            // 
-            this.chkA3.AutoSize = true;
-            this.chkA3.Checked = true;
-            this.chkA3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA3.Location = new System.Drawing.Point(692, 551);
-            this.chkA3.Name = "chkA3";
-            this.chkA3.Size = new System.Drawing.Size(15, 14);
-            this.chkA3.TabIndex = 54;
-            this.chkA3.TabStop = false;
-            this.chkA3.UseVisualStyleBackColor = true;
-            // 
-            // chkA4
-            // 
-            this.chkA4.AutoSize = true;
-            this.chkA4.Checked = true;
-            this.chkA4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA4.Location = new System.Drawing.Point(713, 551);
-            this.chkA4.Name = "chkA4";
-            this.chkA4.Size = new System.Drawing.Size(15, 14);
-            this.chkA4.TabIndex = 55;
-            this.chkA4.TabStop = false;
-            this.chkA4.UseVisualStyleBackColor = true;
-            // 
-            // chkA5
-            // 
-            this.chkA5.AutoSize = true;
-            this.chkA5.Checked = true;
-            this.chkA5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA5.Location = new System.Drawing.Point(756, 551);
-            this.chkA5.Name = "chkA5";
-            this.chkA5.Size = new System.Drawing.Size(15, 14);
-            this.chkA5.TabIndex = 56;
-            this.chkA5.TabStop = false;
-            this.chkA5.UseVisualStyleBackColor = true;
-            // 
-            // chkB5
-            // 
-            this.chkB5.AutoSize = true;
-            this.chkB5.Checked = true;
-            this.chkB5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB5.Location = new System.Drawing.Point(756, 571);
-            this.chkB5.Name = "chkB5";
-            this.chkB5.Size = new System.Drawing.Size(15, 14);
-            this.chkB5.TabIndex = 61;
-            this.chkB5.TabStop = false;
-            this.chkB5.UseVisualStyleBackColor = true;
-            // 
-            // chkB4
-            // 
-            this.chkB4.AutoSize = true;
-            this.chkB4.Checked = true;
-            this.chkB4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB4.Location = new System.Drawing.Point(713, 571);
-            this.chkB4.Name = "chkB4";
-            this.chkB4.Size = new System.Drawing.Size(15, 14);
-            this.chkB4.TabIndex = 60;
-            this.chkB4.TabStop = false;
-            this.chkB4.UseVisualStyleBackColor = true;
-            // 
-            // chkB3
-            // 
-            this.chkB3.AutoSize = true;
-            this.chkB3.Checked = true;
-            this.chkB3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB3.Location = new System.Drawing.Point(692, 571);
-            this.chkB3.Name = "chkB3";
-            this.chkB3.Size = new System.Drawing.Size(15, 14);
-            this.chkB3.TabIndex = 59;
-            this.chkB3.TabStop = false;
-            this.chkB3.UseVisualStyleBackColor = true;
-            // 
-            // chkB2
-            // 
-            this.chkB2.AutoSize = true;
-            this.chkB2.Checked = true;
-            this.chkB2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB2.Location = new System.Drawing.Point(670, 571);
-            this.chkB2.Name = "chkB2";
-            this.chkB2.Size = new System.Drawing.Size(15, 14);
-            this.chkB2.TabIndex = 58;
-            this.chkB2.TabStop = false;
-            this.chkB2.UseVisualStyleBackColor = true;
-            // 
-            // chkB1
-            // 
-            this.chkB1.AutoSize = true;
-            this.chkB1.Checked = true;
-            this.chkB1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB1.Location = new System.Drawing.Point(627, 571);
-            this.chkB1.Name = "chkB1";
-            this.chkB1.Size = new System.Drawing.Size(15, 14);
-            this.chkB1.TabIndex = 57;
-            this.chkB1.TabStop = false;
-            this.chkB1.UseVisualStyleBackColor = true;
-            // 
-            // chkC5
-            // 
-            this.chkC5.AutoSize = true;
-            this.chkC5.Checked = true;
-            this.chkC5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC5.Location = new System.Drawing.Point(756, 591);
-            this.chkC5.Name = "chkC5";
-            this.chkC5.Size = new System.Drawing.Size(15, 14);
-            this.chkC5.TabIndex = 66;
-            this.chkC5.TabStop = false;
-            this.chkC5.UseVisualStyleBackColor = true;
-            // 
-            // chkC4
-            // 
-            this.chkC4.AutoSize = true;
-            this.chkC4.Checked = true;
-            this.chkC4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC4.Location = new System.Drawing.Point(713, 591);
-            this.chkC4.Name = "chkC4";
-            this.chkC4.Size = new System.Drawing.Size(15, 14);
-            this.chkC4.TabIndex = 65;
-            this.chkC4.TabStop = false;
-            this.chkC4.UseVisualStyleBackColor = true;
-            // 
-            // chkC3
-            // 
-            this.chkC3.AutoSize = true;
-            this.chkC3.Checked = true;
-            this.chkC3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC3.Location = new System.Drawing.Point(692, 591);
-            this.chkC3.Name = "chkC3";
-            this.chkC3.Size = new System.Drawing.Size(15, 14);
-            this.chkC3.TabIndex = 64;
-            this.chkC3.TabStop = false;
-            this.chkC3.UseVisualStyleBackColor = true;
-            // 
-            // chkC2
-            // 
-            this.chkC2.AutoSize = true;
-            this.chkC2.Checked = true;
-            this.chkC2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC2.Location = new System.Drawing.Point(670, 591);
-            this.chkC2.Name = "chkC2";
-            this.chkC2.Size = new System.Drawing.Size(15, 14);
-            this.chkC2.TabIndex = 63;
-            this.chkC2.TabStop = false;
-            this.chkC2.UseVisualStyleBackColor = true;
-            // 
-            // chkC1
-            // 
-            this.chkC1.AutoSize = true;
-            this.chkC1.Checked = true;
-            this.chkC1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC1.Location = new System.Drawing.Point(627, 591);
-            this.chkC1.Name = "chkC1";
-            this.chkC1.Size = new System.Drawing.Size(15, 14);
-            this.chkC1.TabIndex = 62;
-            this.chkC1.TabStop = false;
-            this.chkC1.UseVisualStyleBackColor = true;
-            // 
-            // chkD5
-            // 
-            this.chkD5.AutoSize = true;
-            this.chkD5.Checked = true;
-            this.chkD5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD5.Location = new System.Drawing.Point(756, 611);
-            this.chkD5.Name = "chkD5";
-            this.chkD5.Size = new System.Drawing.Size(15, 14);
-            this.chkD5.TabIndex = 71;
-            this.chkD5.TabStop = false;
-            this.chkD5.UseVisualStyleBackColor = true;
-            // 
-            // chkD4
-            // 
-            this.chkD4.AutoSize = true;
-            this.chkD4.Checked = true;
-            this.chkD4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD4.Location = new System.Drawing.Point(713, 611);
-            this.chkD4.Name = "chkD4";
-            this.chkD4.Size = new System.Drawing.Size(15, 14);
-            this.chkD4.TabIndex = 70;
-            this.chkD4.TabStop = false;
-            this.chkD4.UseVisualStyleBackColor = true;
-            // 
-            // chkD3
-            // 
-            this.chkD3.AutoSize = true;
-            this.chkD3.Checked = true;
-            this.chkD3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD3.Location = new System.Drawing.Point(692, 611);
-            this.chkD3.Name = "chkD3";
-            this.chkD3.Size = new System.Drawing.Size(15, 14);
-            this.chkD3.TabIndex = 69;
-            this.chkD3.TabStop = false;
-            this.chkD3.UseVisualStyleBackColor = true;
-            // 
-            // chkD2
-            // 
-            this.chkD2.AutoSize = true;
-            this.chkD2.Checked = true;
-            this.chkD2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD2.Location = new System.Drawing.Point(670, 611);
-            this.chkD2.Name = "chkD2";
-            this.chkD2.Size = new System.Drawing.Size(15, 14);
-            this.chkD2.TabIndex = 68;
-            this.chkD2.TabStop = false;
-            this.chkD2.UseVisualStyleBackColor = true;
-            // 
-            // chkD1
-            // 
-            this.chkD1.AutoSize = true;
-            this.chkD1.Checked = true;
-            this.chkD1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD1.Location = new System.Drawing.Point(627, 611);
-            this.chkD1.Name = "chkD1";
-            this.chkD1.Size = new System.Drawing.Size(15, 14);
-            this.chkD1.TabIndex = 67;
-            this.chkD1.TabStop = false;
-            this.chkD1.UseVisualStyleBackColor = true;
+            this.lblScreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblScreen.Location = new System.Drawing.Point(84, 19);
+            this.lblScreen.Name = "lblScreen";
+            this.lblScreen.Size = new System.Drawing.Size(100, 38);
+            this.lblScreen.TabIndex = 104;
+            this.lblScreen.Text = "Screen";
+            this.lblScreen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // chkE5
             // 
             this.chkE5.AutoSize = true;
             this.chkE5.Checked = true;
             this.chkE5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE5.Location = new System.Drawing.Point(756, 631);
+            this.chkE5.Location = new System.Drawing.Point(191, 160);
             this.chkE5.Name = "chkE5";
             this.chkE5.Size = new System.Drawing.Size(15, 14);
-            this.chkE5.TabIndex = 76;
+            this.chkE5.TabIndex = 103;
             this.chkE5.TabStop = false;
             this.chkE5.UseVisualStyleBackColor = true;
             // 
@@ -695,10 +504,10 @@
             this.chkE4.AutoSize = true;
             this.chkE4.Checked = true;
             this.chkE4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE4.Location = new System.Drawing.Point(713, 631);
+            this.chkE4.Location = new System.Drawing.Point(148, 160);
             this.chkE4.Name = "chkE4";
             this.chkE4.Size = new System.Drawing.Size(15, 14);
-            this.chkE4.TabIndex = 75;
+            this.chkE4.TabIndex = 102;
             this.chkE4.TabStop = false;
             this.chkE4.UseVisualStyleBackColor = true;
             // 
@@ -707,10 +516,10 @@
             this.chkE3.AutoSize = true;
             this.chkE3.Checked = true;
             this.chkE3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE3.Location = new System.Drawing.Point(692, 631);
+            this.chkE3.Location = new System.Drawing.Point(127, 160);
             this.chkE3.Name = "chkE3";
             this.chkE3.Size = new System.Drawing.Size(15, 14);
-            this.chkE3.TabIndex = 74;
+            this.chkE3.TabIndex = 101;
             this.chkE3.TabStop = false;
             this.chkE3.UseVisualStyleBackColor = true;
             // 
@@ -719,10 +528,10 @@
             this.chkE2.AutoSize = true;
             this.chkE2.Checked = true;
             this.chkE2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE2.Location = new System.Drawing.Point(670, 631);
+            this.chkE2.Location = new System.Drawing.Point(105, 160);
             this.chkE2.Name = "chkE2";
             this.chkE2.Size = new System.Drawing.Size(15, 14);
-            this.chkE2.TabIndex = 73;
+            this.chkE2.TabIndex = 100;
             this.chkE2.TabStop = false;
             this.chkE2.UseVisualStyleBackColor = true;
             // 
@@ -731,62 +540,267 @@
             this.chkE1.AutoSize = true;
             this.chkE1.Checked = true;
             this.chkE1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE1.Location = new System.Drawing.Point(627, 631);
+            this.chkE1.Location = new System.Drawing.Point(62, 160);
             this.chkE1.Name = "chkE1";
             this.chkE1.Size = new System.Drawing.Size(15, 14);
-            this.chkE1.TabIndex = 72;
+            this.chkE1.TabIndex = 99;
             this.chkE1.TabStop = false;
             this.chkE1.UseVisualStyleBackColor = true;
             // 
-            // lblScreen
+            // chkD5
             // 
-            this.lblScreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblScreen.Location = new System.Drawing.Point(649, 490);
-            this.lblScreen.Name = "lblScreen";
-            this.lblScreen.Size = new System.Drawing.Size(100, 38);
-            this.lblScreen.TabIndex = 77;
-            this.lblScreen.Text = "Screen";
-            this.lblScreen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkD5.AutoSize = true;
+            this.chkD5.Checked = true;
+            this.chkD5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkD5.Location = new System.Drawing.Point(191, 140);
+            this.chkD5.Name = "chkD5";
+            this.chkD5.Size = new System.Drawing.Size(15, 14);
+            this.chkD5.TabIndex = 98;
+            this.chkD5.TabStop = false;
+            this.chkD5.UseVisualStyleBackColor = true;
+            // 
+            // chkD4
+            // 
+            this.chkD4.AutoSize = true;
+            this.chkD4.Checked = true;
+            this.chkD4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkD4.Location = new System.Drawing.Point(148, 140);
+            this.chkD4.Name = "chkD4";
+            this.chkD4.Size = new System.Drawing.Size(15, 14);
+            this.chkD4.TabIndex = 97;
+            this.chkD4.TabStop = false;
+            this.chkD4.UseVisualStyleBackColor = true;
+            // 
+            // chkD3
+            // 
+            this.chkD3.AutoSize = true;
+            this.chkD3.Checked = true;
+            this.chkD3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkD3.Location = new System.Drawing.Point(127, 140);
+            this.chkD3.Name = "chkD3";
+            this.chkD3.Size = new System.Drawing.Size(15, 14);
+            this.chkD3.TabIndex = 96;
+            this.chkD3.TabStop = false;
+            this.chkD3.UseVisualStyleBackColor = true;
+            // 
+            // chkD2
+            // 
+            this.chkD2.AutoSize = true;
+            this.chkD2.Checked = true;
+            this.chkD2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkD2.Location = new System.Drawing.Point(105, 140);
+            this.chkD2.Name = "chkD2";
+            this.chkD2.Size = new System.Drawing.Size(15, 14);
+            this.chkD2.TabIndex = 95;
+            this.chkD2.TabStop = false;
+            this.chkD2.UseVisualStyleBackColor = true;
+            // 
+            // chkD1
+            // 
+            this.chkD1.AutoSize = true;
+            this.chkD1.Checked = true;
+            this.chkD1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkD1.Location = new System.Drawing.Point(62, 140);
+            this.chkD1.Name = "chkD1";
+            this.chkD1.Size = new System.Drawing.Size(15, 14);
+            this.chkD1.TabIndex = 94;
+            this.chkD1.TabStop = false;
+            this.chkD1.UseVisualStyleBackColor = true;
+            // 
+            // chkC5
+            // 
+            this.chkC5.AutoSize = true;
+            this.chkC5.Checked = true;
+            this.chkC5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkC5.Location = new System.Drawing.Point(191, 120);
+            this.chkC5.Name = "chkC5";
+            this.chkC5.Size = new System.Drawing.Size(15, 14);
+            this.chkC5.TabIndex = 93;
+            this.chkC5.TabStop = false;
+            this.chkC5.UseVisualStyleBackColor = true;
+            // 
+            // chkC4
+            // 
+            this.chkC4.AutoSize = true;
+            this.chkC4.Checked = true;
+            this.chkC4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkC4.Location = new System.Drawing.Point(148, 120);
+            this.chkC4.Name = "chkC4";
+            this.chkC4.Size = new System.Drawing.Size(15, 14);
+            this.chkC4.TabIndex = 92;
+            this.chkC4.TabStop = false;
+            this.chkC4.UseVisualStyleBackColor = true;
+            // 
+            // chkC3
+            // 
+            this.chkC3.AutoSize = true;
+            this.chkC3.Checked = true;
+            this.chkC3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkC3.Location = new System.Drawing.Point(127, 120);
+            this.chkC3.Name = "chkC3";
+            this.chkC3.Size = new System.Drawing.Size(15, 14);
+            this.chkC3.TabIndex = 91;
+            this.chkC3.TabStop = false;
+            this.chkC3.UseVisualStyleBackColor = true;
+            // 
+            // chkC2
+            // 
+            this.chkC2.AutoSize = true;
+            this.chkC2.Checked = true;
+            this.chkC2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkC2.Location = new System.Drawing.Point(105, 120);
+            this.chkC2.Name = "chkC2";
+            this.chkC2.Size = new System.Drawing.Size(15, 14);
+            this.chkC2.TabIndex = 90;
+            this.chkC2.TabStop = false;
+            this.chkC2.UseVisualStyleBackColor = true;
+            // 
+            // chkC1
+            // 
+            this.chkC1.AutoSize = true;
+            this.chkC1.Checked = true;
+            this.chkC1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkC1.Location = new System.Drawing.Point(62, 120);
+            this.chkC1.Name = "chkC1";
+            this.chkC1.Size = new System.Drawing.Size(15, 14);
+            this.chkC1.TabIndex = 89;
+            this.chkC1.TabStop = false;
+            this.chkC1.UseVisualStyleBackColor = true;
+            // 
+            // chkB5
+            // 
+            this.chkB5.AutoSize = true;
+            this.chkB5.Checked = true;
+            this.chkB5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkB5.Location = new System.Drawing.Point(191, 100);
+            this.chkB5.Name = "chkB5";
+            this.chkB5.Size = new System.Drawing.Size(15, 14);
+            this.chkB5.TabIndex = 88;
+            this.chkB5.TabStop = false;
+            this.chkB5.UseVisualStyleBackColor = true;
+            // 
+            // chkB4
+            // 
+            this.chkB4.AutoSize = true;
+            this.chkB4.Checked = true;
+            this.chkB4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkB4.Location = new System.Drawing.Point(148, 100);
+            this.chkB4.Name = "chkB4";
+            this.chkB4.Size = new System.Drawing.Size(15, 14);
+            this.chkB4.TabIndex = 87;
+            this.chkB4.TabStop = false;
+            this.chkB4.UseVisualStyleBackColor = true;
+            // 
+            // chkB3
+            // 
+            this.chkB3.AutoSize = true;
+            this.chkB3.Checked = true;
+            this.chkB3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkB3.Location = new System.Drawing.Point(127, 100);
+            this.chkB3.Name = "chkB3";
+            this.chkB3.Size = new System.Drawing.Size(15, 14);
+            this.chkB3.TabIndex = 86;
+            this.chkB3.TabStop = false;
+            this.chkB3.UseVisualStyleBackColor = true;
+            // 
+            // chkB2
+            // 
+            this.chkB2.AutoSize = true;
+            this.chkB2.Checked = true;
+            this.chkB2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkB2.Location = new System.Drawing.Point(105, 100);
+            this.chkB2.Name = "chkB2";
+            this.chkB2.Size = new System.Drawing.Size(15, 14);
+            this.chkB2.TabIndex = 85;
+            this.chkB2.TabStop = false;
+            this.chkB2.UseVisualStyleBackColor = true;
+            // 
+            // chkB1
+            // 
+            this.chkB1.AutoSize = true;
+            this.chkB1.Checked = true;
+            this.chkB1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkB1.Location = new System.Drawing.Point(62, 100);
+            this.chkB1.Name = "chkB1";
+            this.chkB1.Size = new System.Drawing.Size(15, 14);
+            this.chkB1.TabIndex = 84;
+            this.chkB1.TabStop = false;
+            this.chkB1.UseVisualStyleBackColor = true;
+            // 
+            // chkA5
+            // 
+            this.chkA5.AutoSize = true;
+            this.chkA5.Checked = true;
+            this.chkA5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkA5.Location = new System.Drawing.Point(191, 80);
+            this.chkA5.Name = "chkA5";
+            this.chkA5.Size = new System.Drawing.Size(15, 14);
+            this.chkA5.TabIndex = 83;
+            this.chkA5.TabStop = false;
+            this.chkA5.UseVisualStyleBackColor = true;
+            // 
+            // chkA4
+            // 
+            this.chkA4.AutoSize = true;
+            this.chkA4.Checked = true;
+            this.chkA4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkA4.Location = new System.Drawing.Point(148, 80);
+            this.chkA4.Name = "chkA4";
+            this.chkA4.Size = new System.Drawing.Size(15, 14);
+            this.chkA4.TabIndex = 82;
+            this.chkA4.TabStop = false;
+            this.chkA4.UseVisualStyleBackColor = true;
+            // 
+            // chkA3
+            // 
+            this.chkA3.AutoSize = true;
+            this.chkA3.Checked = true;
+            this.chkA3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkA3.Location = new System.Drawing.Point(127, 80);
+            this.chkA3.Name = "chkA3";
+            this.chkA3.Size = new System.Drawing.Size(15, 14);
+            this.chkA3.TabIndex = 81;
+            this.chkA3.TabStop = false;
+            this.chkA3.UseVisualStyleBackColor = true;
+            // 
+            // chkA2
+            // 
+            this.chkA2.AutoSize = true;
+            this.chkA2.Checked = true;
+            this.chkA2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkA2.Location = new System.Drawing.Point(105, 80);
+            this.chkA2.Name = "chkA2";
+            this.chkA2.Size = new System.Drawing.Size(15, 14);
+            this.chkA2.TabIndex = 80;
+            this.chkA2.TabStop = false;
+            this.chkA2.UseVisualStyleBackColor = true;
+            // 
+            // chkA1
+            // 
+            this.chkA1.AutoSize = true;
+            this.chkA1.Checked = true;
+            this.chkA1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chkA1.Location = new System.Drawing.Point(62, 80);
+            this.chkA1.Name = "chkA1";
+            this.chkA1.Size = new System.Drawing.Size(15, 14);
+            this.chkA1.TabIndex = 79;
+            this.chkA1.TabStop = false;
+            this.chkA1.UseVisualStyleBackColor = true;
             // 
             // lblBorder
             // 
             this.lblBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblBorder.Location = new System.Drawing.Point(581, 480);
+            this.lblBorder.Location = new System.Drawing.Point(16, 9);
             this.lblBorder.Name = "lblBorder";
             this.lblBorder.Size = new System.Drawing.Size(239, 194);
-            this.lblBorder.TabIndex = 78;
+            this.lblBorder.TabIndex = 105;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 792);
-            this.Controls.Add(this.lblScreen);
-            this.Controls.Add(this.chkE5);
-            this.Controls.Add(this.chkE4);
-            this.Controls.Add(this.chkE3);
-            this.Controls.Add(this.chkE2);
-            this.Controls.Add(this.chkE1);
-            this.Controls.Add(this.chkD5);
-            this.Controls.Add(this.chkD4);
-            this.Controls.Add(this.chkD3);
-            this.Controls.Add(this.chkD2);
-            this.Controls.Add(this.chkD1);
-            this.Controls.Add(this.chkC5);
-            this.Controls.Add(this.chkC4);
-            this.Controls.Add(this.chkC3);
-            this.Controls.Add(this.chkC2);
-            this.Controls.Add(this.chkC1);
-            this.Controls.Add(this.chkB5);
-            this.Controls.Add(this.chkB4);
-            this.Controls.Add(this.chkB3);
-            this.Controls.Add(this.chkB2);
-            this.Controls.Add(this.chkB1);
-            this.Controls.Add(this.chkA5);
-            this.Controls.Add(this.chkA4);
-            this.Controls.Add(this.chkA3);
-            this.Controls.Add(this.chkA2);
-            this.Controls.Add(this.chkA1);
+            this.ClientSize = new System.Drawing.Size(845, 792);
+            this.Controls.Add(this.grpBoxTheatre);
             this.Controls.Add(this.lblBookingHistory);
             this.Controls.Add(this.cobDate);
             this.Controls.Add(this.lblDate);
@@ -818,7 +832,6 @@
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.lblPrice);
-            this.Controls.Add(this.lblBorder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -826,6 +839,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
+            this.grpBoxTheatre.ResumeLayout(false);
+            this.grpBoxTheatre.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,32 +880,33 @@
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.ComboBox cobDate;
         private System.Windows.Forms.Label lblBookingHistory;
-        private System.Windows.Forms.CheckBox chkA1;
-        private System.Windows.Forms.CheckBox chkA2;
-        private System.Windows.Forms.CheckBox chkA3;
-        private System.Windows.Forms.CheckBox chkA4;
-        private System.Windows.Forms.CheckBox chkA5;
-        private System.Windows.Forms.CheckBox chkB5;
-        private System.Windows.Forms.CheckBox chkB4;
-        private System.Windows.Forms.CheckBox chkB3;
-        private System.Windows.Forms.CheckBox chkB2;
-        private System.Windows.Forms.CheckBox chkB1;
-        private System.Windows.Forms.CheckBox chkC5;
-        private System.Windows.Forms.CheckBox chkC4;
-        private System.Windows.Forms.CheckBox chkC3;
-        private System.Windows.Forms.CheckBox chkC2;
-        private System.Windows.Forms.CheckBox chkC1;
-        private System.Windows.Forms.CheckBox chkD5;
-        private System.Windows.Forms.CheckBox chkD4;
-        private System.Windows.Forms.CheckBox chkD3;
-        private System.Windows.Forms.CheckBox chkD2;
-        private System.Windows.Forms.CheckBox chkD1;
+        private System.Windows.Forms.GroupBox grpBoxTheatre;
+        private System.Windows.Forms.Label lblScreen;
         private System.Windows.Forms.CheckBox chkE5;
         private System.Windows.Forms.CheckBox chkE4;
         private System.Windows.Forms.CheckBox chkE3;
         private System.Windows.Forms.CheckBox chkE2;
         private System.Windows.Forms.CheckBox chkE1;
-        private System.Windows.Forms.Label lblScreen;
+        private System.Windows.Forms.CheckBox chkD5;
+        private System.Windows.Forms.CheckBox chkD4;
+        private System.Windows.Forms.CheckBox chkD3;
+        private System.Windows.Forms.CheckBox chkD2;
+        private System.Windows.Forms.CheckBox chkD1;
+        private System.Windows.Forms.CheckBox chkC5;
+        private System.Windows.Forms.CheckBox chkC4;
+        private System.Windows.Forms.CheckBox chkC3;
+        private System.Windows.Forms.CheckBox chkC2;
+        private System.Windows.Forms.CheckBox chkC1;
+        private System.Windows.Forms.CheckBox chkB5;
+        private System.Windows.Forms.CheckBox chkB4;
+        private System.Windows.Forms.CheckBox chkB3;
+        private System.Windows.Forms.CheckBox chkB2;
+        private System.Windows.Forms.CheckBox chkB1;
+        private System.Windows.Forms.CheckBox chkA5;
+        private System.Windows.Forms.CheckBox chkA4;
+        private System.Windows.Forms.CheckBox chkA3;
+        private System.Windows.Forms.CheckBox chkA2;
+        private System.Windows.Forms.CheckBox chkA1;
         private System.Windows.Forms.Label lblBorder;
     }
 }
