@@ -457,7 +457,8 @@ namespace MvSysClient {
                             infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
 
                         //listMovies.Items.Add(movieInfo[infos.Value.Title].toString());
-                        listMovies.Items.Add(mv.Title);
+                        if(mv.Shows.Count > 0)
+                            listMovies.Items.Add(mv.Title);
 
                     }
                     listMovies.SelectedIndex = 0;
