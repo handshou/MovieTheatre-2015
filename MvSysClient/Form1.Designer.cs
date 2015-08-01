@@ -841,6 +841,7 @@
             // lblRowA
             // 
             this.lblRowA.AutoSize = true;
+            this.lblRowA.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowA.Location = new System.Drawing.Point(31, 80);
             this.lblRowA.Name = "lblRowA";
             this.lblRowA.Size = new System.Drawing.Size(14, 13);
@@ -850,6 +851,7 @@
             // lblRowB
             // 
             this.lblRowB.AutoSize = true;
+            this.lblRowB.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowB.Location = new System.Drawing.Point(31, 100);
             this.lblRowB.Name = "lblRowB";
             this.lblRowB.Size = new System.Drawing.Size(14, 13);
@@ -859,6 +861,7 @@
             // lblRowC
             // 
             this.lblRowC.AutoSize = true;
+            this.lblRowC.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowC.Location = new System.Drawing.Point(31, 120);
             this.lblRowC.Name = "lblRowC";
             this.lblRowC.Size = new System.Drawing.Size(14, 13);
@@ -868,6 +871,7 @@
             // lblRowD
             // 
             this.lblRowD.AutoSize = true;
+            this.lblRowD.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowD.Location = new System.Drawing.Point(31, 140);
             this.lblRowD.Name = "lblRowD";
             this.lblRowD.Size = new System.Drawing.Size(15, 13);
@@ -877,6 +881,7 @@
             // lblRowE
             // 
             this.lblRowE.AutoSize = true;
+            this.lblRowE.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowE.Location = new System.Drawing.Point(31, 160);
             this.lblRowE.Name = "lblRowE";
             this.lblRowE.Size = new System.Drawing.Size(14, 13);
@@ -886,6 +891,7 @@
             // lblRowE_right
             // 
             this.lblRowE_right.AutoSize = true;
+            this.lblRowE_right.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowE_right.Location = new System.Drawing.Point(225, 160);
             this.lblRowE_right.Name = "lblRowE_right";
             this.lblRowE_right.Size = new System.Drawing.Size(14, 13);
@@ -895,6 +901,7 @@
             // lblRowD_right
             // 
             this.lblRowD_right.AutoSize = true;
+            this.lblRowD_right.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowD_right.Location = new System.Drawing.Point(225, 140);
             this.lblRowD_right.Name = "lblRowD_right";
             this.lblRowD_right.Size = new System.Drawing.Size(15, 13);
@@ -904,6 +911,7 @@
             // lblRowC_right
             // 
             this.lblRowC_right.AutoSize = true;
+            this.lblRowC_right.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowC_right.Location = new System.Drawing.Point(225, 120);
             this.lblRowC_right.Name = "lblRowC_right";
             this.lblRowC_right.Size = new System.Drawing.Size(14, 13);
@@ -913,6 +921,7 @@
             // lblRowB_right
             // 
             this.lblRowB_right.AutoSize = true;
+            this.lblRowB_right.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowB_right.Location = new System.Drawing.Point(225, 100);
             this.lblRowB_right.Name = "lblRowB_right";
             this.lblRowB_right.Size = new System.Drawing.Size(14, 13);
@@ -922,6 +931,7 @@
             // lblRowA_right
             // 
             this.lblRowA_right.AutoSize = true;
+            this.lblRowA_right.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblRowA_right.Location = new System.Drawing.Point(225, 80);
             this.lblRowA_right.Name = "lblRowA_right";
             this.lblRowA_right.Size = new System.Drawing.Size(14, 13);
@@ -931,6 +941,7 @@
             // lblColumn_01
             // 
             this.lblColumn_01.AutoSize = true;
+            this.lblColumn_01.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblColumn_01.Location = new System.Drawing.Point(63, 178);
             this.lblColumn_01.Name = "lblColumn_01";
             this.lblColumn_01.Size = new System.Drawing.Size(13, 13);
@@ -940,6 +951,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label1.Location = new System.Drawing.Point(106, 178);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 13);
@@ -949,6 +961,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label2.Location = new System.Drawing.Point(128, 178);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
@@ -958,6 +971,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label3.Location = new System.Drawing.Point(149, 178);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(13, 13);
@@ -967,6 +981,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label4.Location = new System.Drawing.Point(191, 178);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(13, 13);
@@ -976,6 +991,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label6.Location = new System.Drawing.Point(190, 63);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(13, 13);
@@ -985,6 +1001,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label7.Location = new System.Drawing.Point(148, 63);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(13, 13);
@@ -994,6 +1011,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label8.Location = new System.Drawing.Point(127, 63);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(13, 13);
@@ -1003,6 +1021,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label9.Location = new System.Drawing.Point(105, 63);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(13, 13);
@@ -1012,6 +1031,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label10.Location = new System.Drawing.Point(62, 63);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(13, 13);

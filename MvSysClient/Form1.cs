@@ -94,12 +94,6 @@ namespace MvSysClient {
 
         private void UpdateCinemaPrice(object sender, EventArgs e) {
 
-            //for (int i = 0; i < _checkBoxes.Length; i++) {
-            //    if (_checkBoxes[i].Checked && _checkBoxes[i].Enabled) {
-            //        // message += string.Format("boxes[{0}] is clicked\n", i);
-            //    }
-            //}
-
             int count = 0;
             List<Seat> seatList = new List<Seat>();
             for (int i = 0; i < _checkBoxes.Length; i++) {
@@ -115,10 +109,10 @@ namespace MvSysClient {
             
             Booking b = new Booking(userID, GetShow(), seatList);
 
+            lblBorder.BackColor = Color.Empty;
+
             lblPrice.Visible = true;
             lblPrice.Text = String.Format("Price ${0:0.00}", b.CalculateBaseCost(false));
-
-            // MessageBox.Show(message);
         }
         
         private void UpdateCinemaSeats(object sender, EventArgs e) {
@@ -278,6 +272,7 @@ namespace MvSysClient {
             lblPrice.Text = String.Format("Price ${0:0.00}", price);
 
             cobSeat.Enabled = true;
+            lblBorder.BackColor = Color.Empty;
         }
 
         private void cobSeat_SelectedIndexChanged(object sender, EventArgs e)
@@ -386,6 +381,8 @@ namespace MvSysClient {
             listMovies.Enabled = false;
             grpBoxTheatre.Visible = false;
             lblPrice.Visible = false;
+
+            lblBorder.BackColor = Color.Empty;
 
             lblBookMessage.ResetText();
         }
@@ -707,6 +704,7 @@ namespace MvSysClient {
                     lblBookMessage.ForeColor = Color.Red;
                 }
             } else {
+                lblBorder.BackColor = Color.LightGray;
                 MessageBox.Show("Please select a seat");
             }
         }
