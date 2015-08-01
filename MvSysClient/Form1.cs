@@ -111,8 +111,8 @@ namespace MvSysClient {
 
             lblBorder.BackColor = Color.Empty;
 
-            lblPrice.Visible = true;
-            lblPrice.Text = String.Format("Price ${0:0.00}", b.CalculateBaseCost(false));
+            grpBoxPrice.Visible = true;
+            lblPrice.Text = String.Format("${0:0.00}", b.CalculateBaseCost(false));
         }
         
         private void UpdateCinemaSeats(object sender, EventArgs e) {
@@ -268,8 +268,8 @@ namespace MvSysClient {
 
             double price = 0;
             price = GetShow().Price;
-            lblPrice.Visible = true;
-            lblPrice.Text = String.Format("Price ${0:0.00}", price);
+            grpBoxPrice.Visible = true;
+            lblPrice.Text = String.Format("${0:0.00}", price);
 
             cobSeat.Enabled = true;
             lblBorder.BackColor = Color.Empty;
@@ -380,7 +380,7 @@ namespace MvSysClient {
             cobTime.Enabled = false;
             listMovies.Enabled = false;
             grpBoxTheatre.Visible = false;
-            lblPrice.Visible = false;
+            grpBoxPrice.Visible = false;
 
             lblBorder.BackColor = Color.Empty;
 

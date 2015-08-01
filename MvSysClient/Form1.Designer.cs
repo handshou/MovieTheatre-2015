@@ -55,7 +55,6 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.cobDate = new System.Windows.Forms.ComboBox();
-            this.lblBookingHistory = new System.Windows.Forms.Label();
             this.grpBoxTheatre = new System.Windows.Forms.GroupBox();
             this.lblScreen = new System.Windows.Forms.Label();
             this.chkE5 = new System.Windows.Forms.CheckBox();
@@ -106,8 +105,12 @@
             this.label10 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblTheatreName = new System.Windows.Forms.Label();
+            this.grpBoxPrice = new System.Windows.Forms.GroupBox();
+            this.grpBoxBookingHistory = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).BeginInit();
             this.grpBoxTheatre.SuspendLayout();
+            this.grpBoxPrice.SuspendLayout();
+            this.grpBoxBookingHistory.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -324,7 +327,7 @@
             // 
             // btnSaveBHistory
             // 
-            this.btnSaveBHistory.Location = new System.Drawing.Point(742, 760);
+            this.btnSaveBHistory.Location = new System.Drawing.Point(7, 54);
             this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
             this.btnSaveBHistory.Size = new System.Drawing.Size(78, 21);
@@ -336,7 +339,7 @@
             // btnViewBHistory
             // 
             this.btnViewBHistory.Enabled = false;
-            this.btnViewBHistory.Location = new System.Drawing.Point(742, 735);
+            this.btnViewBHistory.Location = new System.Drawing.Point(7, 29);
             this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnViewBHistory.Name = "btnViewBHistory";
             this.btnViewBHistory.Size = new System.Drawing.Size(78, 21);
@@ -425,7 +428,7 @@
             // 
             this.lblPrice.AutoSize = true;
             this.lblPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(576, 737);
+            this.lblPrice.Location = new System.Drawing.Point(24, 39);
             this.lblPrice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(0, 26);
@@ -451,16 +454,6 @@
             this.cobDate.Size = new System.Drawing.Size(104, 21);
             this.cobDate.TabIndex = 47;
             this.cobDate.SelectedIndexChanged += new System.EventHandler(this.cobDate_SelectedIndexChanged);
-            // 
-            // lblBookingHistory
-            // 
-            this.lblBookingHistory.AutoSize = true;
-            this.lblBookingHistory.Location = new System.Drawing.Point(739, 717);
-            this.lblBookingHistory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblBookingHistory.Name = "lblBookingHistory";
-            this.lblBookingHistory.Size = new System.Drawing.Size(81, 13);
-            this.lblBookingHistory.TabIndex = 51;
-            this.lblBookingHistory.Text = "Booking History";
             // 
             // grpBoxTheatre
             // 
@@ -1059,14 +1052,37 @@
             this.lblTheatreName.Text = "Theatre Name";
             this.lblTheatreName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // grpBoxPrice
+            // 
+            this.grpBoxPrice.Controls.Add(this.lblPrice);
+            this.grpBoxPrice.Location = new System.Drawing.Point(565, 696);
+            this.grpBoxPrice.Name = "grpBoxPrice";
+            this.grpBoxPrice.Size = new System.Drawing.Size(168, 87);
+            this.grpBoxPrice.TabIndex = 81;
+            this.grpBoxPrice.TabStop = false;
+            this.grpBoxPrice.Text = "Price";
+            this.grpBoxPrice.Visible = false;
+            // 
+            // grpBoxBookingHistory
+            // 
+            this.grpBoxBookingHistory.Controls.Add(this.btnViewBHistory);
+            this.grpBoxBookingHistory.Controls.Add(this.btnSaveBHistory);
+            this.grpBoxBookingHistory.Location = new System.Drawing.Point(739, 696);
+            this.grpBoxBookingHistory.Name = "grpBoxBookingHistory";
+            this.grpBoxBookingHistory.Size = new System.Drawing.Size(94, 87);
+            this.grpBoxBookingHistory.TabIndex = 82;
+            this.grpBoxBookingHistory.TabStop = false;
+            this.grpBoxBookingHistory.Text = "Booking History";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 792);
+            this.Controls.Add(this.grpBoxBookingHistory);
+            this.Controls.Add(this.grpBoxPrice);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.grpBoxTheatre);
-            this.Controls.Add(this.lblBookingHistory);
             this.Controls.Add(this.cobDate);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.btnLogout);
@@ -1076,8 +1092,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblSeatNo);
             this.Controls.Add(this.cobSeat);
-            this.Controls.Add(this.btnViewBHistory);
-            this.Controls.Add(this.btnSaveBHistory);
             this.Controls.Add(this.lblBookMessage);
             this.Controls.Add(this.lblMvDirector);
             this.Controls.Add(this.lblMvGenre);
@@ -1096,7 +1110,6 @@
             this.Controls.Add(this.picPoster);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnBrowse);
-            this.Controls.Add(this.lblPrice);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -1106,6 +1119,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.picPoster)).EndInit();
             this.grpBoxTheatre.ResumeLayout(false);
             this.grpBoxTheatre.PerformLayout();
+            this.grpBoxPrice.ResumeLayout(false);
+            this.grpBoxPrice.PerformLayout();
+            this.grpBoxBookingHistory.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1144,7 +1160,6 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.ComboBox cobDate;
-        private System.Windows.Forms.Label lblBookingHistory;
         private System.Windows.Forms.GroupBox grpBoxTheatre;
         private System.Windows.Forms.Label lblScreen;
         private System.Windows.Forms.CheckBox chkE5;
@@ -1195,6 +1210,8 @@
         private System.Windows.Forms.Label lblColumn_01;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label lblTheatreName;
+        private System.Windows.Forms.GroupBox grpBoxPrice;
+        private System.Windows.Forms.GroupBox grpBoxBookingHistory;
     }
 }
 
