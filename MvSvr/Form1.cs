@@ -82,7 +82,6 @@ namespace MvSvr {
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
 
-            SaveMovieToFile(moviesFile);
             Application.Exit();
         }
 
@@ -161,7 +160,7 @@ namespace MvSvr {
             };
 
             movieInfo.Add(m.Title, m);
-
+            SaveMovieToFile(moviesFile);
         }
 
         public Dictionary<String, Movie> LoadMovieFile(String filePath) {
