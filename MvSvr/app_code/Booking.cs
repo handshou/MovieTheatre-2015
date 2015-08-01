@@ -23,6 +23,12 @@ namespace MvSvr {
 
         // Constructors
         public Booking() { }
+        /// <summary>
+        /// Creates a new ticket for booking - saving user's id, show and list of seats
+        /// </summary>
+        /// <param name="user">User identification</param>
+        /// <param name="show">Show object</param>
+        /// <param name="seats">List of Seats</param>
         public Booking(String user, Show show, List<Seat> seats) {
             User = user;
             Show = show;
@@ -31,8 +37,11 @@ namespace MvSvr {
         }
 
         // Methods
-        public double CalculateBaseCost() {
-            return Show.Price * Seats.Count + fee;
+        public double CalculateBaseCost(Boolean includeBookingFee) {
+            if (includeBookingFee) {
+                return Show.Price * Seats.Count + fee;
+            } else
+            return Show.Price * Seats.Count;
         }
 
         public Hall GetHall() {

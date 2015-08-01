@@ -116,7 +116,7 @@
             // 
             this.btnBook.Enabled = false;
             this.btnBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBook.Location = new System.Drawing.Point(686, 640);
+            this.btnBook.Location = new System.Drawing.Point(454, 717);
             this.btnBook.Margin = new System.Windows.Forms.Padding(2);
             this.btnBook.Name = "btnBook";
             this.btnBook.Size = new System.Drawing.Size(104, 64);
@@ -138,10 +138,10 @@
             // listTime
             // 
             this.listTime.Enabled = false;
-            this.listTime.Location = new System.Drawing.Point(581, 480);
+            this.listTime.Location = new System.Drawing.Point(358, 615);
             this.listTime.Margin = new System.Windows.Forms.Padding(2);
             this.listTime.Name = "listTime";
-            this.listTime.Size = new System.Drawing.Size(239, 30);
+            this.listTime.Size = new System.Drawing.Size(200, 30);
             this.listTime.TabIndex = 7;
             this.listTime.UseCompatibleStateImageBehavior = false;
             // 
@@ -149,7 +149,7 @@
             // 
             this.cobTime.Enabled = false;
             this.cobTime.FormattingEnabled = true;
-            this.cobTime.Location = new System.Drawing.Point(686, 560);
+            this.cobTime.Location = new System.Drawing.Point(454, 685);
             this.cobTime.Margin = new System.Windows.Forms.Padding(2);
             this.cobTime.Name = "cobTime";
             this.cobTime.Size = new System.Drawing.Size(104, 21);
@@ -159,7 +159,7 @@
             // labelTime
             // 
             this.labelTime.AutoSize = true;
-            this.labelTime.Location = new System.Drawing.Point(600, 563);
+            this.labelTime.Location = new System.Drawing.Point(354, 688);
             this.labelTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(69, 13);
@@ -290,7 +290,7 @@
             // 
             // lblBookMessage
             // 
-            this.lblBookMessage.Location = new System.Drawing.Point(163, 713);
+            this.lblBookMessage.Location = new System.Drawing.Point(580, 715);
             this.lblBookMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookMessage.Name = "lblBookMessage";
             this.lblBookMessage.Size = new System.Drawing.Size(169, 68);
@@ -300,7 +300,7 @@
             // 
             // btnSaveBHistory
             // 
-            this.btnSaveBHistory.Location = new System.Drawing.Point(593, 683);
+            this.btnSaveBHistory.Location = new System.Drawing.Point(357, 760);
             this.btnSaveBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveBHistory.Name = "btnSaveBHistory";
             this.btnSaveBHistory.Size = new System.Drawing.Size(78, 21);
@@ -312,7 +312,7 @@
             // btnViewBHistory
             // 
             this.btnViewBHistory.Enabled = false;
-            this.btnViewBHistory.Location = new System.Drawing.Point(593, 658);
+            this.btnViewBHistory.Location = new System.Drawing.Point(357, 735);
             this.btnViewBHistory.Margin = new System.Windows.Forms.Padding(2);
             this.btnViewBHistory.Name = "btnViewBHistory";
             this.btnViewBHistory.Size = new System.Drawing.Size(78, 21);
@@ -325,22 +325,24 @@
             // 
             this.cobSeat.Enabled = false;
             this.cobSeat.FormattingEnabled = true;
-            this.cobSeat.Location = new System.Drawing.Point(736, 590);
+            this.cobSeat.Location = new System.Drawing.Point(148, 6);
             this.cobSeat.Margin = new System.Windows.Forms.Padding(2);
             this.cobSeat.Name = "cobSeat";
             this.cobSeat.Size = new System.Drawing.Size(54, 21);
             this.cobSeat.TabIndex = 30;
+            this.cobSeat.Visible = false;
             this.cobSeat.SelectedIndexChanged += new System.EventHandler(this.cobSeat_SelectedIndexChanged);
             // 
             // lblSeatNo
             // 
             this.lblSeatNo.AutoSize = true;
-            this.lblSeatNo.Location = new System.Drawing.Point(602, 593);
+            this.lblSeatNo.Location = new System.Drawing.Point(14, 9);
             this.lblSeatNo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSeatNo.Name = "lblSeatNo";
             this.lblSeatNo.Size = new System.Drawing.Size(69, 13);
             this.lblSeatNo.TabIndex = 31;
             this.lblSeatNo.Text = "Seat Number";
+            this.lblSeatNo.Visible = false;
             // 
             // label5
             // 
@@ -408,7 +410,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(601, 529);
+            this.lblDate.Location = new System.Drawing.Point(354, 657);
             this.lblDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
@@ -419,7 +421,7 @@
             // 
             this.cobDate.Enabled = false;
             this.cobDate.FormattingEnabled = true;
-            this.cobDate.Location = new System.Drawing.Point(686, 526);
+            this.cobDate.Location = new System.Drawing.Point(454, 654);
             this.cobDate.Margin = new System.Windows.Forms.Padding(2);
             this.cobDate.Name = "cobDate";
             this.cobDate.Size = new System.Drawing.Size(104, 21);
@@ -429,7 +431,7 @@
             // lblBookingHistory
             // 
             this.lblBookingHistory.AutoSize = true;
-            this.lblBookingHistory.Location = new System.Drawing.Point(590, 640);
+            this.lblBookingHistory.Location = new System.Drawing.Point(354, 717);
             this.lblBookingHistory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookingHistory.Name = "lblBookingHistory";
             this.lblBookingHistory.Size = new System.Drawing.Size(81, 13);
@@ -441,7 +443,7 @@
             this.chkA1.AutoSize = true;
             this.chkA1.Checked = true;
             this.chkA1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA1.Location = new System.Drawing.Point(408, 674);
+            this.chkA1.Location = new System.Drawing.Point(627, 551);
             this.chkA1.Name = "chkA1";
             this.chkA1.Size = new System.Drawing.Size(15, 14);
             this.chkA1.TabIndex = 52;
@@ -453,7 +455,7 @@
             this.chkA2.AutoSize = true;
             this.chkA2.Checked = true;
             this.chkA2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA2.Location = new System.Drawing.Point(429, 674);
+            this.chkA2.Location = new System.Drawing.Point(670, 551);
             this.chkA2.Name = "chkA2";
             this.chkA2.Size = new System.Drawing.Size(15, 14);
             this.chkA2.TabIndex = 53;
@@ -465,7 +467,7 @@
             this.chkA3.AutoSize = true;
             this.chkA3.Checked = true;
             this.chkA3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA3.Location = new System.Drawing.Point(451, 674);
+            this.chkA3.Location = new System.Drawing.Point(692, 551);
             this.chkA3.Name = "chkA3";
             this.chkA3.Size = new System.Drawing.Size(15, 14);
             this.chkA3.TabIndex = 54;
@@ -477,7 +479,7 @@
             this.chkA4.AutoSize = true;
             this.chkA4.Checked = true;
             this.chkA4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA4.Location = new System.Drawing.Point(472, 674);
+            this.chkA4.Location = new System.Drawing.Point(713, 551);
             this.chkA4.Name = "chkA4";
             this.chkA4.Size = new System.Drawing.Size(15, 14);
             this.chkA4.TabIndex = 55;
@@ -489,7 +491,7 @@
             this.chkA5.AutoSize = true;
             this.chkA5.Checked = true;
             this.chkA5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkA5.Location = new System.Drawing.Point(493, 674);
+            this.chkA5.Location = new System.Drawing.Point(756, 551);
             this.chkA5.Name = "chkA5";
             this.chkA5.Size = new System.Drawing.Size(15, 14);
             this.chkA5.TabIndex = 56;
@@ -501,7 +503,7 @@
             this.chkB5.AutoSize = true;
             this.chkB5.Checked = true;
             this.chkB5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB5.Location = new System.Drawing.Point(493, 694);
+            this.chkB5.Location = new System.Drawing.Point(756, 571);
             this.chkB5.Name = "chkB5";
             this.chkB5.Size = new System.Drawing.Size(15, 14);
             this.chkB5.TabIndex = 61;
@@ -513,7 +515,7 @@
             this.chkB4.AutoSize = true;
             this.chkB4.Checked = true;
             this.chkB4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB4.Location = new System.Drawing.Point(472, 694);
+            this.chkB4.Location = new System.Drawing.Point(713, 571);
             this.chkB4.Name = "chkB4";
             this.chkB4.Size = new System.Drawing.Size(15, 14);
             this.chkB4.TabIndex = 60;
@@ -525,7 +527,7 @@
             this.chkB3.AutoSize = true;
             this.chkB3.Checked = true;
             this.chkB3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB3.Location = new System.Drawing.Point(451, 694);
+            this.chkB3.Location = new System.Drawing.Point(692, 571);
             this.chkB3.Name = "chkB3";
             this.chkB3.Size = new System.Drawing.Size(15, 14);
             this.chkB3.TabIndex = 59;
@@ -537,7 +539,7 @@
             this.chkB2.AutoSize = true;
             this.chkB2.Checked = true;
             this.chkB2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB2.Location = new System.Drawing.Point(429, 694);
+            this.chkB2.Location = new System.Drawing.Point(670, 571);
             this.chkB2.Name = "chkB2";
             this.chkB2.Size = new System.Drawing.Size(15, 14);
             this.chkB2.TabIndex = 58;
@@ -549,7 +551,7 @@
             this.chkB1.AutoSize = true;
             this.chkB1.Checked = true;
             this.chkB1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkB1.Location = new System.Drawing.Point(408, 694);
+            this.chkB1.Location = new System.Drawing.Point(627, 571);
             this.chkB1.Name = "chkB1";
             this.chkB1.Size = new System.Drawing.Size(15, 14);
             this.chkB1.TabIndex = 57;
@@ -561,7 +563,7 @@
             this.chkC5.AutoSize = true;
             this.chkC5.Checked = true;
             this.chkC5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC5.Location = new System.Drawing.Point(493, 714);
+            this.chkC5.Location = new System.Drawing.Point(756, 591);
             this.chkC5.Name = "chkC5";
             this.chkC5.Size = new System.Drawing.Size(15, 14);
             this.chkC5.TabIndex = 66;
@@ -573,7 +575,7 @@
             this.chkC4.AutoSize = true;
             this.chkC4.Checked = true;
             this.chkC4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC4.Location = new System.Drawing.Point(472, 714);
+            this.chkC4.Location = new System.Drawing.Point(713, 591);
             this.chkC4.Name = "chkC4";
             this.chkC4.Size = new System.Drawing.Size(15, 14);
             this.chkC4.TabIndex = 65;
@@ -585,7 +587,7 @@
             this.chkC3.AutoSize = true;
             this.chkC3.Checked = true;
             this.chkC3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC3.Location = new System.Drawing.Point(451, 714);
+            this.chkC3.Location = new System.Drawing.Point(692, 591);
             this.chkC3.Name = "chkC3";
             this.chkC3.Size = new System.Drawing.Size(15, 14);
             this.chkC3.TabIndex = 64;
@@ -597,7 +599,7 @@
             this.chkC2.AutoSize = true;
             this.chkC2.Checked = true;
             this.chkC2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC2.Location = new System.Drawing.Point(429, 714);
+            this.chkC2.Location = new System.Drawing.Point(670, 591);
             this.chkC2.Name = "chkC2";
             this.chkC2.Size = new System.Drawing.Size(15, 14);
             this.chkC2.TabIndex = 63;
@@ -609,7 +611,7 @@
             this.chkC1.AutoSize = true;
             this.chkC1.Checked = true;
             this.chkC1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkC1.Location = new System.Drawing.Point(408, 714);
+            this.chkC1.Location = new System.Drawing.Point(627, 591);
             this.chkC1.Name = "chkC1";
             this.chkC1.Size = new System.Drawing.Size(15, 14);
             this.chkC1.TabIndex = 62;
@@ -621,7 +623,7 @@
             this.chkD5.AutoSize = true;
             this.chkD5.Checked = true;
             this.chkD5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD5.Location = new System.Drawing.Point(493, 734);
+            this.chkD5.Location = new System.Drawing.Point(756, 611);
             this.chkD5.Name = "chkD5";
             this.chkD5.Size = new System.Drawing.Size(15, 14);
             this.chkD5.TabIndex = 71;
@@ -633,7 +635,7 @@
             this.chkD4.AutoSize = true;
             this.chkD4.Checked = true;
             this.chkD4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD4.Location = new System.Drawing.Point(472, 734);
+            this.chkD4.Location = new System.Drawing.Point(713, 611);
             this.chkD4.Name = "chkD4";
             this.chkD4.Size = new System.Drawing.Size(15, 14);
             this.chkD4.TabIndex = 70;
@@ -645,7 +647,7 @@
             this.chkD3.AutoSize = true;
             this.chkD3.Checked = true;
             this.chkD3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD3.Location = new System.Drawing.Point(451, 734);
+            this.chkD3.Location = new System.Drawing.Point(692, 611);
             this.chkD3.Name = "chkD3";
             this.chkD3.Size = new System.Drawing.Size(15, 14);
             this.chkD3.TabIndex = 69;
@@ -657,7 +659,7 @@
             this.chkD2.AutoSize = true;
             this.chkD2.Checked = true;
             this.chkD2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD2.Location = new System.Drawing.Point(429, 734);
+            this.chkD2.Location = new System.Drawing.Point(670, 611);
             this.chkD2.Name = "chkD2";
             this.chkD2.Size = new System.Drawing.Size(15, 14);
             this.chkD2.TabIndex = 68;
@@ -669,7 +671,7 @@
             this.chkD1.AutoSize = true;
             this.chkD1.Checked = true;
             this.chkD1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkD1.Location = new System.Drawing.Point(408, 734);
+            this.chkD1.Location = new System.Drawing.Point(627, 611);
             this.chkD1.Name = "chkD1";
             this.chkD1.Size = new System.Drawing.Size(15, 14);
             this.chkD1.TabIndex = 67;
@@ -681,7 +683,7 @@
             this.chkE5.AutoSize = true;
             this.chkE5.Checked = true;
             this.chkE5.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE5.Location = new System.Drawing.Point(493, 754);
+            this.chkE5.Location = new System.Drawing.Point(756, 631);
             this.chkE5.Name = "chkE5";
             this.chkE5.Size = new System.Drawing.Size(15, 14);
             this.chkE5.TabIndex = 76;
@@ -693,7 +695,7 @@
             this.chkE4.AutoSize = true;
             this.chkE4.Checked = true;
             this.chkE4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE4.Location = new System.Drawing.Point(472, 754);
+            this.chkE4.Location = new System.Drawing.Point(713, 631);
             this.chkE4.Name = "chkE4";
             this.chkE4.Size = new System.Drawing.Size(15, 14);
             this.chkE4.TabIndex = 75;
@@ -705,7 +707,7 @@
             this.chkE3.AutoSize = true;
             this.chkE3.Checked = true;
             this.chkE3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE3.Location = new System.Drawing.Point(451, 754);
+            this.chkE3.Location = new System.Drawing.Point(692, 631);
             this.chkE3.Name = "chkE3";
             this.chkE3.Size = new System.Drawing.Size(15, 14);
             this.chkE3.TabIndex = 74;
@@ -717,7 +719,7 @@
             this.chkE2.AutoSize = true;
             this.chkE2.Checked = true;
             this.chkE2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE2.Location = new System.Drawing.Point(429, 754);
+            this.chkE2.Location = new System.Drawing.Point(670, 631);
             this.chkE2.Name = "chkE2";
             this.chkE2.Size = new System.Drawing.Size(15, 14);
             this.chkE2.TabIndex = 73;
@@ -729,7 +731,7 @@
             this.chkE1.AutoSize = true;
             this.chkE1.Checked = true;
             this.chkE1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkE1.Location = new System.Drawing.Point(408, 754);
+            this.chkE1.Location = new System.Drawing.Point(627, 631);
             this.chkE1.Name = "chkE1";
             this.chkE1.Size = new System.Drawing.Size(15, 14);
             this.chkE1.TabIndex = 72;
@@ -739,7 +741,7 @@
             // lblScreen
             // 
             this.lblScreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblScreen.Location = new System.Drawing.Point(408, 613);
+            this.lblScreen.Location = new System.Drawing.Point(649, 490);
             this.lblScreen.Name = "lblScreen";
             this.lblScreen.Size = new System.Drawing.Size(100, 38);
             this.lblScreen.TabIndex = 77;
@@ -749,9 +751,9 @@
             // lblBorder
             // 
             this.lblBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblBorder.Location = new System.Drawing.Point(358, 609);
+            this.lblBorder.Location = new System.Drawing.Point(581, 480);
             this.lblBorder.Name = "lblBorder";
-            this.lblBorder.Size = new System.Drawing.Size(200, 172);
+            this.lblBorder.Size = new System.Drawing.Size(239, 194);
             this.lblBorder.TabIndex = 78;
             // 
             // Form1

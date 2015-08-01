@@ -66,8 +66,8 @@ namespace MvSvr {
                     Socket client = server.Accept();
                     //clients.Add(client);
                     ConnectionHandler handler = 
-                        new ConnectionHandler(client, this, movieInfo, 
-                            bookingInfo, clients, clientsNumber);
+                        new ConnectionHandler(client, this, ref movieInfo, 
+                            ref bookingInfo, ref clients, ref clientsNumber);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
 
                 } catch(Exception ex) {

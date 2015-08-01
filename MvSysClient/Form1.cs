@@ -40,6 +40,10 @@ namespace MvSysClient {
         public StreamWriter writer;
 
         private CheckBox[] _checkBoxes;
+        private String lastClicked = "";
+        private String lastSearchedKey = "";
+        private String lastSearchedType = "";
+        private int lastListIndex = 0;
 
         private int size = 0;
         private string infoFile = @"infomo.dat";
@@ -76,13 +80,44 @@ namespace MvSysClient {
                                             chkE1, chkE2, chkE3, chkE4, chkE5 };
 
             btnBrowse.Click += new EventHandler(UpdateCinemaSeats);
-            btnSearch.Click += new EventHandler(UpdateCinemaSeats);
+            // btnSearch.Click += new EventHandler(UpdateCinemaSeats); // causes error when no movies found on search()
 
             listMovies.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
 
             cobDate.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
             cobTime.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
-            cobSeat.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats);
+            cobSeat.SelectedIndexChanged += new EventHandler(UpdateCinemaSeats); // control no longer in use, code left for keepsake/revert
+
+            foreach (var checkBox in _checkBoxes)
+                checkBox.CheckedChanged += new EventHandler(UpdateCinemaPrice);
+        }
+
+        private void UpdateCinemaPrice(object sender, EventArgs e) {
+
+            //for (int i = 0; i < _checkBoxes.Length; i++) {
+            //    if (_checkBoxes[i].Checked && _checkBoxes[i].Enabled) {
+            //        // message += string.Format("boxes[{0}] is clicked\n", i);
+            //    }
+            //}
+
+            int count = 0;
+            List<Seat> seatList = new List<Seat>();
+            for (int i = 0; i < _checkBoxes.Length; i++) {
+                if(_checkBoxes[i].CheckState == CheckState.Checked) {
+                    seatList.Add(GetShow().Hall.Seats[i]);
+                    count++;
+                }
+            }
+
+            // Always show the price of one ticket
+            if(count == 0)
+                count = 1;
+            
+            Booking b = new Booking(userID, GetShow(), seatList);
+
+            lblPrice.Text = String.Format("Price ${0:0.00}", b.CalculateBaseCost(false));
+
+            // MessageBox.Show(message);
         }
         
         private void UpdateCinemaSeats(object sender, EventArgs e) {
@@ -105,6 +140,7 @@ namespace MvSysClient {
                     _checkBoxes[i].Enabled = true;
                 }
             }
+
             // MessageBox.Show(message);
         }
 
@@ -147,10 +183,10 @@ namespace MvSysClient {
         private void btnLogout_Click(object sender, EventArgs e) { Logout(); }
         //logs the user out and severs the connection with the server.
 
-        private void btnBrowse_Click(object sender, EventArgs e) { Browse(); }
+        private void btnBrowse_Click(object sender, EventArgs e) { Browse(); lastClicked = "browse"; }
         //request for movies from server
 
-        private void btnSearch_Click(object sender, EventArgs e) { Search(); }
+        private void btnSearch_Click(object sender, EventArgs e) { Search(); lastClicked = "search"; }
         //requests for specific movies from the server
 
         private void btnBook_Click(object sender, EventArgs e) { Book(); }
@@ -528,6 +564,7 @@ namespace MvSysClient {
                         }
 
                         rTxtMessages.AppendText("\nResults established.");
+                        listMovies.SelectedIndex = 0;
 
                     }
                     catch (Exception ex)
@@ -546,7 +583,6 @@ namespace MvSysClient {
                     {
                         rTxtMessages.AppendText("\nSomething bad has happened. Please restart the application.");
                     }
-
             }
 
             else //triggers when textbox for search query is either null or has whitespaces
@@ -555,6 +591,13 @@ namespace MvSysClient {
                 rTxtMessages.AppendText("\nSearch bar is empty: please input a key word.");
 
             }
+
+            // attributes to save client's footprint
+            lastSearchedType = searchType;
+            lastSearchedKey = searchKey;
+            lastClicked = "search";
+            lastListIndex = listMovies.SelectedIndex;
+
         }
 
         public void Book()
@@ -580,7 +623,7 @@ namespace MvSysClient {
                 //}
                 if (_checkBoxes[i].CheckState == CheckState.Checked) {
                     showDict.Add(s.Hall.Seats[i], s);
-                    rTxtMessages.Text += s.Hall.Seats[i].Name + "\n"; // (!) debug
+                    // rTxtMessages.Text += s.Hall.Seats[i].Name + "\n"; // (!) debug
                 }
             }
 
@@ -633,6 +676,25 @@ namespace MvSysClient {
                     lblBookMessage.Text = "Your booking for " + s.Movie.Title + " has been successful";
                     lblBookMessage.Font = new Font(lblBookMessage.Font, FontStyle.Bold);
                     lblBookMessage.ForeColor = Color.Black;
+
+                    for (int i = 0; i < seatList.Count; i++) {
+                        //if (!seatList[i].Vacant) {
+                        //    _checkBoxes[i].CheckState = CheckState.Indeterminate;
+                        //    _checkBoxes[i].Enabled = false;
+                        //}
+                        //if (seatList[i].Vacant) {
+                        //    _checkBoxes[i].CheckState = CheckState.Unchecked;
+                        //    _checkBoxes[i].Enabled = true;
+                        //}
+                        if (_checkBoxes[i].CheckState == CheckState.Checked) {
+                            if (_checkBoxes[i].CheckState == CheckState.Checked) {
+                                _checkBoxes[i].CheckState = CheckState.Indeterminate;
+                                _checkBoxes[i].Enabled = false;
+                                GetShow().Hall.Seats[i].Vacant = false;
+                            }
+                        }
+                    }
+
                 } else {
                     lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
                     lblBookMessage.ForeColor = Color.Red;
