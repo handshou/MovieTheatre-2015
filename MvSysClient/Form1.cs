@@ -341,7 +341,7 @@ namespace MvSysClient {
                 }
                 catch (SocketException ex)
                 {
-                    rTxtMessages.AppendText("\nUnable to connect to the movie server." + ex);
+                    rTxtMessages.AppendText("\nUnable to connect to the movie server.");
                     rTxtMessages.AppendText("\nPlease check if the server is running.");
                     return;
                 }
@@ -355,7 +355,7 @@ namespace MvSysClient {
                     runClient();
 
                 } else {
-
+                    rTxtMessages.Clear();
                     rTxtMessages.AppendText("\nUser ID already logged in. Please choose another user ID.");
                 }
             }

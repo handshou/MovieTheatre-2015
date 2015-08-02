@@ -69,10 +69,10 @@ namespace MvSvr {
 
         // Constructor
         public ConnectionHandler(Socket client, Form1 form, 
-            ref Dictionary<String, Movie> movieInfo, 
-            ref Dictionary<String, List<Booking>> bookingInfo, 
-            ref Dictionary<String, Socket> clients,
-            ref Dictionary<String, String> clientsNumber) {
+            Dictionary<String, Movie> movieInfo, 
+            Dictionary<String, List<Booking>> bookingInfo, 
+            Dictionary<String, Socket> clients,
+            Dictionary<String, String> clientsNumber) {
 
             this.client = client;
             this.form = form;
@@ -95,6 +95,7 @@ namespace MvSvr {
                 // Receive user
                 data = new byte[1024];
                 user = ReceiveCommand().ToLower();
+                user = user.Substring(0, 1).ToUpper() + user.Substring(1, user.Length - 1);
                 if (!clients.ContainsKey(user)) {
                     clientID = String.Format("C{0:D2} : {1}", count, user);
                     clients.Add(user, client);
@@ -107,7 +108,7 @@ namespace MvSvr {
 
                     while (true) {
                         lock (_object) {
-                            //movieInfo = LoadMovieFile(moviesFile);
+                            movieInfo = LoadMovieFile(moviesFile);
 
                             /* R */
                             // Receive command
@@ -157,8 +158,8 @@ namespace MvSvr {
         public void Browse() {
 
             //lock (_object) {
-                SaveToFile(browseFile, movieInfo);
-                SendFile(browseFile);
+                //SaveToFile(browseFile, movieInfo);
+                SendFile(moviesFile);
             //}
         }
 
