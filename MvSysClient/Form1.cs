@@ -591,7 +591,7 @@ namespace MvSysClient {
                             }
                         }
 
-                        rTxtMessages.AppendText("\nSearching " + searchType + " : " + searchKey);
+                        rTxtMessages.AppendText("\nRequesting from Server \"" + searchType + " : " + searchKey + "\"");
                         listMovies.SelectedIndex = 0;
 
                     }

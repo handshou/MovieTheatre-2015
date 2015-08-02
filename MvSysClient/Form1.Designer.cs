@@ -221,6 +221,7 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(200, 31);
             this.txtSearch.TabIndex = 6;
+            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // cobSearch
             // 
@@ -235,19 +236,18 @@
             this.cobSearch.Name = "cobSearch";
             this.cobSearch.Size = new System.Drawing.Size(200, 21);
             this.cobSearch.TabIndex = 5;
-            this.cobSearch.Text = "-- Select search type --";
+            this.cobSearch.Text = "Select Search Type";
             this.cobSearch.SelectedIndexChanged += new System.EventHandler(this.cobSearch_SelectedIndexChanged);
             // 
             // listMovies
             // 
             this.listMovies.DisplayMember = "string";
-            this.listMovies.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listMovies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.listMovies.FormattingEnabled = true;
-            this.listMovies.ItemHeight = 21;
             this.listMovies.Location = new System.Drawing.Point(516, 232);
             this.listMovies.Margin = new System.Windows.Forms.Padding(2);
             this.listMovies.Name = "listMovies";
-            this.listMovies.Size = new System.Drawing.Size(199, 235);
+            this.listMovies.Size = new System.Drawing.Size(199, 225);
             this.listMovies.TabIndex = 4;
             this.listMovies.SelectedIndexChanged += new System.EventHandler(this.listMovies_SelectedIndexChanged);
             // 
@@ -412,7 +412,7 @@
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(66, 29);
             this.btnLogin.TabIndex = 2;
-            this.btnLogin.Text = "Log In";
+            this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
@@ -424,7 +424,7 @@
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(66, 29);
             this.btnLogout.TabIndex = 3;
-            this.btnLogout.Text = "Log Out";
+            this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = true;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
