@@ -95,25 +95,27 @@ namespace MvSysClient {
 
         private void UpdateCinemaPrice(object sender, EventArgs e) {
 
-            int count = 0;
-            List<Seat> seatList = new List<Seat>();
-            for (int i = 0; i < checkBoxes.Length; i++) {
-                if(checkBoxes[i].CheckState == CheckState.Checked) {
-                    seatList.Add(GetShow().Hall.Seats[i]);
-                    count++;
+            if (listMovies.GetItemText(listMovies.SelectedItem).Length > 0) {
+                int count = 0;
+                List<Seat> seatList = new List<Seat>();
+                for (int i = 0; i < checkBoxes.Length; i++) {
+                    if (checkBoxes[i].CheckState == CheckState.Checked) {
+                        seatList.Add(GetShow().Hall.Seats[i]);
+                        count++;
+                    }
                 }
+
+                // Always show the price of one ticket
+                if (count == 0)
+                    count = 1;
+
+                Booking b = new Booking(userID, GetShow(), seatList);
+
+                lblBorder.BackColor = Color.Empty;
+
+                grpBoxPrice.Visible = true;
+                lblPrice.Text = String.Format("${0:0.00}", b.CalculateBaseCost(false));
             }
-
-            // Always show the price of one ticket
-            if(count == 0)
-                count = 1;
-            
-            Booking b = new Booking(userID, GetShow(), seatList);
-
-            lblBorder.BackColor = Color.Empty;
-
-            grpBoxPrice.Visible = true;
-            lblPrice.Text = String.Format("${0:0.00}", b.CalculateBaseCost(false));
         }
         
         private void UpdateCinemaSeats(object sender, EventArgs e) {
@@ -161,7 +163,18 @@ namespace MvSysClient {
             listMovies.Enabled = true;
             lblBookMessage.ResetText();
 
-            grpBoxTheatre.Visible = true;
+            grpBoxTheatre.Enabled = true;
+            grpBoxDescription.Enabled = true;
+            grpBoxPrice.Enabled = true;
+            grpBoxBookingHistory.Enabled = true;
+
+            listTime.Enabled = true;
+            lblDate.Enabled = true;
+            lblTime.Enabled = true;
+            cobDate.Enabled = true;
+            cobTime.Enabled = true;
+
+            lblMvDescription.Visible = true;
 
             rTxtMessages.Clear();
             rTxtMessages.AppendText("Welcome to the Movie Booking System\n");
@@ -379,10 +392,17 @@ namespace MvSysClient {
             cobSeat.Enabled = false;
             cobDate.Enabled = false;
             cobTime.Enabled = false;
+            lblDate.Enabled = false;
+            lblTime.Enabled = false;
             listMovies.Enabled = false;
-            grpBoxTheatre.Visible = false;
-            grpBoxPrice.Visible = false;
+            listTime.Enabled = false;
 
+            grpBoxTheatre.Enabled = false;
+            grpBoxDescription.Enabled = false;
+            grpBoxPrice.Enabled = false;
+            grpBoxBookingHistory.Enabled = false;
+
+            lblMvDescription.Visible = false;
             lblBorder.BackColor = Color.Empty;
 
             lblBookMessage.ResetText();
@@ -643,9 +663,11 @@ namespace MvSysClient {
 
                 FileInfo f = new FileInfo(filePath);
                 filesize = f.Length;
-                data = new byte[filesize];
+                // data = new byte[filesize];
                 // Sending booking information
                 socket.Send(Encoding.ASCII.GetBytes(filesize.ToString()));
+
+                Thread.Sleep(10);
 
                 // Sending file
                 byte[] buffer = null;
@@ -1009,7 +1031,7 @@ namespace MvSysClient {
                              imgPhoto.VerticalResolution);
 
             Graphics grPhoto = Graphics.FromImage(bmPhoto);
-            grPhoto.Clear(Color.Black);
+            grPhoto.Clear(Color.FromArgb(240,240,240));
             grPhoto.InterpolationMode =
                     InterpolationMode.HighQualityBicubic;
 

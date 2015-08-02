@@ -125,7 +125,7 @@ namespace MvSvr {
                                     break;
                                 case FINISH: Quit();
                                     break;
-                                default: form.DisplayMsg("[" + user + "] :: Unknown command");
+                                default: form.DisplayMsg("[" + user + "] :: Unknown command (" + cmd.Substring(0,9) + ")");
                                     break;
                             }
                             if (cmd == FINISH)
@@ -463,7 +463,8 @@ namespace MvSvr {
             } catch (Exception ex) {
                 form.DisplayMsg("Error receiving file (filesize)\n" + ex.ToString());
             }
-            filesize = Convert.ToInt64(Encoding.ASCII.GetString(data));
+            String filesize_str = Encoding.ASCII.GetString(data);
+            filesize = Convert.ToInt64(filesize_str);
 
             /* R */ // Receive file
             data = new byte[filesize];
