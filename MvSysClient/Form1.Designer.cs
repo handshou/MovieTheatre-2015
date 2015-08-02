@@ -119,7 +119,7 @@
             // 
             this.btnBrowse.Enabled = false;
             this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.btnBrowse.Location = new System.Drawing.Point(518, 576);
+            this.btnBrowse.Location = new System.Drawing.Point(518, 644);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(200, 64);
@@ -132,7 +132,7 @@
             // 
             this.btnSearch.Enabled = false;
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.btnSearch.Location = new System.Drawing.Point(518, 644);
+            this.btnSearch.Location = new System.Drawing.Point(518, 576);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(200, 64);
@@ -169,10 +169,12 @@
             this.listTime.Enabled = false;
             this.listTime.Location = new System.Drawing.Point(17, 688);
             this.listTime.Margin = new System.Windows.Forms.Padding(2);
+            this.listTime.MultiSelect = false;
             this.listTime.Name = "listTime";
             this.listTime.Size = new System.Drawing.Size(200, 30);
             this.listTime.TabIndex = 7;
             this.listTime.UseCompatibleStateImageBehavior = false;
+            this.listTime.SelectedIndexChanged += new System.EventHandler(this.listTime_SelectedIndexChanged);
             // 
             // cobTime
             // 
@@ -207,7 +209,7 @@
             this.rTxtMessages.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.rTxtMessages.Size = new System.Drawing.Size(490, 213);
             this.rTxtMessages.TabIndex = 13;
-            this.rTxtMessages.Text = "Welcome! Please login to continue..";
+            this.rTxtMessages.Text = "Welcome! Please login using four-character user id.";
             // 
             // txtSearch
             // 
@@ -396,7 +398,7 @@
             // 
             // lblMvDescription
             // 
-            this.lblMvDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMvDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.lblMvDescription.Location = new System.Drawing.Point(11, 19);
             this.lblMvDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMvDescription.Name = "lblMvDescription";

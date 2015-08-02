@@ -122,10 +122,11 @@ namespace MvSvr {
             movieInfo.Add(m.Title, m);
 
             m = new Movie();
-            m.Title = "Batman Of The Future";
+            m.Title = "Batman Beyond";
             m.Genre = "Animated";
-            m.Description = "Batman is back, again!";
-            m.Director = "Steven Lim";
+            m.Description = "Batman Beyond (known as Batman of the Future in Europe, Latin America, Australia and India) is an American animated television series created by Warner Bros. "
+            + "Animation in collaboration with DC Comics as a continuation of the Batman legacy.";
+            m.Director = "Bruce Timm";
             m.Poster = GetImage("poster\\batman_of_the_future.jpg");
             m.Shows = new List<Show> { 
                 new Show(m, "3 July 2015", new Hall("Theatre 1"), "0900", "1100", 8.00),

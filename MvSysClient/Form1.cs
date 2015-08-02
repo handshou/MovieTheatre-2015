@@ -177,8 +177,8 @@ namespace MvSysClient {
             lblMvDescription.Visible = true;
 
             rTxtMessages.Clear();
-            rTxtMessages.AppendText("Welcome to the Movie Booking System\n");
-            rTxtMessages.AppendText("\nYou may find your desired movies by browsing or searching\n");
+            rTxtMessages.AppendText("Hi " + userID + ",\n");
+            rTxtMessages.AppendText("You may browse or search for movies from our database!\n");
 
         }
 
@@ -589,7 +589,7 @@ namespace MvSysClient {
                             }
                         }
 
-                        rTxtMessages.AppendText("\nResults established.");
+                        rTxtMessages.AppendText("\nSearching " + searchType + " : " + searchKey);
                         listMovies.SelectedIndex = 0;
 
                     }
@@ -602,7 +602,7 @@ namespace MvSysClient {
                 else
                     if (answer == SEMPTY)
                     {
-                        rTxtMessages.AppendText("\nNo results attained. If this is not expected, please change the search terms.");
+                        rTxtMessages.AppendText("\nNo movies found.\nPlease ensure that your search type is correct.");
                     }
 
                     else
@@ -618,7 +618,7 @@ namespace MvSysClient {
 
             }
 
-            // attributes to save client's footprint
+            // attributes to save client's footprint, for future plans and not in use at the moment
             lastSearchedType = searchType;
             lastSearchedKey = searchKey;
             lastClicked = "search";
@@ -1062,6 +1062,14 @@ namespace MvSysClient {
             string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             for (int i = 0; i < lines.Length; i++) {
                 rTxtMessages.AppendText(lines[i] + "\r\n");
+            }
+        }
+
+        private void listTime_SelectedIndexChanged(object sender, EventArgs e) {
+            for (int i = 0; i < listTime.Items.Count; i++) {
+                if (listTime.Items[i].Selected) {
+                    cobTime.SelectedIndex = i;
+                }
             }
         }
     }
