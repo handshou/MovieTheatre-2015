@@ -59,6 +59,8 @@ namespace MvSvr {
         public void ConnectClient() {
 
             DisplayMsg("[Server] Initialised!");
+            DisplayMsgMovies("[Server] Initialised!");
+            DisplayMsgShows("[Server] Initialised!");
             server.Bind(endpoint);
             server.Listen(10);
             while(true) {

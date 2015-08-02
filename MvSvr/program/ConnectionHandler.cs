@@ -108,7 +108,7 @@ namespace MvSvr {
 
                     while (true) {
                         lock (_object) {
-                            movieInfo = LoadMovieFile(moviesFile);
+                            //movieInfo = LoadMovieFile(moviesFile);
 
                             /* R */
                             // Receive command

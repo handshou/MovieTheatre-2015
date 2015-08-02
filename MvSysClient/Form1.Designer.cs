@@ -119,10 +119,10 @@
             // 
             this.btnBrowse.Enabled = false;
             this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.btnBrowse.Location = new System.Drawing.Point(518, 644);
+            this.btnBrowse.Location = new System.Drawing.Point(515, 590);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(200, 64);
+            this.btnBrowse.Size = new System.Drawing.Size(200, 46);
             this.btnBrowse.TabIndex = 7;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -132,10 +132,10 @@
             // 
             this.btnSearch.Enabled = false;
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.btnSearch.Location = new System.Drawing.Point(518, 576);
+            this.btnSearch.Location = new System.Drawing.Point(515, 540);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(2);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(200, 64);
+            this.btnSearch.Size = new System.Drawing.Size(200, 46);
             this.btnSearch.TabIndex = 8;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -145,10 +145,10 @@
             // 
             this.btnBook.Enabled = false;
             this.btnBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBook.Location = new System.Drawing.Point(518, 712);
+            this.btnBook.Location = new System.Drawing.Point(515, 640);
             this.btnBook.Margin = new System.Windows.Forms.Padding(2);
             this.btnBook.Name = "btnBook";
-            this.btnBook.Size = new System.Drawing.Size(200, 64);
+            this.btnBook.Size = new System.Drawing.Size(200, 46);
             this.btnBook.TabIndex = 9;
             this.btnBook.Text = "Book";
             this.btnBook.UseVisualStyleBackColor = true;
@@ -157,7 +157,7 @@
             // picPoster
             // 
             this.picPoster.Image = ((System.Drawing.Image)(resources.GetObject("picPoster.Image")));
-            this.picPoster.Location = new System.Drawing.Point(17, 322);
+            this.picPoster.Location = new System.Drawing.Point(14, 232);
             this.picPoster.Margin = new System.Windows.Forms.Padding(2);
             this.picPoster.Name = "picPoster";
             this.picPoster.Size = new System.Drawing.Size(200, 200);
@@ -167,7 +167,7 @@
             // listTime
             // 
             this.listTime.Enabled = false;
-            this.listTime.Location = new System.Drawing.Point(17, 688);
+            this.listTime.Location = new System.Drawing.Point(14, 598);
             this.listTime.Margin = new System.Windows.Forms.Padding(2);
             this.listTime.MultiSelect = false;
             this.listTime.Name = "listTime";
@@ -180,7 +180,7 @@
             // 
             this.cobTime.Enabled = false;
             this.cobTime.FormattingEnabled = true;
-            this.cobTime.Location = new System.Drawing.Point(113, 758);
+            this.cobTime.Location = new System.Drawing.Point(110, 668);
             this.cobTime.Margin = new System.Windows.Forms.Padding(2);
             this.cobTime.Name = "cobTime";
             this.cobTime.Size = new System.Drawing.Size(104, 21);
@@ -191,7 +191,7 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Enabled = false;
-            this.lblTime.Location = new System.Drawing.Point(13, 761);
+            this.lblTime.Location = new System.Drawing.Point(10, 671);
             this.lblTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(69, 13);
@@ -202,7 +202,7 @@
             // 
             this.rTxtMessages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rTxtMessages.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rTxtMessages.Location = new System.Drawing.Point(17, 101);
+            this.rTxtMessages.Location = new System.Drawing.Point(14, 11);
             this.rTxtMessages.Margin = new System.Windows.Forms.Padding(2);
             this.rTxtMessages.Name = "rTxtMessages";
             this.rTxtMessages.ReadOnly = true;
@@ -215,7 +215,7 @@
             // 
             this.txtSearch.Enabled = false;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(518, 541);
+            this.txtSearch.Location = new System.Drawing.Point(515, 503);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(2);
             this.txtSearch.Multiline = true;
             this.txtSearch.Name = "txtSearch";
@@ -230,7 +230,7 @@
             "Name",
             "Genre",
             "Director"});
-            this.cobSearch.Location = new System.Drawing.Point(518, 513);
+            this.cobSearch.Location = new System.Drawing.Point(515, 475);
             this.cobSearch.Margin = new System.Windows.Forms.Padding(2);
             this.cobSearch.Name = "cobSearch";
             this.cobSearch.Size = new System.Drawing.Size(200, 21);
@@ -244,17 +244,17 @@
             this.listMovies.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listMovies.FormattingEnabled = true;
             this.listMovies.ItemHeight = 21;
-            this.listMovies.Location = new System.Drawing.Point(519, 101);
+            this.listMovies.Location = new System.Drawing.Point(516, 232);
             this.listMovies.Margin = new System.Windows.Forms.Padding(2);
             this.listMovies.Name = "listMovies";
-            this.listMovies.Size = new System.Drawing.Size(199, 403);
+            this.listMovies.Size = new System.Drawing.Size(199, 235);
             this.listMovies.TabIndex = 4;
             this.listMovies.SelectedIndexChanged += new System.EventHandler(this.listMovies_SelectedIndexChanged);
             // 
             // lblShowName
             // 
             this.lblShowName.AutoSize = true;
-            this.lblShowName.Location = new System.Drawing.Point(17, 539);
+            this.lblShowName.Location = new System.Drawing.Point(14, 449);
             this.lblShowName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowName.Name = "lblShowName";
             this.lblShowName.Size = new System.Drawing.Size(67, 13);
@@ -265,7 +265,7 @@
             // lblShowGenre
             // 
             this.lblShowGenre.AutoSize = true;
-            this.lblShowGenre.Location = new System.Drawing.Point(17, 586);
+            this.lblShowGenre.Location = new System.Drawing.Point(14, 496);
             this.lblShowGenre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowGenre.Name = "lblShowGenre";
             this.lblShowGenre.Size = new System.Drawing.Size(36, 13);
@@ -276,7 +276,7 @@
             // lblShowDirector
             // 
             this.lblShowDirector.AutoSize = true;
-            this.lblShowDirector.Location = new System.Drawing.Point(17, 632);
+            this.lblShowDirector.Location = new System.Drawing.Point(14, 542);
             this.lblShowDirector.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblShowDirector.Name = "lblShowDirector";
             this.lblShowDirector.Size = new System.Drawing.Size(44, 13);
@@ -288,7 +288,7 @@
             // 
             this.lblMvName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblMvName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMvName.Location = new System.Drawing.Point(17, 555);
+            this.lblMvName.Location = new System.Drawing.Point(14, 465);
             this.lblMvName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMvName.Name = "lblMvName";
             this.lblMvName.Size = new System.Drawing.Size(200, 25);
@@ -300,7 +300,7 @@
             // 
             this.lblMvGenre.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblMvGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMvGenre.Location = new System.Drawing.Point(17, 601);
+            this.lblMvGenre.Location = new System.Drawing.Point(14, 511);
             this.lblMvGenre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMvGenre.Name = "lblMvGenre";
             this.lblMvGenre.Size = new System.Drawing.Size(200, 25);
@@ -312,7 +312,7 @@
             // 
             this.lblMvDirector.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblMvDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMvDirector.Location = new System.Drawing.Point(17, 648);
+            this.lblMvDirector.Location = new System.Drawing.Point(14, 558);
             this.lblMvDirector.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMvDirector.Name = "lblMvDirector";
             this.lblMvDirector.Size = new System.Drawing.Size(200, 25);
@@ -322,7 +322,7 @@
             // 
             // lblBookMessage
             // 
-            this.lblBookMessage.Location = new System.Drawing.Point(14, 2);
+            this.lblBookMessage.Location = new System.Drawing.Point(25, 146);
             this.lblBookMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBookMessage.Name = "lblBookMessage";
             this.lblBookMessage.Size = new System.Drawing.Size(169, 68);
@@ -357,7 +357,7 @@
             // 
             this.cobSeat.Enabled = false;
             this.cobSeat.FormattingEnabled = true;
-            this.cobSeat.Location = new System.Drawing.Point(148, 6);
+            this.cobSeat.Location = new System.Drawing.Point(159, 150);
             this.cobSeat.Margin = new System.Windows.Forms.Padding(2);
             this.cobSeat.Name = "cobSeat";
             this.cobSeat.Size = new System.Drawing.Size(54, 21);
@@ -368,7 +368,7 @@
             // lblSeatNo
             // 
             this.lblSeatNo.AutoSize = true;
-            this.lblSeatNo.Location = new System.Drawing.Point(14, 9);
+            this.lblSeatNo.Location = new System.Drawing.Point(25, 153);
             this.lblSeatNo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSeatNo.Name = "lblSeatNo";
             this.lblSeatNo.Size = new System.Drawing.Size(69, 13);
@@ -380,7 +380,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(202, 47);
+            this.label5.Location = new System.Drawing.Point(539, 94);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 20);
@@ -390,7 +390,7 @@
             // txtUser
             // 
             this.txtUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUser.Location = new System.Drawing.Point(270, 44);
+            this.txtUser.Location = new System.Drawing.Point(607, 91);
             this.txtUser.Margin = new System.Windows.Forms.Padding(2);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(94, 26);
@@ -407,7 +407,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(382, 44);
+            this.btnLogin.Location = new System.Drawing.Point(553, 121);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(66, 29);
@@ -419,7 +419,7 @@
             // btnLogout
             // 
             this.btnLogout.Enabled = false;
-            this.btnLogout.Location = new System.Drawing.Point(452, 44);
+            this.btnLogout.Location = new System.Drawing.Point(623, 121);
             this.btnLogout.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(66, 29);
@@ -442,7 +442,7 @@
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Enabled = false;
-            this.lblDate.Location = new System.Drawing.Point(13, 730);
+            this.lblDate.Location = new System.Drawing.Point(10, 640);
             this.lblDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
@@ -453,7 +453,7 @@
             // 
             this.cobDate.Enabled = false;
             this.cobDate.FormattingEnabled = true;
-            this.cobDate.Location = new System.Drawing.Point(113, 727);
+            this.cobDate.Location = new System.Drawing.Point(110, 637);
             this.cobDate.Margin = new System.Windows.Forms.Padding(2);
             this.cobDate.Name = "cobDate";
             this.cobDate.Size = new System.Drawing.Size(104, 21);
@@ -511,7 +511,7 @@
             this.grpBoxTheatre.Controls.Add(this.chkA1);
             this.grpBoxTheatre.Controls.Add(this.lblBorder);
             this.grpBoxTheatre.Enabled = false;
-            this.grpBoxTheatre.Location = new System.Drawing.Point(236, 440);
+            this.grpBoxTheatre.Location = new System.Drawing.Point(233, 350);
             this.grpBoxTheatre.Margin = new System.Windows.Forms.Padding(0);
             this.grpBoxTheatre.Name = "grpBoxTheatre";
             this.grpBoxTheatre.Size = new System.Drawing.Size(271, 247);
@@ -1050,9 +1050,9 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(17, 50);
+            this.btnClear.Location = new System.Drawing.Point(429, 191);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.Size = new System.Drawing.Size(44, 23);
             this.btnClear.TabIndex = 80;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -1062,7 +1062,7 @@
             // 
             this.grpBoxPrice.Controls.Add(this.lblPrice);
             this.grpBoxPrice.Enabled = false;
-            this.grpBoxPrice.Location = new System.Drawing.Point(236, 690);
+            this.grpBoxPrice.Location = new System.Drawing.Point(233, 600);
             this.grpBoxPrice.Name = "grpBoxPrice";
             this.grpBoxPrice.Size = new System.Drawing.Size(168, 87);
             this.grpBoxPrice.TabIndex = 81;
@@ -1074,7 +1074,7 @@
             this.grpBoxBookingHistory.Controls.Add(this.btnViewBHistory);
             this.grpBoxBookingHistory.Controls.Add(this.btnSaveBHistory);
             this.grpBoxBookingHistory.Enabled = false;
-            this.grpBoxBookingHistory.Location = new System.Drawing.Point(410, 690);
+            this.grpBoxBookingHistory.Location = new System.Drawing.Point(407, 600);
             this.grpBoxBookingHistory.Name = "grpBoxBookingHistory";
             this.grpBoxBookingHistory.Size = new System.Drawing.Size(94, 87);
             this.grpBoxBookingHistory.TabIndex = 82;
@@ -1085,7 +1085,7 @@
             // 
             this.grpBoxDescription.Controls.Add(this.lblMvDescription);
             this.grpBoxDescription.Enabled = false;
-            this.grpBoxDescription.Location = new System.Drawing.Point(236, 322);
+            this.grpBoxDescription.Location = new System.Drawing.Point(233, 232);
             this.grpBoxDescription.Name = "grpBoxDescription";
             this.grpBoxDescription.Size = new System.Drawing.Size(271, 115);
             this.grpBoxDescription.TabIndex = 83;
@@ -1096,7 +1096,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 792);
+            this.ClientSize = new System.Drawing.Size(728, 697);
             this.Controls.Add(this.grpBoxDescription);
             this.Controls.Add(this.grpBoxBookingHistory);
             this.Controls.Add(this.grpBoxPrice);

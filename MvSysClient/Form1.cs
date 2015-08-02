@@ -413,6 +413,8 @@ namespace MvSysClient {
         //Manipulates other controls to add in details of each movie and each show
         //allows for the booking of seats
         {
+
+            btnBrowse.Text = "Browse";
             listMovies.Items.Clear();
 
             IFormatter formatter = new BinaryFormatter();
@@ -693,6 +695,7 @@ namespace MvSysClient {
                     size = socket.Receive(data); /* R */
                     result = Encoding.ASCII.GetString(data, 0, size);
                 } catch (Exception) {
+                    btnBrowse.Text = "Refresh";
                     MessageBox.Show("Please refresh the movie listing!");
                     //lblBookMessage.Text = "Booking unsuccessful. Please contact a staff member for assistance.";
                     lblBookMessage.ForeColor = Color.Red;
@@ -726,6 +729,7 @@ namespace MvSysClient {
                     }
 
                 } else {
+                    btnBrowse.Text = "Refresh";
                     MessageBox.Show("Please refresh the movie listing!");
                     //lblBookMessage.ForeColor = Color.Red;
                 }
