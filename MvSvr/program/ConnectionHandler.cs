@@ -108,7 +108,7 @@ namespace MvSvr {
 
                     while (true) {
                         lock (_object) {
-                            //movieInfo = LoadMovieFile(moviesFile);
+                            //movieInfo = DeserializeMovies(moviesFile);
 
                             /* R */
                             // Receive command
@@ -158,7 +158,7 @@ namespace MvSvr {
         public void Browse() {
 
             //lock (_object) {
-                //SaveToFile(browseFile, movieInfo);
+                //Serialize(browseFile, movieInfo);
                 SendFile(moviesFile);
             //}
         }
@@ -186,7 +186,7 @@ namespace MvSvr {
             /* S */ // Send found
             /* S */ // Send file
                 SendCommand(SFOUND);
-                SaveToFile(searchFile, searchInfo);
+                Serialize(searchFile, searchInfo);
                 SendFile(searchFile);
             }
         }
@@ -281,7 +281,7 @@ namespace MvSvr {
                     }
 
                     // Save movie info
-                    SaveMovieToFile(moviesFile);
+                    SerializeMovies(moviesFile);
 
                     // Update booking history
                     List<Booking> userBookingHistory = new List<Booking>();
@@ -296,7 +296,7 @@ namespace MvSvr {
                     //form.DisplayMsg(userBookingHistory[0].Show.Movie.Title.ToString()); // (!) Debug
                     
                     // Save booking info                   
-                    SaveBookingToFile(bkHistFile);
+                    SerializeBooking(bkHistFile);
 
                     SendCommand(SUCCESS);
                     form.DisplayMsg("[" + user + "] :: Booking success");
@@ -329,7 +329,7 @@ namespace MvSvr {
             Booking b = new Booking(); Show s = new Show();
             List<Seat> seats; Seat seat = new Seat();
             List<Booking> bookingList = new List<Booking>();
-            //bookingInfo = LoadBookingFile(bkHistFile);
+            //bookingInfo = DeserializeBooking(bkHistFile);
             bookingInfo.TryGetValue(user, out bookingList);
 
             String info_str = "";
@@ -364,7 +364,7 @@ namespace MvSvr {
             SendString(info_str);
         }
 
-        public void SaveToFile(String filePath, Dictionary<String, Movie> d) {
+        public void Serialize(String filePath, Dictionary<String, Movie> d) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -373,7 +373,7 @@ namespace MvSvr {
             }
         }
 
-        public void SaveMovieToFile(String filePath) {
+        public void SerializeMovies(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -383,7 +383,7 @@ namespace MvSvr {
             //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
-        public void SaveBookingToFile(String filePath) {
+        public void SerializeBooking(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -484,7 +484,7 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
+        public Dictionary<String, List<Booking>> DeserializeBooking(String filePath) {
 
             Dictionary<String, Booking> 
                 bookingInfoBuilder = new Dictionary<String, Booking>();
@@ -538,7 +538,7 @@ namespace MvSvr {
             return bookingInfo;
         }
 
-        public Dictionary<String, Movie> LoadMovieFile(String filePath) {
+        public Dictionary<String, Movie> DeserializeMovies(String filePath) {
 
             Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
             try {

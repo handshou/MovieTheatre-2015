@@ -48,8 +48,8 @@ namespace MvSvr {
             InitializeComponent();
             this.Text = "Server";
             //LoadMovies();
-            LoadMovieFile(moviesFile);
-            //bookingInfo = LoadBookingFile(bkHistFile); // Load booking info
+            DeserializeMovies(moviesFile);
+            //bookingInfo = DeserializeBooking(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
@@ -87,7 +87,7 @@ namespace MvSvr {
             Application.Exit();
         }
 
-        public void SaveMovieToFile(String filePath) {
+        public void SerializeMovies(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -163,10 +163,10 @@ namespace MvSvr {
             };
 
             movieInfo.Add(m.Title, m);
-            SaveMovieToFile(moviesFile);
+            SerializeMovies(moviesFile);
         }
 
-        public Dictionary<String, Movie> LoadMovieFile(String filePath) {
+        public Dictionary<String, Movie> DeserializeMovies(String filePath) {
 
             Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
             try {
@@ -208,7 +208,7 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
+        public Dictionary<String, List<Booking>> DeserializeBooking(String filePath) {
 
             Dictionary<String, Booking>
                 bookingInfoBuilder = new Dictionary<String, Booking>();
