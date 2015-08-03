@@ -10,28 +10,21 @@ using System.Drawing;
 using System.Linq;
 
 namespace MvSvr {
-
     [Serializable()]
-
     public class Movie {
-
         // Attributes + Get Set
         public String Title { get; set; }
-        //public double Runtime { get; set; }
         public String Description { get; set; }
         public String Director { get; set; }
-        //public String Rating { get; set; }
         public String Genre { get; set; }
         public Image Poster { get; set; }
         public List<Show> Shows { get; set; }
 
-        // https://msdn.microsoft.com/en-us/library/stf701f5(v=vs.110).aspx
-        // e.Graphics.DrawImage(image2, 20.0F, 20.0F);
-
         // Constructors
-        public Movie() { }
-        public Movie(String Title, String Description, String Director, 
-            String Genre) {
+        public Movie() {}
+
+        public Movie(String Title, String Description, String Director, String Genre) 
+        {
             this.Title = Title;
             this.Description = Description;
             this.Director = Director;
@@ -39,8 +32,9 @@ namespace MvSvr {
             this.Shows = new List<Show>();
             this.Poster = Image.FromFile("poster\\no_image_available.png");
         }
-        public Movie(String Title, String Description, String Director, 
-            String Genre, List<Show> Shows, Image Poster) {
+
+        public Movie(String Title, String Description, String Director, String Genre, List<Show> Shows, Image Poster) 
+        {
             this.Title = Title;
             this.Description = Description;
             this.Director = Director;
@@ -49,8 +43,9 @@ namespace MvSvr {
             this.Poster = Poster;
         }
 
-        // Methods - (!) OrderBy not working as intended!
-        public List<Show> FindShows(int index) {
+        // Methods
+        public List<Show> FindShows(int index) 
+        {
             // returns all shows that fall on given date by index
             List<Show> shows = new List<Show>();
             for (int i = 0; i < Shows.Count; i++) {
@@ -59,12 +54,12 @@ namespace MvSvr {
                     shows.Add(Shows[i]);
                 }
             }
-            // show => show.TimeStart
             shows.OrderBy(x => x.TimeStart, new SemiNumericComparer());
-
             return shows;
         }
-        public List<Show> FindShows(String date) {
+
+        public List<Show> FindShows(String date) 
+        {
             // returns all shows that fall on given date by date
             List<Show> shows = new List<Show>();
             for (int i = 0; i < Shows.Count; i++) {
@@ -73,31 +68,32 @@ namespace MvSvr {
                 }
             }
             shows.OrderBy(x => x.TimeStart, new SemiNumericComparer());
-
             return shows;
         }
-        public List<String> GetDates() {
+
+        public List<String> GetDates() 
+        {
             List<String> showdates = new List<String>();
             foreach (Show s in Shows) {
                 if (!showdates.Contains(s.Date))
                     showdates.Add(s.Date);
             }
-            // showdates.Sort();
-
             return showdates;
         }
-        public List<String> FindShowTimes(String date) {
+
+        public List<String> FindShowTimes(String date) 
+        {
             List<String> showtimes = new List<String>();
             showtimes = new List<String>();
             for (int i = 0; i < Shows.Count; i++) {
                 if (Shows[i].Date.Equals(date))
                     showtimes.Add(Shows[i].TimeStart);
             }
-            // showtimes.Sort();
-
             return showtimes;
         }
-        public List<String> FindShowTimes(int index) {
+
+        public List<String> FindShowTimes(int index) 
+        {
             // returns all shows that fall on given date by index
             List<String> showtimes = new List<String>();
             foreach (Show s in FindShows(index)) {
@@ -105,8 +101,6 @@ namespace MvSvr {
                     showtimes.Add(s.TimeStart);
                 }
             }
-            // showtimes.Sort();
-
             return showtimes;
         }
     }

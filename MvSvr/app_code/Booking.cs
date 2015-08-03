@@ -8,14 +8,10 @@ using System;
 using System.Collections.Generic;
 
 namespace MvSvr {
-
     [Serializable()]
-
     public class Booking {
-
         // Attributes + Get Set
         private static double fee = 1.50;
-        //public double Subtotal { get; set; }
         public String User { get; set; }
         public Show Show { get; set; }
         public List<Seat> Seats { get; set; }
@@ -44,9 +40,7 @@ namespace MvSvr {
             return Show.Price * Seats.Count;
         }
 
-        public Hall GetHall() {
-            return Show.Hall;
-        }
+        public Hall GetHall() { return Show.Hall; }
 
         public String ToString() {
             return User + " " + Show.Date + " " + Seats.ToString() ;

@@ -108,7 +108,7 @@ namespace MvSvr {
 
                     while (true) {
                         lock (_object) {
-                            //movieInfo = DeserializeMovies(moviesFile);
+                            //movieInfo = LoadMovieFile(moviesFile);
 
                             /* R */
                             // Receive command
@@ -329,7 +329,7 @@ namespace MvSvr {
             Booking b = new Booking(); Show s = new Show();
             List<Seat> seats; Seat seat = new Seat();
             List<Booking> bookingList = new List<Booking>();
-            //bookingInfo = DeserializeBooking(bkHistFile);
+            //bookingInfo = LoadBookingFile(bkHistFile);
             bookingInfo.TryGetValue(user, out bookingList);
 
             String info_str = "";
@@ -383,7 +383,7 @@ namespace MvSvr {
             //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
-        public void SerializeBooking(String filePath) {
+        public void SaveBookingToFile(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -484,7 +484,7 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, List<Booking>> DeserializeBooking(String filePath) {
+        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
 
             Dictionary<String, Booking> 
                 bookingInfoBuilder = new Dictionary<String, Booking>();
@@ -538,7 +538,7 @@ namespace MvSvr {
             return bookingInfo;
         }
 
-        public Dictionary<String, Movie> DeserializeMovies(String filePath) {
+        public Dictionary<String, Movie> LoadMovieFile(String filePath) {
 
             Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
             try {

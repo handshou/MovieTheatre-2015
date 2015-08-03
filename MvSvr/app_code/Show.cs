@@ -9,11 +9,8 @@ using System.Collections.Generic;
 using System.Globalization;
 
 namespace MvSvr {
-
     [Serializable()]
-
     public class Show {
-
         // Attributes + Get Set
         public Movie Movie { get; set; }
         public String TimeStart { get; set; }
@@ -21,19 +18,18 @@ namespace MvSvr {
         public String Date { get; set; }
         public Hall Hall { get; set; }
         public double Price { get; set; }
-        // public List<Booking> Bookings { get; set; }
 
         // Constructors
         public Show() { }
-        public Show(Movie movie, String date, Hall hall, String timeStart,
-                    String timeEnd, double price/*, List<Booking> bookings*/) {
+
+        public Show(Movie movie, String date, Hall hall, String timeStart, String timeEnd, double price) 
+        {
             Movie = movie;
             Date = date;
             Hall = hall;
             TimeStart = timeStart;
             TimeEnd = timeEnd;
             Price = price;
-            // Bookings = bookings;
         }
     }
 }

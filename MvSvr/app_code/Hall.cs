@@ -8,11 +8,8 @@ using System;
 using System.Collections.Generic;
 
 namespace MvSvr {
-
     [Serializable()]
-
     public class Hall {
-
         // Attributes + Get Set
         private int capacity_max = 25;
         public String Name { get; set; }
@@ -21,7 +18,6 @@ namespace MvSvr {
             get { return capacity_max; }
             set { capacity_max = value; }
         }
-
         String[] seatNames =   {"A1", "A2", "A3", "A4", "A5",
                                 "B1", "B2", "B3", "B4", "B5",
                                 "C1", "C2", "C3", "C4", "C5",

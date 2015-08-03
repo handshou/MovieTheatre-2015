@@ -20,9 +20,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace MvSvr {
-
     public partial class Form1 : Form {
-
         // Attributes
         private String moviesFile = @"movies.dat";
         private String browseFile = @"browse.dat";
@@ -44,7 +42,6 @@ namespace MvSvr {
         public delegate void DisplayMsgShowsCallback(String msg);
 
         public Form1() {
-
             InitializeComponent();
             this.Text = "Server";
             //LoadMovies();
@@ -53,11 +50,9 @@ namespace MvSvr {
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
-
         }
 
         public void ConnectClient() {
-
             DisplayMsg("[Server] Initialised!");
             DisplayMsgMovies("[Server] Initialised!");
             DisplayMsgShows("[Server] Initialised!");
@@ -71,9 +66,7 @@ namespace MvSvr {
                         new ConnectionHandler(client, this, movieInfo, 
                             bookingInfo, clients, clientsNumber);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(handler.HandleConnection));
-
                 } catch(Exception ex) {
-
                     // Error output
                     DisplayMsg("Connection failed on port " + port + "\r\n");
                     DisplayMsg(ex.ToString());
@@ -83,12 +76,10 @@ namespace MvSvr {
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-
             Application.Exit();
         }
 
         public void SerializeMovies(String filePath) {
-
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 formatter.Serialize(fs, movieInfo.Values.ToArray());
@@ -98,13 +89,11 @@ namespace MvSvr {
         }
 
         public Image GetImage(String imgPath) {
-
             Image img = Image.FromFile(imgPath);
             return img;
         }
 
         public void LoadMovies() {
-
             movieInfo = new Dictionary<String, Movie>();
 
             Movie m = new Movie();
@@ -167,7 +156,6 @@ namespace MvSvr {
         }
 
         public Dictionary<String, Movie> DeserializeMovies(String filePath) {
-
             Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
             try {
                 using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
@@ -190,7 +178,6 @@ namespace MvSvr {
         }
 
         private void LoadFile(String filePath) {
-
             formatter = new BinaryFormatter();
             try {
                 using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
@@ -209,11 +196,8 @@ namespace MvSvr {
         }
 
         public Dictionary<String, List<Booking>> DeserializeBooking(String filePath) {
-
-            Dictionary<String, Booking>
-                bookingInfoBuilder = new Dictionary<String, Booking>();
-            Dictionary<String, List<Booking>>
-                bookingInfo = new Dictionary<String, List<Booking>>();
+            Dictionary<String, Booking> bookingInfoBuilder = new Dictionary<String, Booking>();
+            Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
             try {
                 using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
@@ -250,7 +234,6 @@ namespace MvSvr {
         }
 
         public void DisplayMsg(String msg) {
-
             if (this.InvokeRequired) {
                 DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
                 this.Invoke(d, msg);
@@ -264,7 +247,6 @@ namespace MvSvr {
 
         // (!) Consider removing if client trigger events should not activate Movies textbox display
         public void DisplayMsgMovies(String msg) {
-
             if (this.InvokeRequired) {
                 DisplayMsgMoviesCallback d = new DisplayMsgMoviesCallback(DisplayMsgMovies);
                 this.Invoke(d, msg);
@@ -278,7 +260,6 @@ namespace MvSvr {
 
         // (!) Consider removing if client trigger events should not activate Shows textbox display
         public void DisplayMsgShows(String msg) {
-
             if (this.InvokeRequired) {
                 DisplayMsgShowsCallback d = new DisplayMsgShowsCallback(DisplayMsgShows);
                 this.Invoke(d, msg);
@@ -290,16 +271,11 @@ namespace MvSvr {
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e) {
+        private void btnClear_Click(object sender, EventArgs e) { }
 
-        }
-
-        private void btnList_Click(object sender, EventArgs e) {
-
-        }
+        private void btnList_Click(object sender, EventArgs e) { }
 
         private void btnAdd_Click(object sender, EventArgs e) {
-            
             //// Create the movie and shows
             String title, desc, dir, genre, imgPath;
 
@@ -317,20 +293,13 @@ namespace MvSvr {
             DisplayMsgShows("New Movie: " + m.Title + " added");
 
             tabControl.SelectedTab = tabPageShows;
-
         }
 
-        private void btnDebugClear_Click(object sender, EventArgs e) {
+        private void btnDebugClear_Click(object sender, EventArgs e) { tbDisplay.Clear(); }
 
-            tbDisplay.Clear();
-        }
-
-        private void btnBroadcast_Click(object sender, EventArgs e) {
-
-        }
+        private void btnBroadcast_Click(object sender, EventArgs e) { }
 
         private void btnWipe_Click(object sender, EventArgs e) {
-
             // Wipes all saved movies and alterations made 
             // by server administrator and loads repository defaults
             if (MessageBox.Show("Restore to default?", "Movies Repository",
@@ -348,7 +317,6 @@ namespace MvSvr {
             libClientsShows.Items.Clear();
             libClientsDebug.Items.Clear();
             foreach(KeyValuePair<String, String> client in new SortedDictionary<String, String>(clientsNumber)) {
-                
                 libClientsMovies.Items.Add(client.Value);
                 libClientsShows.Items.Add(client.Value);
                 libClientsDebug.Items.Add(client.Value);

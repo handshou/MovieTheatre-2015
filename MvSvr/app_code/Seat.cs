@@ -8,11 +8,8 @@ using System;
 using System.Text.RegularExpressions;
 
 namespace MvSvr {
-
     [Serializable()]
-
     public class Seat {
-
         // Attributes + Get Set
         private bool vacant = true;
         private String name;
