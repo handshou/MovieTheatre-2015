@@ -890,7 +890,7 @@ namespace MvSysClient {
                 if(!all.Contains(s.Date))
                     all.Add(s.Date);
             }
-            all.Sort();
+            //all.Sort();
             //rTxtMessages.Text = all.Count.ToString();
             return all;
         }
@@ -913,7 +913,7 @@ namespace MvSysClient {
                     }
                     
                 }
-                showtimes.Sort();
+                //showtimes.Sort();
             }
             catch (Exception ex)
             {

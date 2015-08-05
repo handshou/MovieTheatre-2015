@@ -303,6 +303,7 @@ namespace MvSvr {
                 DisplayMsgMovies("New Movie: " + m.Title + " added");
                 DisplayMsgShows("New Movie: " + m.Title + " added");
 
+                lbMovies.Items.Clear();
                 foreach (KeyValuePair<String, Movie> movie in movieInfo) {
                     lbMovies.Items.Add(movie.Key);
                 }
@@ -422,6 +423,50 @@ namespace MvSvr {
             if(lbShows.Items.Count == 0){
                 lbShows.Items.Add("No shows");
             }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Booking
+            if (tabControl.SelectedIndex == 2) {
+                lbBookings.Items.Clear();
+                foreach (KeyValuePair<String, List<Booking>> kvp in bookingInfo) {
+                    lbBookings.Items.Add(kvp.Key);
+                }
+                tbBookings.Text = "Select a user to view their booking information";
+            }
+            // Shows
+            if (tabControl.SelectedIndex == 1) {
+
+            }
+        }
+
+        private void lbBookings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbBookings.Text = "";
+            int count = 1;
+            List<Seat> seats;
+            Seat seat = new Seat();
+            String seats_str = "", info_str = "";
+            //foreach (KeyValuePair<String, List<Booking>> kvp in bookingInfo) {
+            List<Booking> bookingFile = bookingInfo[lbBookings.SelectedItem.ToString()];
+                tbBookings.AppendText("User " + bookingInfo.Keys.ToArray<String>()[lbBookings.SelectedIndex] + "\r\n");
+                foreach (Booking b in bookingFile) {
+                    Show s = b.Show;
+                    seats = b.Seats;
+                    seats_str = "";
+                    info_str = "";
+                    for (int h = 0 ; h < seats.Count ; h++) {
+                        seat = b.Seats[h];
+                        seats_str += seat.Name + " ";
+                    }
+                    info_str += "[" + s.Movie.Title + "] (" + b.BookingTime + ")\r\n" +
+                                "[" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "] " + seats_str;
+
+                    tbBookings.AppendText("[#" + count + "] " + info_str + "\r\n\r\n");
+                    count++;
+                }
+            //}
         }
     }
 }

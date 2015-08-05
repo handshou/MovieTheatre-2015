@@ -44,6 +44,10 @@
             this.btnBroadcast = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.tabPageShows = new System.Windows.Forms.TabPage();
+            this.lbShowDays = new System.Windows.Forms.ListBox();
+            this.lbShows = new System.Windows.Forms.ListBox();
+            this.lbMovies = new System.Windows.Forms.ListBox();
+            this.btnAddShow = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
             this.tbPrice = new System.Windows.Forms.TextBox();
@@ -60,20 +64,21 @@
             this.libClientsDebug = new System.Windows.Forms.ListBox();
             this.btnDebugClear = new System.Windows.Forms.Button();
             this.tbDisplay = new System.Windows.Forms.TextBox();
-            this.btnAddShow = new System.Windows.Forms.Button();
-            this.lbMovies = new System.Windows.Forms.ListBox();
-            this.lbShows = new System.Windows.Forms.ListBox();
-            this.lbShowDays = new System.Windows.Forms.ListBox();
+            this.tabPageBooking = new System.Windows.Forms.TabPage();
+            this.tbBookings = new System.Windows.Forms.TextBox();
+            this.lbBookings = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
             this.tabPageShows.SuspendLayout();
             this.tabPageDebug.SuspendLayout();
+            this.tabPageBooking.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPageMovies);
             this.tabControl.Controls.Add(this.tabPageShows);
+            this.tabControl.Controls.Add(this.tabPageBooking);
             this.tabControl.Controls.Add(this.tabPageDebug);
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Multiline = true;
@@ -81,6 +86,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(452, 473);
             this.tabControl.TabIndex = 15;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabPageMovies
             // 
@@ -285,6 +291,42 @@
             this.tabPageShows.Text = "Shows";
             this.tabPageShows.UseVisualStyleBackColor = true;
             // 
+            // lbShowDays
+            // 
+            this.lbShowDays.FormattingEnabled = true;
+            this.lbShowDays.Location = new System.Drawing.Point(204, 242);
+            this.lbShowDays.Name = "lbShowDays";
+            this.lbShowDays.Size = new System.Drawing.Size(109, 95);
+            this.lbShowDays.TabIndex = 54;
+            this.lbShowDays.SelectedIndexChanged += new System.EventHandler(this.lbShowDays_SelectedIndexChanged);
+            // 
+            // lbShows
+            // 
+            this.lbShows.FormattingEnabled = true;
+            this.lbShows.Location = new System.Drawing.Point(319, 242);
+            this.lbShows.Name = "lbShows";
+            this.lbShows.Size = new System.Drawing.Size(109, 95);
+            this.lbShows.TabIndex = 53;
+            // 
+            // lbMovies
+            // 
+            this.lbMovies.FormattingEnabled = true;
+            this.lbMovies.Location = new System.Drawing.Point(17, 242);
+            this.lbMovies.Name = "lbMovies";
+            this.lbMovies.Size = new System.Drawing.Size(181, 95);
+            this.lbMovies.TabIndex = 52;
+            this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
+            // 
+            // btnAddShow
+            // 
+            this.btnAddShow.Location = new System.Drawing.Point(353, 405);
+            this.btnAddShow.Name = "btnAddShow";
+            this.btnAddShow.Size = new System.Drawing.Size(75, 23);
+            this.btnAddShow.TabIndex = 50;
+            this.btnAddShow.Text = "Add Show";
+            this.btnAddShow.UseVisualStyleBackColor = true;
+            this.btnAddShow.Click += new System.EventHandler(this.btnAddShow_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -428,41 +470,35 @@
             this.tbDisplay.Size = new System.Drawing.Size(318, 405);
             this.tbDisplay.TabIndex = 16;
             // 
-            // btnAddShow
+            // tabPageBooking
             // 
-            this.btnAddShow.Location = new System.Drawing.Point(353, 405);
-            this.btnAddShow.Name = "btnAddShow";
-            this.btnAddShow.Size = new System.Drawing.Size(75, 23);
-            this.btnAddShow.TabIndex = 50;
-            this.btnAddShow.Text = "Add Show";
-            this.btnAddShow.UseVisualStyleBackColor = true;
-            this.btnAddShow.Click += new System.EventHandler(this.btnAddShow_Click);
+            this.tabPageBooking.Controls.Add(this.lbBookings);
+            this.tabPageBooking.Controls.Add(this.tbBookings);
+            this.tabPageBooking.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBooking.Name = "tabPageBooking";
+            this.tabPageBooking.Size = new System.Drawing.Size(444, 447);
+            this.tabPageBooking.TabIndex = 3;
+            this.tabPageBooking.Text = "Bookings";
+            this.tabPageBooking.UseVisualStyleBackColor = true;
             // 
-            // lbMovies
+            // tbBookings
             // 
-            this.lbMovies.FormattingEnabled = true;
-            this.lbMovies.Location = new System.Drawing.Point(17, 242);
-            this.lbMovies.Name = "lbMovies";
-            this.lbMovies.Size = new System.Drawing.Size(181, 95);
-            this.lbMovies.TabIndex = 52;
-            this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
+            this.tbBookings.Location = new System.Drawing.Point(17, 21);
+            this.tbBookings.Multiline = true;
+            this.tbBookings.Name = "tbBookings";
+            this.tbBookings.ReadOnly = true;
+            this.tbBookings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbBookings.Size = new System.Drawing.Size(318, 405);
+            this.tbBookings.TabIndex = 26;
             // 
-            // lbShows
+            // lbBookings
             // 
-            this.lbShows.FormattingEnabled = true;
-            this.lbShows.Location = new System.Drawing.Point(319, 242);
-            this.lbShows.Name = "lbShows";
-            this.lbShows.Size = new System.Drawing.Size(109, 95);
-            this.lbShows.TabIndex = 53;
-            // 
-            // lbShowDays
-            // 
-            this.lbShowDays.FormattingEnabled = true;
-            this.lbShowDays.Location = new System.Drawing.Point(204, 242);
-            this.lbShowDays.Name = "lbShowDays";
-            this.lbShowDays.Size = new System.Drawing.Size(109, 95);
-            this.lbShowDays.TabIndex = 54;
-            this.lbShowDays.SelectedIndexChanged += new System.EventHandler(this.lbShowDays_SelectedIndexChanged);
+            this.lbBookings.FormattingEnabled = true;
+            this.lbBookings.Location = new System.Drawing.Point(353, 21);
+            this.lbBookings.Name = "lbBookings";
+            this.lbBookings.Size = new System.Drawing.Size(75, 407);
+            this.lbBookings.TabIndex = 27;
+            this.lbBookings.SelectedIndexChanged += new System.EventHandler(this.lbBookings_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -483,6 +519,8 @@
             this.tabPageShows.PerformLayout();
             this.tabPageDebug.ResumeLayout(false);
             this.tabPageDebug.PerformLayout();
+            this.tabPageBooking.ResumeLayout(false);
+            this.tabPageBooking.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -529,6 +567,9 @@
         private System.Windows.Forms.ListBox lbMovies;
         private System.Windows.Forms.ListBox lbShows;
         private System.Windows.Forms.ListBox lbShowDays;
+        private System.Windows.Forms.TabPage tabPageBooking;
+        private System.Windows.Forms.TextBox tbBookings;
+        private System.Windows.Forms.ListBox lbBookings;
     }
 }
 
