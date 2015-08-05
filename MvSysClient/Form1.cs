@@ -49,6 +49,7 @@ namespace MvSysClient {
         private string infoFile = @"infomo.dat";
         private string srchFile = @"search.dat";
         private string filePath = @"bookingInfo.dat";
+        private string bkHistFile = @"bkrepo.dat";
         private long filesize = 0;
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
 
@@ -638,7 +639,7 @@ namespace MvSysClient {
 
             Dictionary<Seat, Show> showDict = new Dictionary<Seat, Show>();
             // showDict.Add(s.Hall.Seats[index], s);
-            // SaveToBookingFile(filePath, showDict);
+            // SerializeBookedSeats(bkHistFile, showDict);
 
             for (int i = 0; i < seatList.Count; i++) {
                 //if (!seatList[i].Vacant) {
@@ -656,7 +657,7 @@ namespace MvSysClient {
             }
 
             if (showDict.Count > 0) {
-                SaveToBookingFile(filePath, showDict);
+                SerializeBookedSeats(bkHistFile, showDict);
 
                 //sending to server
                 byte[] data = new byte[1024];
@@ -972,7 +973,7 @@ namespace MvSysClient {
             return output;
         }
 
-        public void SaveToBookingFile(String filePath, Dictionary<Seat, Show> d)
+        public void SerializeBookedSeats(String filePath, Dictionary<Seat, Show> d)
         //this method is called by the Book method when a booking needs to be verified by the server
         //serializes and sends the seat information to the server
         {

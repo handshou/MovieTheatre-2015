@@ -225,7 +225,7 @@ namespace MvSvr {
                 /* R */ // Receive booking info
                 /* R */
                 ReceiveFile(bseatsFile);
-                seats = LoadSeatsFile(bseatsFile, out show);
+                seats = DeserializeSeats(bseatsFile, out show);
 
                 // Create booking from seats
                 Booking bnew = new Booking(user, show, seats);
@@ -296,7 +296,7 @@ namespace MvSvr {
                     //form.DisplayMsg(userBookingHistory[0].Show.Movie.Title.ToString()); // (!) Debug
                     
                     // Save booking info                   
-                    SerializeBooking(bkHistFile);
+                    SerializeBookings(bkHistFile);
 
                     SendCommand(SUCCESS);
                     form.DisplayMsg("[" + user + "] :: Booking success");
@@ -383,7 +383,7 @@ namespace MvSvr {
             //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
-        public void SerializeBooking(String filePath) {
+        public void SerializeBookings(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
@@ -484,7 +484,7 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, List<Booking>> LoadBookingFile(String filePath) {
+        public Dictionary<String, List<Booking>> DeserializeBookings(String filePath) {
 
             Dictionary<String, Booking> 
                 bookingInfoBuilder = new Dictionary<String, Booking>();
@@ -517,20 +517,6 @@ namespace MvSvr {
                             }
                         }
                     }
-
-                    //String userbuilder = "";
-                    //foreach(var item in myDictionary){
-                    //    foo(item.Key);
-                    //    bar(item.Value);
-                    //}
-
-                    //foreach(KeyValuePair<String, Booking> p in bookingInfoBuilder) {
-                    //    foreach (KeyValuePair<String, Booking> u in bookingInfoBuilder) {
-                    //        userbuilder = u.Value.User;
-                    //        if(!bookingInfo.ContainsKey(userbuilder))
-                    //            bookingInfo.Add(userbuilder, )
-                    //    }
-                    //}
                 }
             } catch (Exception ex) {
                 form.DisplayMsg(ex.ToString());
@@ -562,7 +548,7 @@ namespace MvSvr {
             return movieInfoNew;
         }
 
-        public List<Seat> LoadSeatsFile(String filePath, out Show show) {
+        public List<Seat> DeserializeSeats(String filePath, out Show show) {
 
             List<Seat> output = new List<Seat>();
             show = new Show();

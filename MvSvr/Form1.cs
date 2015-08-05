@@ -177,7 +177,7 @@ namespace MvSvr {
             return movieInfoNew;
         }
 
-        private void LoadFile(String filePath) {
+        private void Deserialize(String filePath) {
             formatter = new BinaryFormatter();
             try {
                 using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
@@ -408,7 +408,18 @@ namespace MvSvr {
         private void btnSave_Click(object sender, EventArgs e)
         {
             SerializeMovies(moviesFile);
+            SerializeBookings(bkHistFile);
             DisplayMsgMovies("Movies saved to " + moviesFile);
+        }
+
+        public void SerializeBookings(String filePath)
+        {
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, bookingInfo.Values.ToArray());
+                fs.Close();
+            }
+            //form.DisplayMsg("Saved booking database to " + filePath); (!)
         }
 
         private void lbShowDays_SelectedIndexChanged(object sender, EventArgs e)
