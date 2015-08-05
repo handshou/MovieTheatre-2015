@@ -46,7 +46,8 @@ namespace MvSvr {
             this.Text = "Server";
             //LoadMovies();
             DeserializeMovies(moviesFile);
-            //bookingInfo = DeserializeBooking(bkHistFile); // Load booking info
+            DeserializeBookings(bkHistFile);
+            //bookingInfo = DeserializeBookings(bkHistFile); // Load booking info
             Thread t = new Thread(ConnectClient);
             t.IsBackground = true;
             t.Start();
@@ -195,42 +196,57 @@ namespace MvSvr {
             }
         }
 
-        public Dictionary<String, List<Booking>> DeserializeBooking(String filePath) {
-            Dictionary<String, Booking> bookingInfoBuilder = new Dictionary<String, Booking>();
-            Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
+        //public Dictionary<String, List<Booking>> DeserializeBookings(String filePath) {
+        //    Dictionary<String, Booking> bookingInfoBuilder = new Dictionary<String, Booking>();
+        //    Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
 
+        //    try {
+        //        using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+        //            Booking[] b_info = (Booking[])formatter.Deserialize(fs);
+        //            fs.Flush();
+        //            fs.Close();
+        //            /// Key             Value
+        //            /// UserA + Date    BookingCopy1
+        //            /// UserA + Date    BookingCopy2
+        //            /// UserB + Date    BookingCopy3
+        //            bookingInfoBuilder = b_info.ToDictionary((u) =>
+        //                (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
+
+        //            foreach (Booking ub in bookingInfoBuilder.Values) {
+        //                if (!bookingInfo.ContainsKey(ub.User)) {
+        //                    bookingInfo.Add(ub.User, new List<Booking>());
+        //                }
+        //            }
+
+        //            foreach (List<Booking> b in bookingInfo.Values) {
+        //                foreach (Booking ub in bookingInfoBuilder.Values) {
+        //                    for (int i = 0; i < b.Count; i++) {
+        //                        if (ub.User.Equals(b[i].User))
+        //                            b.Add(ub);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
+        //    } catch (Exception ex) {
+        //        tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
+        //    }
+        //    return bookingInfo;
+        //}
+
+        public void DeserializeBookings(String filePath)
+        {
             try {
                 using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
-                    Booking[] b_info = (Booking[])formatter.Deserialize(fs);
+                    List<Booking>[] blist_info = (List<Booking>[])formatter.Deserialize(fs);
                     fs.Flush();
                     fs.Close();
-                    /// Key             Value
-                    /// UserA + Date    BookingCopy1
-                    /// UserA + Date    BookingCopy2
-                    /// UserB + Date    BookingCopy3
-                    bookingInfoBuilder = b_info.ToDictionary((u) =>
-                        (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
-
-                    foreach (Booking ub in bookingInfoBuilder.Values) {
-                        if (!bookingInfo.ContainsKey(ub.User)) {
-                            bookingInfo.Add(ub.User, new List<Booking>());
-                        }
-                    }
-
-                    foreach (List<Booking> b in bookingInfo.Values) {
-                        foreach (Booking ub in bookingInfoBuilder.Values) {
-                            for (int i = 0; i < b.Count; i++) {
-                                if (ub.User.Equals(b[i].User))
-                                    b.Add(ub);
-                            }
-                        }
-                    }
+                    bookingInfo = blist_info.ToDictionary((u) => (u[0].User), (u) => u);
                 }
                 tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
             } catch (Exception ex) {
                 tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
             }
-            return bookingInfo;
         }
 
         public void DisplayMsg(String msg) {
@@ -325,6 +341,7 @@ namespace MvSvr {
             if (MessageBox.Show("Restore to default?", "Movies Repository",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
                 LoadMovies();
+                bookingInfo = new Dictionary<String, List<Booking>>();
                 DisplayMsgMovies("[Server] Movies Repository wiped to default");
                 DisplayMsgShows("[Server] Movies Repository wiped to default");
                 DisplayMsg("[Server] Movies Repository wiped to default");
