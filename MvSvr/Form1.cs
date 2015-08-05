@@ -277,22 +277,41 @@ namespace MvSvr {
 
         private void btnAdd_Click(object sender, EventArgs e) {
             //// Create the movie and shows
-            String title, desc, dir, genre, imgPath;
+            String title, desc, dir, genre, imgPath = "";
+            Boolean hasImage = false;
 
             title    = tbTitle.Text;
             desc     = tbDescription.Text;
             dir      = tbDirector.Text;
             genre    = tbGenre.Text;
-            if(tbImage.Text.Trim().Length != 0) // No image
-                imgPath  = tbImage.Text;
+            if (tbImage.Text.Trim().Length != 0 && !tbImage.Text.Trim().Equals("optional")) {
+                hasImage = true;
+                imgPath = tbImage.Text;
+            }
 
             Movie m = new Movie(title, desc, dir, genre);
-            movieInfo.Add(m.Title, m);
+            if (!movieInfo.ContainsKey(m.Title)) {
+                if (hasImage) {
+                    try {
+                        m.Poster = GetImage(imgPath);
+                    } catch {
+                        DisplayMsgMovies("Unable to process image");
+                    }
+                }
+                movieInfo.Add(m.Title, m);
 
-            DisplayMsgMovies("New Movie: " + m.Title + " added");
-            DisplayMsgShows("New Movie: " + m.Title + " added");
+                DisplayMsgMovies("New Movie: " + m.Title + " added");
+                DisplayMsgShows("New Movie: " + m.Title + " added");
 
-            tabControl.SelectedTab = tabPageShows;
+                foreach (KeyValuePair<String, Movie> movie in movieInfo) {
+                    lbMovies.Items.Add(movie.Key);
+                }
+
+                tabControl.SelectedTab = tabPageShows;
+                lbMovies.SelectedIndex = lbMovies.Items.Count - 1;
+            } else {
+                DisplayMsgMovies("Movie already exists. Please use another title.");
+            }
         }
 
         private void btnDebugClear_Click(object sender, EventArgs e) { tbDisplay.Clear(); }
@@ -324,6 +343,64 @@ namespace MvSvr {
             libClientsMovies.Sorted = true;
             libClientsShows.Sorted = true;
             libClientsDebug.Sorted = true;
-        } 
+        }
+
+        private void btnAddShow_Click(object sender, EventArgs e)
+        {
+            String saveDate = tbDate.Text;
+            String saveTimeFrom = tbTimeFrom.Text;
+            String saveTimeTo = tbTimeTo.Text;
+            double savePrice = 8.00;
+            try {
+                savePrice = Convert.ToInt32(tbPrice.Text);
+            } catch {
+                DisplayMsgShows("Please input correct price format.");
+            }
+
+            int movieInfoIndex = lbMovies.SelectedIndex;
+            Movie selectedMovie = movieInfo.Values.ElementAt(movieInfoIndex);
+            selectedMovie.Shows.Add(new Show(selectedMovie, saveDate, new Hall("Theatre 1"), saveTimeFrom, saveTimeTo, savePrice));
+
+            UpdateShowsList(movieInfoIndex);
+            DisplayMsgShows("Show added");
+        }
+
+        private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateShowsList(lbMovies.SelectedIndex);
+        }
+
+        public void UpdateShowsList(int index)
+        {
+            lbShows.Items.Clear();
+            Movie selectedMovie = movieInfo.Values.ElementAt(index);
+            List<Show> shows = selectedMovie.Shows;
+
+            foreach (Show s in shows) {
+                lbShows.Items.Add(s.TimeStart + " - " + s.TimeEnd);
+            }
+            if (shows.Count == 0) {
+                lbShows.Items.Add("No shows");
+            }
+        }
+
+        private void btnList_Click_1(object sender, EventArgs e)
+        {
+            int count = 0;
+            DisplayMsgMovies("[Movie Listing]");
+            foreach (KeyValuePair<String, Movie> movie in movieInfo) {
+                DisplayMsgMovies("[" + count + "] " + movie.Key);
+                count++;
+            }
+            if (count == 0) {
+                DisplayMsgMovies("No movies.");
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SerializeMovies(moviesFile);
+            DisplayMsgMovies("Movies saved to " + moviesFile);
+        }
     }
 }

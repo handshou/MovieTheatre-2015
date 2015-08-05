@@ -45,6 +45,15 @@
             this.btnBroadcast = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.tabPageShows = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblPrice = new System.Windows.Forms.Label();
+            this.tbPrice = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbDate = new System.Windows.Forms.TextBox();
+            this.lblTimeTo = new System.Windows.Forms.Label();
+            this.tbTimeTo = new System.Windows.Forms.TextBox();
+            this.tbTimeFrom = new System.Windows.Forms.TextBox();
+            this.lblTimeFrom = new System.Windows.Forms.Label();
             this.tbShows = new System.Windows.Forms.TextBox();
             this.libClientsShows = new System.Windows.Forms.ListBox();
             this.tabPageDebug = new System.Windows.Forms.TabPage();
@@ -52,15 +61,9 @@
             this.libClientsDebug = new System.Windows.Forms.ListBox();
             this.btnDebugClear = new System.Windows.Forms.Button();
             this.tbDisplay = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblPrice = new System.Windows.Forms.Label();
-            this.tbPrice = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lblTimeTo = new System.Windows.Forms.Label();
-            this.tbTimeTo = new System.Windows.Forms.TextBox();
-            this.tbTimeFrom = new System.Windows.Forms.TextBox();
-            this.lblTimeFrom = new System.Windows.Forms.Label();
+            this.btnAddShow = new System.Windows.Forms.Button();
+            this.lbMovies = new System.Windows.Forms.ListBox();
+            this.lbShows = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
             this.tabPageShows.SuspendLayout();
@@ -224,7 +227,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 13;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "Add Movie";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -236,6 +239,7 @@
             this.btnList.TabIndex = 10;
             this.btnList.Text = "List";
             this.btnList.UseVisualStyleBackColor = true;
+            this.btnList.Click += new System.EventHandler(this.btnList_Click_1);
             // 
             // btnSave
             // 
@@ -245,6 +249,7 @@
             this.btnSave.TabIndex = 12;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnBroadcast
             // 
@@ -267,11 +272,14 @@
             // 
             // tabPageShows
             // 
+            this.tabPageShows.Controls.Add(this.lbShows);
+            this.tabPageShows.Controls.Add(this.lbMovies);
+            this.tabPageShows.Controls.Add(this.btnAddShow);
             this.tabPageShows.Controls.Add(this.label2);
             this.tabPageShows.Controls.Add(this.lblPrice);
             this.tabPageShows.Controls.Add(this.tbPrice);
             this.tabPageShows.Controls.Add(this.label1);
-            this.tabPageShows.Controls.Add(this.textBox1);
+            this.tabPageShows.Controls.Add(this.tbDate);
             this.tabPageShows.Controls.Add(this.lblTimeTo);
             this.tabPageShows.Controls.Add(this.tbTimeTo);
             this.tabPageShows.Controls.Add(this.tbTimeFrom);
@@ -281,10 +289,83 @@
             this.tabPageShows.Location = new System.Drawing.Point(4, 22);
             this.tabPageShows.Name = "tabPageShows";
             this.tabPageShows.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageShows.Size = new System.Drawing.Size(444, 450);
+            this.tabPageShows.Size = new System.Drawing.Size(444, 447);
             this.tabPageShows.TabIndex = 2;
             this.tabPageShows.Text = "Shows";
             this.tabPageShows.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(85, 409);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "$";
+            // 
+            // lblPrice
+            // 
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Location = new System.Drawing.Point(26, 409);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(31, 13);
+            this.lblPrice.TabIndex = 48;
+            this.lblPrice.Text = "Price";
+            // 
+            // tbPrice
+            // 
+            this.tbPrice.Location = new System.Drawing.Point(104, 406);
+            this.tbPrice.Name = "tbPrice";
+            this.tbPrice.Size = new System.Drawing.Size(209, 20);
+            this.tbPrice.TabIndex = 44;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 357);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Date";
+            // 
+            // tbDate
+            // 
+            this.tbDate.Location = new System.Drawing.Point(104, 354);
+            this.tbDate.Name = "tbDate";
+            this.tbDate.Size = new System.Drawing.Size(209, 20);
+            this.tbDate.TabIndex = 41;
+            // 
+            // lblTimeTo
+            // 
+            this.lblTimeTo.AutoSize = true;
+            this.lblTimeTo.Location = new System.Drawing.Point(195, 383);
+            this.lblTimeTo.Name = "lblTimeTo";
+            this.lblTimeTo.Size = new System.Drawing.Size(20, 13);
+            this.lblTimeTo.TabIndex = 46;
+            this.lblTimeTo.Text = "To";
+            // 
+            // tbTimeTo
+            // 
+            this.tbTimeTo.Location = new System.Drawing.Point(255, 380);
+            this.tbTimeTo.Name = "tbTimeTo";
+            this.tbTimeTo.Size = new System.Drawing.Size(58, 20);
+            this.tbTimeTo.TabIndex = 43;
+            // 
+            // tbTimeFrom
+            // 
+            this.tbTimeFrom.Location = new System.Drawing.Point(104, 380);
+            this.tbTimeFrom.Name = "tbTimeFrom";
+            this.tbTimeFrom.Size = new System.Drawing.Size(58, 20);
+            this.tbTimeFrom.TabIndex = 42;
+            // 
+            // lblTimeFrom
+            // 
+            this.lblTimeFrom.AutoSize = true;
+            this.lblTimeFrom.Location = new System.Drawing.Point(26, 383);
+            this.lblTimeFrom.Name = "lblTimeFrom";
+            this.lblTimeFrom.Size = new System.Drawing.Size(30, 13);
+            this.lblTimeFrom.TabIndex = 45;
+            this.lblTimeFrom.Text = "Time";
             // 
             // tbShows
             // 
@@ -356,78 +437,32 @@
             this.tbDisplay.Size = new System.Drawing.Size(318, 405);
             this.tbDisplay.TabIndex = 16;
             // 
-            // label2
+            // btnAddShow
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(85, 296);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 49;
-            this.label2.Text = "$";
+            this.btnAddShow.Location = new System.Drawing.Point(353, 405);
+            this.btnAddShow.Name = "btnAddShow";
+            this.btnAddShow.Size = new System.Drawing.Size(75, 23);
+            this.btnAddShow.TabIndex = 50;
+            this.btnAddShow.Text = "Add Show";
+            this.btnAddShow.UseVisualStyleBackColor = true;
+            this.btnAddShow.Click += new System.EventHandler(this.btnAddShow_Click);
             // 
-            // lblPrice
+            // lbMovies
             // 
-            this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(26, 296);
-            this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(31, 13);
-            this.lblPrice.TabIndex = 48;
-            this.lblPrice.Text = "Price";
+            this.lbMovies.FormattingEnabled = true;
+            this.lbMovies.Location = new System.Drawing.Point(17, 242);
+            this.lbMovies.Name = "lbMovies";
+            this.lbMovies.Size = new System.Drawing.Size(296, 95);
+            this.lbMovies.TabIndex = 52;
+            this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
             // 
-            // tbPrice
+            // lbShows
             // 
-            this.tbPrice.Location = new System.Drawing.Point(104, 293);
-            this.tbPrice.Name = "tbPrice";
-            this.tbPrice.Size = new System.Drawing.Size(209, 20);
-            this.tbPrice.TabIndex = 44;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 244);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 47;
-            this.label1.Text = "Date";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(104, 241);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(209, 20);
-            this.textBox1.TabIndex = 41;
-            // 
-            // lblTimeTo
-            // 
-            this.lblTimeTo.AutoSize = true;
-            this.lblTimeTo.Location = new System.Drawing.Point(195, 270);
-            this.lblTimeTo.Name = "lblTimeTo";
-            this.lblTimeTo.Size = new System.Drawing.Size(20, 13);
-            this.lblTimeTo.TabIndex = 46;
-            this.lblTimeTo.Text = "To";
-            // 
-            // tbTimeTo
-            // 
-            this.tbTimeTo.Location = new System.Drawing.Point(255, 267);
-            this.tbTimeTo.Name = "tbTimeTo";
-            this.tbTimeTo.Size = new System.Drawing.Size(58, 20);
-            this.tbTimeTo.TabIndex = 43;
-            // 
-            // tbTimeFrom
-            // 
-            this.tbTimeFrom.Location = new System.Drawing.Point(104, 267);
-            this.tbTimeFrom.Name = "tbTimeFrom";
-            this.tbTimeFrom.Size = new System.Drawing.Size(58, 20);
-            this.tbTimeFrom.TabIndex = 42;
-            // 
-            // lblTimeFrom
-            // 
-            this.lblTimeFrom.AutoSize = true;
-            this.lblTimeFrom.Location = new System.Drawing.Point(26, 270);
-            this.lblTimeFrom.Name = "lblTimeFrom";
-            this.lblTimeFrom.Size = new System.Drawing.Size(30, 13);
-            this.lblTimeFrom.TabIndex = 45;
-            this.lblTimeFrom.Text = "Time";
+            this.lbShows.FormattingEnabled = true;
+            this.lbShows.Location = new System.Drawing.Point(319, 242);
+            this.lbShows.Name = "lbShows";
+            this.lbShows.Size = new System.Drawing.Size(109, 95);
+            this.lbShows.TabIndex = 53;
             // 
             // Form1
             // 
@@ -486,11 +521,14 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.TextBox tbPrice;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbDate;
         private System.Windows.Forms.Label lblTimeTo;
         private System.Windows.Forms.TextBox tbTimeTo;
         private System.Windows.Forms.TextBox tbTimeFrom;
         private System.Windows.Forms.Label lblTimeFrom;
+        private System.Windows.Forms.Button btnAddShow;
+        private System.Windows.Forms.ListBox lbMovies;
+        private System.Windows.Forms.ListBox lbShows;
     }
 }
 

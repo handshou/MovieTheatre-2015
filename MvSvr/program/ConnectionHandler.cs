@@ -383,7 +383,7 @@ namespace MvSvr {
             //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
 
-        public void SaveBookingToFile(String filePath) {
+        public void SerializeBooking(String filePath) {
 
             formatter = new BinaryFormatter();
             using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
