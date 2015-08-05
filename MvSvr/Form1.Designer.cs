@@ -26,7 +26,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMovies = new System.Windows.Forms.TabPage();
-            this.btnConfirm = new System.Windows.Forms.Button();
             this.lblImage = new System.Windows.Forms.Label();
             this.tbImage = new System.Windows.Forms.TextBox();
             this.tbGenre = new System.Windows.Forms.TextBox();
@@ -64,6 +63,7 @@
             this.btnAddShow = new System.Windows.Forms.Button();
             this.lbMovies = new System.Windows.Forms.ListBox();
             this.lbShows = new System.Windows.Forms.ListBox();
+            this.lbShowDays = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tabPageMovies.SuspendLayout();
             this.tabPageShows.SuspendLayout();
@@ -84,7 +84,6 @@
             // 
             // tabPageMovies
             // 
-            this.tabPageMovies.Controls.Add(this.btnConfirm);
             this.tabPageMovies.Controls.Add(this.lblImage);
             this.tabPageMovies.Controls.Add(this.tbImage);
             this.tabPageMovies.Controls.Add(this.tbGenre);
@@ -109,15 +108,6 @@
             this.tabPageMovies.TabIndex = 0;
             this.tabPageMovies.Text = "Movies";
             this.tabPageMovies.UseVisualStyleBackColor = true;
-            // 
-            // btnConfirm
-            // 
-            this.btnConfirm.Location = new System.Drawing.Point(353, 357);
-            this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(75, 23);
-            this.btnConfirm.TabIndex = 15;
-            this.btnConfirm.Text = "Confirm";
-            this.btnConfirm.UseVisualStyleBackColor = true;
             // 
             // lblImage
             // 
@@ -272,6 +262,7 @@
             // 
             // tabPageShows
             // 
+            this.tabPageShows.Controls.Add(this.lbShowDays);
             this.tabPageShows.Controls.Add(this.lbShows);
             this.tabPageShows.Controls.Add(this.lbMovies);
             this.tabPageShows.Controls.Add(this.btnAddShow);
@@ -452,7 +443,7 @@
             this.lbMovies.FormattingEnabled = true;
             this.lbMovies.Location = new System.Drawing.Point(17, 242);
             this.lbMovies.Name = "lbMovies";
-            this.lbMovies.Size = new System.Drawing.Size(296, 95);
+            this.lbMovies.Size = new System.Drawing.Size(181, 95);
             this.lbMovies.TabIndex = 52;
             this.lbMovies.SelectedIndexChanged += new System.EventHandler(this.lbMovies_SelectedIndexChanged);
             // 
@@ -463,6 +454,15 @@
             this.lbShows.Name = "lbShows";
             this.lbShows.Size = new System.Drawing.Size(109, 95);
             this.lbShows.TabIndex = 53;
+            // 
+            // lbShowDays
+            // 
+            this.lbShowDays.FormattingEnabled = true;
+            this.lbShowDays.Location = new System.Drawing.Point(204, 242);
+            this.lbShowDays.Name = "lbShowDays";
+            this.lbShowDays.Size = new System.Drawing.Size(109, 95);
+            this.lbShowDays.TabIndex = 54;
+            this.lbShowDays.SelectedIndexChanged += new System.EventHandler(this.lbShowDays_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -512,7 +512,6 @@
         private System.Windows.Forms.TextBox tbGenre;
         private System.Windows.Forms.Label lblGenre;
         private System.Windows.Forms.ListBox libClientsDebug;
-        private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.TabPage tabPageShows;
         private System.Windows.Forms.Button btnWipe;
         private System.Windows.Forms.TextBox tbShows;
@@ -529,6 +528,7 @@
         private System.Windows.Forms.Button btnAddShow;
         private System.Windows.Forms.ListBox lbMovies;
         private System.Windows.Forms.ListBox lbShows;
+        private System.Windows.Forms.ListBox lbShowDays;
     }
 }
 

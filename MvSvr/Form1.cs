@@ -361,26 +361,33 @@ namespace MvSvr {
             Movie selectedMovie = movieInfo.Values.ElementAt(movieInfoIndex);
             selectedMovie.Shows.Add(new Show(selectedMovie, saveDate, new Hall("Theatre 1"), saveTimeFrom, saveTimeTo, savePrice));
 
-            UpdateShowsList(movieInfoIndex);
+            UpdateShowDaysList(movieInfoIndex);
             DisplayMsgShows("Show added");
         }
 
         private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateShowsList(lbMovies.SelectedIndex);
+            UpdateShowDaysList(lbMovies.SelectedIndex);
         }
 
-        public void UpdateShowsList(int index)
+        public void UpdateShowDaysList(int index)
         {
-            lbShows.Items.Clear();
-            Movie selectedMovie = movieInfo.Values.ElementAt(index);
-            List<Show> shows = selectedMovie.Shows;
 
-            foreach (Show s in shows) {
-                lbShows.Items.Add(s.TimeStart + " - " + s.TimeEnd);
+            // Show Days
+            lbShowDays.Items.Clear();
+            Movie selectedMovie = movieInfo.Values.ElementAt(index);
+            List<String> showDates = selectedMovie.GetDates();
+
+            foreach (String sDate in showDates) {
+                lbShowDays.Items.Add(sDate);
             }
-            if (shows.Count == 0) {
-                lbShows.Items.Add("No shows");
+
+            if (lbShowDays.Items.Count != 0) {
+                lbShowDays.SelectedIndex = 0;
+            }
+
+            if (showDates.Count == 0) {
+                lbShowDays.Items.Add("No show days");
             }
         }
 
@@ -401,6 +408,20 @@ namespace MvSvr {
         {
             SerializeMovies(moviesFile);
             DisplayMsgMovies("Movies saved to " + moviesFile);
+        }
+
+        private void lbShowDays_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Shows
+            lbShows.Items.Clear();
+            Movie selectedMovie = movieInfo.Values.ElementAt(lbMovies.SelectedIndex);
+            List<String> showsString = selectedMovie.FindShowTimes(lbShowDays.SelectedIndex);
+            foreach(String showString in showsString){
+                lbShows.Items.Add(showString);
+            }
+            if(lbShows.Items.Count == 0){
+                lbShows.Items.Add("No shows");
+            }
         }
     }
 }
