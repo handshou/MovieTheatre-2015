@@ -29,6 +29,7 @@ namespace MvSvr {
         private IFormatter formatter = new BinaryFormatter();
         private Dictionary<String, Movie> movieInfo = new Dictionary<String, Movie>();
         private Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
+        private Dictionary<String, List<Booking>> bkGroupByShow = new Dictionary<String, List<Booking>>();
 
         // Connection Attributes
         private static int port = 9070;
@@ -453,8 +454,17 @@ namespace MvSvr {
             }
         }
 
+        // TAB CONTROL
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Show Bookings
+            if (tabControl.SelectedIndex == 3) {
+                lbShowBkMovies.Items.Clear();
+                foreach(KeyValuePair<String, Movie> kvp in movieInfo/*new SortedDictionary<String, Movie>(movieInfo)*/){
+                    lbShowBkMovies.Items.Add(kvp.Key);
+                }
+            }
+
             // Booking
             if (tabControl.SelectedIndex == 2) {
                 lbBookings.Items.Clear();
@@ -476,10 +486,54 @@ namespace MvSvr {
             List<Seat> seats;
             Seat seat = new Seat();
             String seats_str = "", info_str = "";
-            //foreach (KeyValuePair<String, List<Booking>> kvp in bookingInfo) {
             List<Booking> bookingFile = bookingInfo[lbBookings.SelectedItem.ToString()];
-                tbBookings.AppendText("User " + bookingInfo.Keys.ToArray<String>()[lbBookings.SelectedIndex] + "\r\n");
-                foreach (Booking b in bookingFile) {
+            tbBookings.AppendText("User " + bookingInfo.Keys.ToArray<String>()[lbBookings.SelectedIndex] + "\r\n");
+            foreach (Booking b in bookingFile) {
+                Show s = b.Show;
+                seats = b.Seats;
+                seats_str = "";
+                info_str = "";
+                for (int h = 0 ; h < seats.Count ; h++) {
+                    seat = b.Seats[h];
+                    seats_str += seat.Name + " ";
+                }
+                info_str += "[" + s.Movie.Title + "] (" + b.BookingTime + ")\r\n" +
+                            "[" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "] " + seats_str;
+
+                tbBookings.AppendText("[#" + count + "] " + info_str + "\r\n\r\n");
+                count++;
+            }
+        }
+
+        public void bookingsByShow()
+        {
+            List<Booking> bookings = new List<Booking>();
+            //Dictionary<String, List<Booking>> bookingInfo
+            foreach(List<Booking> bkList in bookingInfo.Values) {
+                foreach(Booking b in bkList) {
+                    bookings.Add(b);
+                }
+            }
+            //List<Booking> bookings = bookingInfo.Values;
+            bkGroupByShow = bookings.GroupBy(u => u.Show.ToString()).ToDictionary(g => g.Key, g => g.ToList());
+        }
+
+        private void lbShowBkShows_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Movie m = movieInfo.Values.ElementAt(lbShowBkMovies.SelectedIndex);
+            Show sfind = m.FindShows(lbShowBkShowDays.SelectedIndex)[lbShowBkShows.SelectedIndex];
+
+            tbBookings.Text = "";
+            int count = 1;
+            List<Seat> seats;
+            Seat seat = new Seat();
+            String seats_str = "", info_str = "";
+            List<Booking> bookingFile = new List<Booking>();
+            if (bkGroupByShow.TryGetValue(sfind.ToString(), out bookingFile)) {
+            //    tbShowBookings.Text = "No bookings found";
+            //} else {
+                tbShowBookings.AppendText("User " + bookingInfo.Keys.ToArray<String>()[lbBookings.SelectedIndex] + "\r\n");
+                foreach (Booking b in bkGroupByShow[sfind.ToString()]) {
                     Show s = b.Show;
                     seats = b.Seats;
                     seats_str = "";
@@ -491,10 +545,27 @@ namespace MvSvr {
                     info_str += "[" + s.Movie.Title + "] (" + b.BookingTime + ")\r\n" +
                                 "[" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "] " + seats_str;
 
-                    tbBookings.AppendText("[#" + count + "] " + info_str + "\r\n\r\n");
+                    tbShowBookings.AppendText("[#" + count + "] " + info_str + "\r\n\r\n");
                     count++;
                 }
-            //}
+            }
+        }
+
+        private void lbShowBkShowDays_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbShowBkShows.Items.Clear();
+            Movie m = movieInfo.Values.ElementAt(lbShowBkMovies.SelectedIndex);
+            foreach(String showtimes in m.FindShowTimes(lbShowBkShowDays.SelectedIndex))
+            lbShowBkShows.Items.Add(showtimes);
+        }
+
+        private void lbShowBkMovies_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbShowBkShowDays.Items.Clear();
+            Movie m = movieInfo.Values.ElementAt(lbShowBkMovies.SelectedIndex);
+            foreach (String showdays in m.GetDates()) {
+                lbShowBkShowDays.Items.Add(showdays);
+            }
         }
     }
 }

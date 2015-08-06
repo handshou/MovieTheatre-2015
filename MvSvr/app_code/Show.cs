@@ -31,5 +31,10 @@ namespace MvSvr {
             TimeEnd = timeEnd;
             Price = price;
         }
+
+        public String ToString()
+        {
+            return TimeStart + "\t" + TimeEnd + "\t" + Date + "\t" + Hall.Name + "\t" + Price;
+        }
     }
 }
