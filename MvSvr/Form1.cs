@@ -173,8 +173,9 @@ namespace MvSvr {
                         movieInfoNew.Add(mv.Title, mv);
                     }
                 }
+                tbDisplay.AppendText("Load Movies: Successful" + "\r\n");
             } catch (Exception ex) {
-                tbDisplay.AppendText("Load Movie File Error: \n" + ex.ToString() + "\r\n");
+                tbDisplay.AppendText("Load Movies File Error: \r\n" + ex.ToString() + "\r\n");
             }
             return movieInfoNew;
         }
@@ -301,7 +302,7 @@ namespace MvSvr {
             desc     = tbDescription.Text;
             dir      = tbDirector.Text;
             genre    = tbGenre.Text;
-            if (tbImage.Text.Trim().Length != 0 && !tbImage.Text.Trim().Equals("optional")) {
+            if (tbImage.Text.Trim().Length != 0 && !tbImage.Text.Trim().Equals("poster\\")) {
                 hasImage = true;
                 imgPath = tbImage.Text;
             }
@@ -428,6 +429,7 @@ namespace MvSvr {
             SerializeMovies(moviesFile);
             SerializeBookings(bkHistFile);
             DisplayMsgMovies("Movies saved to " + moviesFile);
+            DisplayMsgMovies("Bookings saved to " + bkHistFile);
         }
 
         public void SerializeBookings(String filePath)
@@ -462,6 +464,7 @@ namespace MvSvr {
                 lbShowBkMovies.Items.Clear();
                 lbShowBkShowDays.Items.Clear();
                 lbShowBkShows.Items.Clear();
+                tbShowBookings.Clear();
                 foreach(KeyValuePair<String, Movie> kvp in movieInfo/*new SortedDictionary<String, Movie>(movieInfo)*/){
                     lbShowBkMovies.Items.Add(kvp.Key);
                 }
@@ -528,10 +531,10 @@ namespace MvSvr {
                 Show sfind = m.FindShows(lbShowBkShowDays.SelectedIndex)[lbShowBkShows.SelectedIndex];
 
                 tbBookings.Text = "";
-                int count = 1;
                 List<Seat> seats;
                 Seat seat = new Seat();
                 String seats_str = "", info_str = "";
+                String distinctUserStr = "distinctUser";
                 List<Booking> bookingFile = new List<Booking>();
                 bookingsByShow();
                 //foreach (Show sfinds in m.FindShows(lbShowBkShowDays.SelectedIndex)) {
@@ -557,11 +560,19 @@ namespace MvSvr {
                             seat = b.Seats[h];
                             seats_str += seat.Name + " ";
                         }
-                        info_str += b.User + " [" + s.Movie.Title + "] (" + b.BookingTime + ")\r\n" +
-                                    "[" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "] " + seats_str;
 
-                        tbShowBookings.AppendText("[#" + count + "] " + info_str + "\r\n\r\n");
-                        count++;
+                        if (!b.User.Equals(distinctUserStr)) {
+                            if (!distinctUserStr.Equals("distinctUser")) {
+                                info_str += "\r\n";
+                            }
+                            info_str += "User " + b.User + "\r\n";
+                            distinctUserStr = b.User;
+                        }
+
+                        info_str += "[" + s.Movie.Title + "] [" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "]\r\n" +
+                                    "(" + b.BookingTime + ") :: "+ seats_str;
+
+                        tbShowBookings.AppendText(info_str + "\r\n");
                     }
                 }
             } catch (Exception ex) {

@@ -137,7 +137,7 @@
             this.tbImage.Name = "tbImage";
             this.tbImage.Size = new System.Drawing.Size(209, 20);
             this.tbImage.TabIndex = 5;
-            this.tbImage.Text = "optional";
+            this.tbImage.Text = "poster\\\\";
             // 
             // tbGenre
             // 
@@ -223,6 +223,7 @@
             this.btnClear.TabIndex = 11;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnAdd
             // 
