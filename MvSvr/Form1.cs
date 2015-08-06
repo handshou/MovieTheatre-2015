@@ -2,8 +2,8 @@
  * Hansel Chia: s10161147
  * Jack Chang: s10156590
  * This section covers the server side GUI and program
+ *
  */
-
 
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -32,11 +33,14 @@ namespace MvSvr {
         private Dictionary<String, List<Booking>> bkGroupByShow = new Dictionary<String, List<Booking>>();
 
         // Connection Attributes
+        private byte[] data = new byte[1024];
         private static int port = 9070;
         private IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
         private Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private Dictionary<String, Socket> clients = new Dictionary<String, Socket>();
         private Dictionary<String, String> clientsNumber = new Dictionary<String, String>();
+
+        private const String BRCAST = "[BRCA]";
 
         public delegate void DisplayMsgCallback(String msg);
         public delegate void DisplayMsgMoviesCallback(String msg);
@@ -180,24 +184,6 @@ namespace MvSvr {
             return movieInfoNew;
         }
 
-        private void Deserialize(String filePath) {
-            formatter = new BinaryFormatter();
-            try {
-                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
-                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
-                    fs.Close();
-                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo) { // (!) Remove when complete
-                        tbDisplay.AppendText("Title: " + infos.Value.Title + "\r\n");
-                        tbDisplay.AppendText(infos.Value.Genre + "\r\n");
-                    }
-                }
-            } catch (Exception ex) {
-
-                tbDisplay.AppendText(ex.ToString() + "\r\n");
-            }
-        }
-
         //public Dictionary<String, List<Booking>> DeserializeBookings(String filePath) {
         //    Dictionary<String, Booking> bookingInfoBuilder = new Dictionary<String, Booking>();
         //    Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
@@ -335,7 +321,13 @@ namespace MvSvr {
 
         private void btnDebugClear_Click(object sender, EventArgs e) { tbDisplay.Clear(); }
 
-        private void btnBroadcast_Click(object sender, EventArgs e) { }
+        private void btnBroadcast_Click(object sender, EventArgs e) {
+            foreach (Socket client in clients.Values) {
+                data = Encoding.ASCII.GetBytes(BRCAST);
+                client.Send(data);
+            }
+            DisplayMsgMovies("[Server] Broadcasting to all connected clients...");
+        }
 
         private void btnWipe_Click(object sender, EventArgs e) {
             // Wipes all saved movies and alterations made 
@@ -344,6 +336,8 @@ namespace MvSvr {
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
                 LoadMovies();
                 bookingInfo = new Dictionary<String, List<Booking>>();
+                bkGroupByShow = new Dictionary<String, List<Booking>>();
+                SerializeBookings(bkHistFile);
                 DisplayMsgMovies("[Server] Movies Repository wiped to default");
                 DisplayMsgShows("[Server] Movies Repository wiped to default");
                 DisplayMsg("[Server] Movies Repository wiped to default");

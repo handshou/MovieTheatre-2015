@@ -16,12 +16,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-/// https://www.youtube.com/watch?v=0VmFdYWdSSU - Serialize Deserialize into Collection
-
 namespace MvSvr {
-
     class ConnectionHandler {
-
         // Attributes
         private string cmd;
         private string user;
@@ -68,12 +64,7 @@ namespace MvSvr {
         private MethodInvoker miv;
 
         // Constructor
-        public ConnectionHandler(Socket client, Form1 form, 
-            Dictionary<String, Movie> movieInfo, 
-            Dictionary<String, List<Booking>> bookingInfo, 
-            Dictionary<String, Socket> clients,
-            Dictionary<String, String> clientsNumber) {
-
+        public ConnectionHandler(Socket client, Form1 form, Dictionary<String, Movie> movieInfo, Dictionary<String, List<Booking>> bookingInfo, Dictionary<String, Socket> clients, Dictionary<String, String> clientsNumber) {
             this.client = client;
             this.form = form;
             this.movieInfo = movieInfo;
