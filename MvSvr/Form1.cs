@@ -585,6 +585,7 @@ namespace MvSvr {
         private void lbShowBkMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbShowBkShowDays.Items.Clear();
+            lbShowBkShows.Items.Clear();
             Movie m = movieInfo.Values.ElementAt(lbShowBkMovies.SelectedIndex);
             foreach (String showdays in m.GetDates()) {
                 lbShowBkShowDays.Items.Add(showdays);
