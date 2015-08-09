@@ -295,7 +295,7 @@ namespace MvSvr {
         }
         public Image GetImage(String imgPath)
         {
-            Image img = Image.FromFile(imgPath);
+            Image img = Image.FromFile(@imgPath);
             return img;
         }
 
