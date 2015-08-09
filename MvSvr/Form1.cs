@@ -58,6 +58,9 @@ namespace MvSvr {
             t.Start();
         }
 
+        /// <summary>
+        /// Accepts connections from clients and creates a thread for each connection.
+        /// </summary>
         public void ConnectClient() {
             DisplayMsg("[Server] Initialised!");
             DisplayMsgMovies("[Server] Initialised!");
@@ -76,29 +79,13 @@ namespace MvSvr {
                     // Error output
                     DisplayMsg("Connection failed on port " + port + "\r\n");
                     DisplayMsg(ex.ToString());
-                    
                 }
             }
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            Application.Exit();
-        }
-
-        public void SerializeMovies(String filePath) {
-            formatter = new BinaryFormatter();
-            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
-                formatter.Serialize(fs, movieInfo.Values.ToArray());
-                fs.Close();
-            }
-            //form.DisplayMsg("Saved movies database to " + filePath); (!)
-        }
-
-        public Image GetImage(String imgPath) {
-            Image img = Image.FromFile(imgPath);
-            return img;
-        }
-
+        }        
+        /// <summary>
+        /// Provides a base of movies for server to reset all movies and bookings saved.
+        /// Overwrites and saves to moviesFile location.
+        /// </summary>
         public void LoadMovies() {
             movieInfo = new Dictionary<String, Movie>();
 
@@ -160,8 +147,97 @@ namespace MvSvr {
             movieInfo.Add(m.Title, m);
             SerializeMovies(moviesFile);
         }
+        /// <summary>
+        /// Updates and refreshes the server-side client information with their user display when they connect and disconnect from the server.
+        /// </summary>
+        public void UpdateClientListBox()
+        {
+            libClientsMovies.Items.Clear();
+            libClientsShows.Items.Clear();
+            libClientsDebug.Items.Clear();
+            foreach (KeyValuePair<String, String> client in new SortedDictionary<String, String>(clientsNumber)) {
+                libClientsMovies.Items.Add(client.Value);
+                libClientsShows.Items.Add(client.Value);
+                libClientsDebug.Items.Add(client.Value);
+            }
+            libClientsMovies.Sorted = true;
+            libClientsShows.Sorted = true;
+            libClientsDebug.Sorted = true;
+        }
+        /// <summary>
+        /// This method takes in a movie index, and populates the lbShowDays listbox of the Add Shows tab.
+        /// </summary>
+        /// <param name="index">Index of selected movie in listbox, lbMovies.</param>
+        public void UpdateShowDaysList(int index)
+        {
+            // Show Days
+            lbShowDays.Items.Clear();
+            Movie selectedMovie = movieInfo.Values.ElementAt(index);
+            List<String> showDates = selectedMovie.GetDates();
 
-        public Dictionary<String, Movie> DeserializeMovies(String filePath) {
+            foreach (String sDate in showDates) {
+                lbShowDays.Items.Add(sDate);
+            }
+
+            if (lbShowDays.Items.Count != 0) {
+                lbShowDays.SelectedIndex = 0;
+            }
+
+            if (showDates.Count == 0) {
+                lbShowDays.Items.Add("No show days");
+            }
+        }
+        /// <summary>
+        /// This method takes bookingInfo collection and groups them into a new collection bkGroupByShow by Show.
+        /// Used in the Show Info tab.
+        /// </summary>
+        public void bookingsByShow()
+        {
+            List<Booking> bookings = new List<Booking>();
+            //Dictionary<String, List<Booking>> bookingInfo
+            foreach (List<Booking> bkList in bookingInfo.Values) {
+                foreach (Booking b in bkList) {
+                    bookings.Add(b);
+                }
+            }
+            //List<Booking> bookings = bookingInfo.Values;
+            bkGroupByShow = bookings.GroupBy(u => u.Show.ToString()).ToDictionary(g => g.Key, g => g.ToList());
+        }
+
+        public void SerializeMovies(String filePath)
+        {
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, movieInfo.Values.ToArray());
+                fs.Close();
+            }
+            //form.DisplayMsg("Saved movies database to " + filePath); (!)
+        }
+        public void SerializeBookings(String filePath)
+        {
+            formatter = new BinaryFormatter();
+            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                formatter.Serialize(fs, bookingInfo.Values.ToArray());
+                fs.Close();
+            }
+            //form.DisplayMsg("Saved booking database to " + filePath); (!)
+        }
+        public void DeserializeBookings(String filePath)
+        {
+            try {
+                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+                    List<Booking>[] blist_info = (List<Booking>[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    bookingInfo = blist_info.ToDictionary((u) => (u[0].User), (u) => u);
+                }
+                tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
+            } catch (Exception ex) {
+                tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
+            }
+        }
+        public Dictionary<String, Movie> DeserializeMovies(String filePath)
+        {
             Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
             try {
                 using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
@@ -183,60 +259,6 @@ namespace MvSvr {
             }
             return movieInfoNew;
         }
-
-        //public Dictionary<String, List<Booking>> DeserializeBookings(String filePath) {
-        //    Dictionary<String, Booking> bookingInfoBuilder = new Dictionary<String, Booking>();
-        //    Dictionary<String, List<Booking>> bookingInfo = new Dictionary<String, List<Booking>>();
-
-        //    try {
-        //        using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
-        //            Booking[] b_info = (Booking[])formatter.Deserialize(fs);
-        //            fs.Flush();
-        //            fs.Close();
-        //            /// Key             Value
-        //            /// UserA + Date    BookingCopy1
-        //            /// UserA + Date    BookingCopy2
-        //            /// UserB + Date    BookingCopy3
-        //            bookingInfoBuilder = b_info.ToDictionary((u) =>
-        //                (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
-
-        //            foreach (Booking ub in bookingInfoBuilder.Values) {
-        //                if (!bookingInfo.ContainsKey(ub.User)) {
-        //                    bookingInfo.Add(ub.User, new List<Booking>());
-        //                }
-        //            }
-
-        //            foreach (List<Booking> b in bookingInfo.Values) {
-        //                foreach (Booking ub in bookingInfoBuilder.Values) {
-        //                    for (int i = 0; i < b.Count; i++) {
-        //                        if (ub.User.Equals(b[i].User))
-        //                            b.Add(ub);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
-        //    } catch (Exception ex) {
-        //        tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
-        //    }
-        //    return bookingInfo;
-        //}
-
-        public void DeserializeBookings(String filePath)
-        {
-            try {
-                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
-                    List<Booking>[] blist_info = (List<Booking>[])formatter.Deserialize(fs);
-                    fs.Flush();
-                    fs.Close();
-                    bookingInfo = blist_info.ToDictionary((u) => (u[0].User), (u) => u);
-                }
-                tbDisplay.AppendText("Load Bookings: Successful" + "\r\n");
-            } catch (Exception ex) {
-                tbDisplay.AppendText("Load Bookings: Failed" + "\r\n" + ex.ToString() +"\r\n");
-            }
-        }
-
         public void DisplayMsg(String msg) {
             if (this.InvokeRequired) {
                 DisplayMsgCallback d = new DisplayMsgCallback(DisplayMsg);
@@ -248,8 +270,6 @@ namespace MvSvr {
                 tbDisplay.AppendText(lines[i] + "\r\n");
             }
         }
-
-        // (!) Consider removing if client trigger events should not activate Movies textbox display
         public void DisplayMsgMovies(String msg) {
             if (this.InvokeRequired) {
                 DisplayMsgMoviesCallback d = new DisplayMsgMoviesCallback(DisplayMsgMovies);
@@ -261,8 +281,6 @@ namespace MvSvr {
                 tbMovies.AppendText(lines[i] + "\r\n");
             }
         }
-
-        // (!) Consider removing if client trigger events should not activate Shows textbox display
         public void DisplayMsgShows(String msg) {
             if (this.InvokeRequired) {
                 DisplayMsgShowsCallback d = new DisplayMsgShowsCallback(DisplayMsgShows);
@@ -274,11 +292,42 @@ namespace MvSvr {
                 tbShows.AppendText(lines[i] + "\r\n");
             }
         }
+        public Image GetImage(String imgPath)
+        {
+            Image img = Image.FromFile(imgPath);
+            return img;
+        }
 
+        // TAB CONTROL
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Show Bookings
+            if (tabControl.SelectedIndex == 3) {
+                lbShowBkMovies.Items.Clear();
+                lbShowBkShowDays.Items.Clear();
+                lbShowBkShows.Items.Clear();
+                tbShowBookings.Clear();
+                foreach (KeyValuePair<String, Movie> kvp in movieInfo/*new SortedDictionary<String, Movie>(movieInfo)*/) {
+                    lbShowBkMovies.Items.Add(kvp.Key);
+                }
+            }
+
+            // Booking
+            if (tabControl.SelectedIndex == 2) {
+                lbBookings.Items.Clear();
+                foreach (KeyValuePair<String, List<Booking>> kvp in bookingInfo) {
+                    lbBookings.Items.Add(kvp.Key);
+                }
+                tbBookings.Text = "Select a user to view their booking information";
+            }
+            // Shows
+            if (tabControl.SelectedIndex == 1) {
+
+            }
+        }
         private void btnClear_Click(object sender, EventArgs e) {
             tbMovies.Clear();
         }
-
         private void btnAdd_Click(object sender, EventArgs e) {
             //// Create the movie and shows
             String title, desc, dir, genre, imgPath = "";
@@ -318,9 +367,7 @@ namespace MvSvr {
                 DisplayMsgMovies("Movie already exists. Please use another title.");
             }
         }
-
         private void btnDebugClear_Click(object sender, EventArgs e) { tbDisplay.Clear(); }
-
         private void btnBroadcast_Click(object sender, EventArgs e) {
             foreach (Socket client in clients.Values) {
                 data = Encoding.ASCII.GetBytes(BRCAST);
@@ -328,7 +375,6 @@ namespace MvSvr {
             }
             DisplayMsgMovies("[Server] Broadcasting to all connected clients...");
         }
-
         private void btnWipe_Click(object sender, EventArgs e) {
             // Wipes all saved movies and alterations made 
             // by server administrator and loads repository defaults
@@ -343,22 +389,25 @@ namespace MvSvr {
                 DisplayMsg("[Server] Movies Repository wiped to default");
             }
         }
-
-        public void UpdateClientListBox()    
+        private void btnList_Click_1(object sender, EventArgs e)
         {
-            libClientsMovies.Items.Clear();
-            libClientsShows.Items.Clear();
-            libClientsDebug.Items.Clear();
-            foreach(KeyValuePair<String, String> client in new SortedDictionary<String, String>(clientsNumber)) {
-                libClientsMovies.Items.Add(client.Value);
-                libClientsShows.Items.Add(client.Value);
-                libClientsDebug.Items.Add(client.Value);
+            int count = 0;
+            DisplayMsgMovies("[Movie Listing]");
+            foreach (KeyValuePair<String, Movie> movie in movieInfo) {
+                DisplayMsgMovies("[" + count + "] " + movie.Key);
+                count++;
             }
-            libClientsMovies.Sorted = true;
-            libClientsShows.Sorted = true;
-            libClientsDebug.Sorted = true;
+            if (count == 0) {
+                DisplayMsgMovies("No movies.");
+            }
         }
-
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SerializeMovies(moviesFile);
+            SerializeBookings(bkHistFile);
+            DisplayMsgMovies("Movies saved to " + moviesFile);
+            DisplayMsgMovies("Bookings saved to " + bkHistFile);
+        }
         private void btnAddShow_Click(object sender, EventArgs e)
         {
             String saveDate = tbDate.Text;
@@ -378,106 +427,23 @@ namespace MvSvr {
             UpdateShowDaysList(movieInfoIndex);
             DisplayMsgShows("Show added");
         }
-
         private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateShowDaysList(lbMovies.SelectedIndex);
         }
-
-        public void UpdateShowDaysList(int index)
-        {
-
-            // Show Days
-            lbShowDays.Items.Clear();
-            Movie selectedMovie = movieInfo.Values.ElementAt(index);
-            List<String> showDates = selectedMovie.GetDates();
-
-            foreach (String sDate in showDates) {
-                lbShowDays.Items.Add(sDate);
-            }
-
-            if (lbShowDays.Items.Count != 0) {
-                lbShowDays.SelectedIndex = 0;
-            }
-
-            if (showDates.Count == 0) {
-                lbShowDays.Items.Add("No show days");
-            }
-        }
-
-        private void btnList_Click_1(object sender, EventArgs e)
-        {
-            int count = 0;
-            DisplayMsgMovies("[Movie Listing]");
-            foreach (KeyValuePair<String, Movie> movie in movieInfo) {
-                DisplayMsgMovies("[" + count + "] " + movie.Key);
-                count++;
-            }
-            if (count == 0) {
-                DisplayMsgMovies("No movies.");
-            }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            SerializeMovies(moviesFile);
-            SerializeBookings(bkHistFile);
-            DisplayMsgMovies("Movies saved to " + moviesFile);
-            DisplayMsgMovies("Bookings saved to " + bkHistFile);
-        }
-
-        public void SerializeBookings(String filePath)
-        {
-            formatter = new BinaryFormatter();
-            using (fs = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
-                formatter.Serialize(fs, bookingInfo.Values.ToArray());
-                fs.Close();
-            }
-            //form.DisplayMsg("Saved booking database to " + filePath); (!)
-        }
-
         private void lbShowDays_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Shows
             lbShows.Items.Clear();
             Movie selectedMovie = movieInfo.Values.ElementAt(lbMovies.SelectedIndex);
             List<String> showsString = selectedMovie.FindShowTimes(lbShowDays.SelectedIndex);
-            foreach(String showString in showsString){
+            foreach (String showString in showsString) {
                 lbShows.Items.Add(showString);
             }
-            if(lbShows.Items.Count == 0){
+            if (lbShows.Items.Count == 0) {
                 lbShows.Items.Add("No shows");
             }
         }
-
-        // TAB CONTROL
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Show Bookings
-            if (tabControl.SelectedIndex == 3) {
-                lbShowBkMovies.Items.Clear();
-                lbShowBkShowDays.Items.Clear();
-                lbShowBkShows.Items.Clear();
-                tbShowBookings.Clear();
-                foreach(KeyValuePair<String, Movie> kvp in movieInfo/*new SortedDictionary<String, Movie>(movieInfo)*/){
-                    lbShowBkMovies.Items.Add(kvp.Key);
-                }
-            }
-
-            // Booking
-            if (tabControl.SelectedIndex == 2) {
-                lbBookings.Items.Clear();
-                foreach (KeyValuePair<String, List<Booking>> kvp in bookingInfo) {
-                    lbBookings.Items.Add(kvp.Key);
-                }
-                tbBookings.Text = "Select a user to view their booking information";
-            }
-            // Shows
-            if (tabControl.SelectedIndex == 1) {
-
-            }
-        }
-
         private void lbBookings_SelectedIndexChanged(object sender, EventArgs e)
         {
             tbBookings.Text = "";
@@ -503,20 +469,6 @@ namespace MvSvr {
                 count++;
             }
         }
-
-        public void bookingsByShow()
-        {
-            List<Booking> bookings = new List<Booking>();
-            //Dictionary<String, List<Booking>> bookingInfo
-            foreach(List<Booking> bkList in bookingInfo.Values) {
-                foreach(Booking b in bkList) {
-                    bookings.Add(b);
-                }
-            }
-            //List<Booking> bookings = bookingInfo.Values;
-            bkGroupByShow = bookings.GroupBy(u => u.Show.ToString()).ToDictionary(g => g.Key, g => g.ToList());
-        }
-
         private void lbShowBkShows_SelectedIndexChanged(object sender, EventArgs e)
         {
             try {
@@ -543,7 +495,7 @@ namespace MvSvr {
                 bkGroupByShow.TryGetValue(sfind.ToString(), out bookingFile);
                 if (bookingFile == null || bookingFile.Count == 0) {
                     tbShowBookings.Text = "No bookings found\r\n";
-                }  else {
+                } else {
                     //tbShowBookings.AppendText("User " + bookingInfo.Keys.ToArray<String>()[lbBookings.SelectedIndex] + "\r\n");
                     foreach (Booking b in bkGroupByShow[sfind.ToString()]) {
                         Show s = b.Show;
@@ -564,7 +516,7 @@ namespace MvSvr {
                         }
 
                         info_str += "[" + s.Movie.Title + "] [" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "]\r\n" +
-                                    "(" + b.BookingTime + ") :: "+ seats_str;
+                                    "(" + b.BookingTime + ") :: " + seats_str;
 
                         tbShowBookings.AppendText(info_str + "\r\n");
                     }
@@ -573,15 +525,13 @@ namespace MvSvr {
                 tbShowBookings.AppendText(ex.ToString() + "\r\n");
             }
         }
-
         private void lbShowBkShowDays_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbShowBkShows.Items.Clear();
             Movie m = movieInfo.Values.ElementAt(lbShowBkMovies.SelectedIndex);
-            foreach(String showtimes in m.FindShowTimes(lbShowBkShowDays.SelectedIndex))
-            lbShowBkShows.Items.Add(showtimes);
+            foreach (String showtimes in m.FindShowTimes(lbShowBkShowDays.SelectedIndex))
+                lbShowBkShows.Items.Add(showtimes);
         }
-
         private void lbShowBkMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbShowBkShowDays.Items.Clear();
@@ -590,6 +540,10 @@ namespace MvSvr {
             foreach (String showdays in m.GetDates()) {
                 lbShowBkShowDays.Items.Add(showdays);
             }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -75,7 +75,6 @@ namespace MvSvr {
 
         // Methods
         public void HandleConnection(Object state) {
-
             miv = new MethodInvoker(form.UpdateClientListBox);
             int size = 0;
             try {
@@ -99,13 +98,10 @@ namespace MvSvr {
 
                     while (true) {
                         lock (_object) {
-                            //movieInfo = LoadMovieFile(moviesFile);
-
                             /* R */
                             // Receive command
                             cmd = ReceiveCommand();
                             form.DisplayMsg("\n[" + user + "] :: " + cmd); // (!) Remove when complete
-
                             switch (cmd) {
                                 case BROWSE: Browse();
                                     break;
@@ -128,9 +124,7 @@ namespace MvSvr {
                     SendCommand(FAILURE);
                     form.DisplayMsg("[Server] Detected attempted login");
                 }
-
             } catch (SocketException) {
-
                 clients.Remove(user);
                 clientsNumber.Remove(user);
                 connections--;
@@ -138,14 +132,10 @@ namespace MvSvr {
                 Thread.Sleep(300);
 
                 DisplayDisconnectMsg(connections);
-
             } catch (Exception ex) {
-
                 form.DisplayMsg(ex.ToString());
             }
-            // Consider implementing abort thread
         }
-
         public void Browse() {
 
             //lock (_object) {
@@ -153,7 +143,6 @@ namespace MvSvr {
                 SendFile(moviesFile);
             //}
         }
-
         public void Search() {
 
             String type = "", 
@@ -181,30 +170,6 @@ namespace MvSvr {
                 SendFile(searchFile);
             }
         }
-
-        public Dictionary<String, Movie> SearchMovies(String type, String terms){
-
-            Dictionary<String, Movie> d = new Dictionary<String, Movie>();
-            foreach (KeyValuePair<String, Movie> m in movieInfo) {
-                if (type == "Genre") {
-                    if (m.Value.Genre.ToLower().Contains(terms.ToLower())) {
-                        d.Add(m.Key, m.Value);
-                    }
-                } else
-                if (type == "Director") {
-                    if (m.Value.Director.ToLower().Contains(terms.ToLower())) {
-                        d.Add(m.Key, m.Value);
-                    }
-                } else
-                if (type == "Name") {
-                    if (m.Key.ToLower().Contains(terms.ToLower())) {
-                        d.Add(m.Key, m.Value);
-                    }
-                }
-            }
-            return d;
-        }
-
         public void Booking() {
 
             //lock (_object) { // get userid title time seatindex price
@@ -300,7 +265,6 @@ namespace MvSvr {
                 }
             //}
         }
-
         public void Quit() {
 
             if (ns != null)
@@ -314,13 +278,11 @@ namespace MvSvr {
             form.BeginInvoke(miv);
             DisplayDisconnectMsg(connections);
         }
-
         public void History() {
 
             Booking b = new Booking(); Show s = new Show();
             List<Seat> seats; Seat seat = new Seat();
             List<Booking> bookingList = new List<Booking>();
-            //bookingInfo = LoadBookingFile(bkHistFile);
             bookingInfo.TryGetValue(user, out bookingList);
 
             String info_str = "";
@@ -363,7 +325,6 @@ namespace MvSvr {
                 fs.Close();
             }
         }
-
         public void SerializeMovies(String filePath) {
 
             formatter = new BinaryFormatter();
@@ -373,7 +334,6 @@ namespace MvSvr {
             }
             //form.DisplayMsg("Saved movies database to " + filePath); (!)
         }
-
         public void SerializeBookings(String filePath) {
 
             formatter = new BinaryFormatter();
@@ -383,7 +343,95 @@ namespace MvSvr {
             }
             //form.DisplayMsg("Saved booking database to " + filePath); (!)
         }
+        public List<Seat> DeserializeSeats(String filePath, out Show show)
+        {
 
+            List<Seat> output = new List<Seat>();
+            show = new Show();
+            try {
+                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
+                    Object[] obj_info = (Object[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    show = (Show)obj_info[0];
+                    int sz = (int)obj_info[1];
+
+                    // form.DisplayMsg(obj_info.Length.ToString());
+
+                    // Add seats - potential indexoutofrange exception
+                    for (int i = 2 ; i < sz ; i++) {
+                        output.Add((Seat)obj_info[i]);
+                    }
+                }
+            } catch (Exception ex) {
+                form.DisplayMsg(ex.ToString());
+            }
+            return output;
+        }
+        public Dictionary<String, List<Booking>> DeserializeBookings(String filePath)
+        {
+
+            Dictionary<String, Booking>
+                bookingInfoBuilder = new Dictionary<String, Booking>();
+            Dictionary<String, List<Booking>>
+                bookingInfo = new Dictionary<String, List<Booking>>();
+
+            try {
+                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
+                    Booking[] b_info = (Booking[])formatter.Deserialize(fs);
+                    fs.Flush();
+                    fs.Close();
+                    /// Key             Value
+                    /// UserA + Time    BookingCopy1
+                    /// UserA + Time    BookingCopy2
+                    /// UserB + Time    BookingCopy3
+                    bookingInfoBuilder = b_info.ToDictionary((u) =>
+                        (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
+
+                    foreach (Booking ub in bookingInfoBuilder.Values) {
+                        if (!bookingInfo.ContainsKey(ub.User)) {
+                            bookingInfo.Add(ub.User, new List<Booking>());
+                        }
+                    }
+
+                    foreach (List<Booking> b in bookingInfo.Values) {
+                        foreach (Booking ub in bookingInfoBuilder.Values) {
+                            for (int i = 0 ; i < b.Count ; i++) {
+                                if (ub.User.Equals(b[i].User))
+                                    b.Add(ub);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                form.DisplayMsg(ex.ToString());
+            }
+            return bookingInfo;
+        }
+
+        public Dictionary<String, Movie> SearchMovies(String type, String terms)
+        {
+
+            Dictionary<String, Movie> d = new Dictionary<String, Movie>();
+            foreach (KeyValuePair<String, Movie> m in movieInfo) {
+                if (type == "Genre") {
+                    if (m.Value.Genre.ToLower().Contains(terms.ToLower())) {
+                        d.Add(m.Key, m.Value);
+                    }
+                } else
+                    if (type == "Director") {
+                        if (m.Value.Director.ToLower().Contains(terms.ToLower())) {
+                            d.Add(m.Key, m.Value);
+                        }
+                    } else
+                        if (type == "Name") {
+                            if (m.Key.ToLower().Contains(terms.ToLower())) {
+                                d.Add(m.Key, m.Value);
+                            }
+                        }
+            }
+            return d;
+        }
         public String ReceiveTypeTerms(out String type) {
 
             String terms = "";
@@ -397,7 +445,6 @@ namespace MvSvr {
 
             return terms;
         }
-
         public String ReceiveCommand() {
 
             data = new byte[1024];
@@ -405,21 +452,18 @@ namespace MvSvr {
 
             return Encoding.ASCII.GetString(data, 0, size);
         }
-
         public void SendCommand(String cmd) {
 
             data = new byte[1024];
             data = Encoding.ASCII.GetBytes(cmd);
             size = client.Send(data);
         }
-
         public void SendString(String str) {
 
             data = new byte[8192];
             data = Encoding.ASCII.GetBytes(str);
             size = client.Send(data);
         }
-
         public void SendFile(String filePath) {
 
             f = new FileInfo(filePath);
@@ -444,7 +488,6 @@ namespace MvSvr {
                 form.DisplayMsg(ex.ToString());
             }
         }
-
         public void ReceiveFile(String filePath) {
 
             /* R */ // Receive file size
@@ -474,96 +517,6 @@ namespace MvSvr {
                 fs.Close();
             }
         }
-
-        public Dictionary<String, List<Booking>> DeserializeBookings(String filePath) {
-
-            Dictionary<String, Booking> 
-                bookingInfoBuilder = new Dictionary<String, Booking>();
-            Dictionary<String, List<Booking>>
-                bookingInfo = new Dictionary<String, List<Booking>>();
-
-            try {
-                using (fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read)) {
-                    Booking[] b_info = (Booking[])formatter.Deserialize(fs);
-                    fs.Flush();
-                    fs.Close();
-                    /// Key             Value
-                    /// UserA + Time    BookingCopy1
-                    /// UserA + Time    BookingCopy2
-                    /// UserB + Time    BookingCopy3
-                    bookingInfoBuilder = b_info.ToDictionary((u) => 
-                        (u.User).Insert(u.User.Length + 1, u.BookingTime.ToString()), (u) => u);
-                    
-                    foreach(Booking ub in bookingInfoBuilder.Values){
-                        if(!bookingInfo.ContainsKey(ub.User)){
-                            bookingInfo.Add(ub.User, new List<Booking>());
-                        }
-                    }
-
-                    foreach(List<Booking> b in bookingInfo.Values){
-                        foreach(Booking ub in bookingInfoBuilder.Values){
-                            for(int i = 0; i < b.Count; i++) {
-                                if(ub.User.Equals(b[i].User))
-                                    b.Add(ub);
-                            }
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                form.DisplayMsg(ex.ToString());
-            }
-            return bookingInfo;
-        }
-
-        public Dictionary<String, Movie> LoadMovieFile(String filePath) {
-
-            Dictionary<String, Movie> movieInfoNew = new Dictionary<String, Movie>();
-            try {
-                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
-                    Movie[] m_info = (Movie[])formatter.Deserialize(fs);
-                    fs.Flush();
-                    fs.Close();
-                    movieInfo = m_info.ToDictionary((u) => u.Title, (u) => u);
-
-                    foreach (KeyValuePair<String, Movie> infos in movieInfo) {
-                        Movie mv = new Movie(infos.Value.Title, infos.Value.Description,
-                            infos.Value.Director, infos.Value.Genre, infos.Value.Shows, infos.Value.Poster);
-
-                        movieInfoNew.Add(mv.Title, mv);
-                    }
-                    
-                }
-            } catch (Exception ex) {
-                form.DisplayMsg(ex.ToString());
-            }
-            return movieInfoNew;
-        }
-
-        public List<Seat> DeserializeSeats(String filePath, out Show show) {
-
-            List<Seat> output = new List<Seat>();
-            show = new Show();
-            try {
-                using (fs = new FileStream(filePath, FileMode.Open, FileAccess.Read)) {
-                    Object[] obj_info = (Object[])formatter.Deserialize(fs);
-                    fs.Flush();
-                    fs.Close();
-                    show = (Show) obj_info[0];
-                    int sz = (int)obj_info[1];
-
-                    // form.DisplayMsg(obj_info.Length.ToString());
-
-                    // Add seats - potential indexoutofrange exception
-                    for(int i = 2; i < sz; i++) {
-                        output.Add((Seat) obj_info[i]);
-                    }
-                }
-            } catch (Exception ex) {
-                form.DisplayMsg(ex.ToString());
-            }
-            return output;
-        }
-
         public void DisplayConnectMsg(int connections) {
 
             if (connections == 1)
@@ -571,7 +524,6 @@ namespace MvSvr {
             else
                 form.DisplayMsg("\n[Server] " + connections + " active connections (+" + user + ")");
         }
-
         public void DisplayDisconnectMsg(int connections) {
 
             if (connections == 1)
