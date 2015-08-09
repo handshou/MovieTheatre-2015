@@ -172,6 +172,7 @@ namespace MvSvr {
         {
             // Show Days
             lbShowDays.Items.Clear();
+            lbShows.Items.Clear();
             Movie selectedMovie = movieInfo.Values.ElementAt(index);
             List<String> showDates = selectedMovie.GetDates();
 
@@ -322,7 +323,12 @@ namespace MvSvr {
             }
             // Shows
             if (tabControl.SelectedIndex == 1) {
-
+                lbMovies.Items.Clear();
+                lbShowDays.Items.Clear();
+                lbShows.Items.Clear();
+                foreach (KeyValuePair<String, Movie> movie in movieInfo) {
+                    lbMovies.Items.Add(movie.Key);
+                }
             }
         }
         private void btnClear_Click(object sender, EventArgs e) {
@@ -427,6 +433,7 @@ namespace MvSvr {
             UpdateShowDaysList(movieInfoIndex);
             DisplayMsgShows("Show added");
         }
+
         private void lbMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateShowDaysList(lbMovies.SelectedIndex);
@@ -515,8 +522,7 @@ namespace MvSvr {
                             distinctUserStr = b.User;
                         }
 
-                        info_str += "[" + s.Movie.Title + "] [" + s.Date + "] [" + s.TimeStart + " - " + s.TimeEnd + "]\r\n" +
-                                    "(" + b.BookingTime + ") :: " + seats_str;
+                        info_str += "(" + b.BookingTime + ") :: " + seats_str;
 
                         tbShowBookings.AppendText(info_str + "\r\n");
                     }

@@ -97,28 +97,26 @@ namespace MvSvr {
                     Thread.Sleep(300);
 
                     while (true) {
-                        lock (_object) {
-                            /* R */
-                            // Receive command
-                            cmd = ReceiveCommand();
-                            form.DisplayMsg("\n[" + user + "] :: " + cmd); // (!) Remove when complete
-                            switch (cmd) {
-                                case BROWSE: Browse();
-                                    break;
-                                case SEARCH: Search();
-                                    break;
-                                case BOOKNG: Booking();
-                                    break;
-                                case HISTRY: History();
-                                    break;
-                                case FINISH: Quit();
-                                    break;
-                                default: form.DisplayMsg("[" + user + "] :: Unknown command (" + cmd.Substring(0,9) + ")");
-                                    break;
-                            }
-                            if (cmd == FINISH)
+                        /* R */
+                        // Receive command
+                        cmd = ReceiveCommand();
+                        form.DisplayMsg("\n[" + user + "] :: " + cmd); // (!) Remove when complete
+                        switch (cmd) {
+                            case BROWSE: Browse();
+                                break;
+                            case SEARCH: Search();
+                                break;
+                            case BOOKNG: Booking();
+                                break;
+                            case HISTRY: History();
+                                break;
+                            case FINISH: Quit();
+                                break;
+                            default: form.DisplayMsg("[" + user + "] :: Unknown command (" + cmd.Substring(0,9) + ")");
                                 break;
                         }
+                        if (cmd == FINISH)
+                            break;
                     }
                 } else {
                     SendCommand(FAILURE);
@@ -225,17 +223,17 @@ namespace MvSvr {
                 }
 
                 if (bookingSuccess) {
-
-                    foreach (Seat seat in seats) {
-                        foreach (Seat serverSeat in serverSeats) {
-                            if (seat.Name.Equals(serverSeat.Name)) {
-                                serverSeat.Vacant = false;
-                                //form.DisplayMsg(serverSeat.Name + " has been updated to " + // (!) Debug
-                                //    serverSeat.Vacant.ToString());
+                    lock (_object) {
+                        foreach (Seat seat in seats) {
+                            foreach (Seat serverSeat in serverSeats) {
+                                if (seat.Name.Equals(serverSeat.Name)) {
+                                    serverSeat.Vacant = false;
+                                    //form.DisplayMsg(serverSeat.Name + " has been updated to " + // (!) Debug
+                                    //    serverSeat.Vacant.ToString());
+                                }
                             }
                         }
                     }
-
                     // Save movie info
                     SerializeMovies(moviesFile);
 
