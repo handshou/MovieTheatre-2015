@@ -41,11 +41,8 @@
             this.lblMvName = new System.Windows.Forms.Label();
             this.lblMvGenre = new System.Windows.Forms.Label();
             this.lblMvDirector = new System.Windows.Forms.Label();
-            this.lblBookMessage = new System.Windows.Forms.Label();
             this.btnSaveBHistory = new System.Windows.Forms.Button();
             this.btnViewBHistory = new System.Windows.Forms.Button();
-            this.cobSeat = new System.Windows.Forms.ComboBox();
-            this.lblSeatNo = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.lblMvDescription = new System.Windows.Forms.Label();
@@ -320,16 +317,6 @@
             this.lblMvDirector.Text = "mvdirector";
             this.lblMvDirector.Visible = false;
             // 
-            // lblBookMessage
-            // 
-            this.lblBookMessage.Location = new System.Drawing.Point(25, 146);
-            this.lblBookMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblBookMessage.Name = "lblBookMessage";
-            this.lblBookMessage.Size = new System.Drawing.Size(169, 68);
-            this.lblBookMessage.TabIndex = 25;
-            this.lblBookMessage.Text = "lblBookMessage";
-            this.lblBookMessage.Visible = false;
-            // 
             // btnSaveBHistory
             // 
             this.btnSaveBHistory.Location = new System.Drawing.Point(7, 54);
@@ -352,29 +339,6 @@
             this.btnViewBHistory.Text = "View";
             this.btnViewBHistory.UseVisualStyleBackColor = true;
             this.btnViewBHistory.Click += new System.EventHandler(this.btnViewBHistory_Click);
-            // 
-            // cobSeat
-            // 
-            this.cobSeat.Enabled = false;
-            this.cobSeat.FormattingEnabled = true;
-            this.cobSeat.Location = new System.Drawing.Point(159, 150);
-            this.cobSeat.Margin = new System.Windows.Forms.Padding(2);
-            this.cobSeat.Name = "cobSeat";
-            this.cobSeat.Size = new System.Drawing.Size(54, 21);
-            this.cobSeat.TabIndex = 30;
-            this.cobSeat.Visible = false;
-            this.cobSeat.SelectedIndexChanged += new System.EventHandler(this.cobSeat_SelectedIndexChanged);
-            // 
-            // lblSeatNo
-            // 
-            this.lblSeatNo.AutoSize = true;
-            this.lblSeatNo.Location = new System.Drawing.Point(25, 153);
-            this.lblSeatNo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblSeatNo.Name = "lblSeatNo";
-            this.lblSeatNo.Size = new System.Drawing.Size(69, 13);
-            this.lblSeatNo.TabIndex = 31;
-            this.lblSeatNo.Text = "Seat Number";
-            this.lblSeatNo.Visible = false;
             // 
             // label5
             // 
@@ -1108,9 +1072,6 @@
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.lblSeatNo);
-            this.Controls.Add(this.cobSeat);
-            this.Controls.Add(this.lblBookMessage);
             this.Controls.Add(this.lblMvDirector);
             this.Controls.Add(this.lblMvGenre);
             this.Controls.Add(this.lblMvName);
@@ -1164,11 +1125,8 @@
         private System.Windows.Forms.Label lblMvName;
         private System.Windows.Forms.Label lblMvGenre;
         private System.Windows.Forms.Label lblMvDirector;
-        private System.Windows.Forms.Label lblBookMessage;
         private System.Windows.Forms.Button btnSaveBHistory;
         private System.Windows.Forms.Button btnViewBHistory;
-        private System.Windows.Forms.ComboBox cobSeat;
-        private System.Windows.Forms.Label lblSeatNo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.Label lblMvDescription;
